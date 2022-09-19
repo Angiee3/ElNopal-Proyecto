@@ -1,0 +1,59 @@
+{% extends 'partials/body.html' %} 
+{% load crispy_forms_tags %}
+{% load static %}
+{% block contenido %}
+
+<div >
+    <div class="container bg-white p-5 h-auto">
+        <div class="row">
+            <div class="col">
+                <h2>Exportar</h2>
+                <form action="{% url 'backup' tipo='D' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        {% for modelo in ficheros %}
+                        <div class="mb-3 ">
+                            <a href="{% static 'backup' %}/{{modelo}}">{{modelo}}</a>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <input type="submit" class="btn_agregar d-block text-center text-decoration-none py-1 rounded border border-none" style="width: 120px;" value="Generar Copia">
+                </form>
+            </div>
+    
+            <div class="col">
+                <h2>Importar</h2>
+                <form action="{% url 'backup' tipo='U' %}" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %} 
+                    {{form|crispy}}
+                    <input type="submit" class="btn_agregar d-block text-center text-decoration-none py-1 rounded border border-none" style="width: 120px;" value="Enviar">
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <h2>Historial de Importes</h2>
+                <table class="display table table-striped table-hover text-nowrap mt-3" id="tabla">
+                    <thead style="background-color: var(--verde); color: var(--verdeoscuro);">
+                        <tr>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Archivo</th>
+                            <th scope="col">Fecha</th>
+    
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for backup in backups %}
+                        <tr>
+                            <td>{{backup.name}} </td>
+                            <td>{{backup.file.url}} </td>
+                            <td>{{backup.date}} </td>
+                        </tr>
+                        {% endfor%}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock contenido %}

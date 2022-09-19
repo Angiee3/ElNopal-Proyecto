@@ -1,0 +1,12 @@
+{% load static %}
+<div class="btn-group dropstart position-fixed top-50 end-0 me-1">
+    <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+      <img  style="width:30px" src="{% static 'img/acce.png' %}" alt="">
+    </button>
+    <ul class="dropdown-menu">
+      <li><button  class="dropdown-item" type="button"  id="aumentar"><img class="w-25 " src="{% static 'img/icons/zoom+.svg' %}" alt="">Aumentar Letra</button></li>
+      <li><button class="dropdown-item" type="button"  id="disminuir"><img class="w-25 " src="{% static 'img/icons/zoom-.svg' %}" alt=""> Reducir Letra</button></li>
+      <li><button class="dropdown-item" type="button"  id="restaurar"><img class="w-25 " src="{% static 'img/icons/restore.svg' %}" alt="">Restaurar</button></li>
+      <li><button class="dropdown-item input-group" type="button"  id="dark"> <img class="w-25 " src="{% static 'img/icons/contrast.svg' %}" alt=""> Contraste</button></li>
+    </ul>
+</div>

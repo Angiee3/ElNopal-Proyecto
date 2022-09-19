@@ -1,0 +1,23 @@
+{% extends 'partials/body_login.html' %}
+{% load crispy_forms_tags %}
+{% block title %}{{titulo_pagina}} - INICIAR SESION{% endblock title %}
+{% load static %}
+{% block contenido %}
+<div class="background_login">
+    <div class="container_login">
+        <div>
+            <div class="container_subtitle" id="c_top">
+                <h2 class="subtitles_login">Recupera tu cuenta</h2>
+            </div>
+
+            <div class="container_login_subtitles">
+                <div class="text_login">Contraseña reestablecida</div>
+            </div>
+
+            <div class="container_subtitle" id="c_bottom">
+                <a class="link_login" href="{% url 'admin-login' %}">Volver al inicio de sesión</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock contenido %}

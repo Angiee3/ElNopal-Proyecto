@@ -1,0 +1,70 @@
+{% extends 'partials/body.html' %}
+
+{% block title %}Inicio{% endblock title %}
+{% load static %}
+{% block contenido %}
+
+<div class="d-flex btn-flotante">
+  <figure class="m-auto" ><img src="{% static 'img/icons/help.svg' %}" id="ayuda" data-bs-toggle="modal" data-bs-target="#modalAyuda" alt="Ayuda"></figure>
+</div>
+<section>
+  <div class="container3">
+    <div class="glider-contain col-xl-15 " id="glider-{{subcategory.id}}">
+      <div class="glider-cat-1 glider">
+        {% for sub in categories %}
+        <div class="card w-25 border ms-3 ">
+          <img class="w-75 mx-auto" src="{{sub.image.url}}"  style="height:200px;"  alt="...">
+          <div class="card-description">
+            <form action="" method="POST">
+              {% csrf_token %}
+              <input type="hidden" name="{{sub.id}}">
+              <button class="card-title"  type="submit" style="border: none !important; outline: none; color: var(--verdeoscuro) !important; background: none !important; padding: 5px 15px !important; " >{{sub.name}}</button>
+      	    </form>
+        </div>
+         
+	</div>
+        {% endfor %}
+      </div>
+      <button class="glider-prev"><i class="fas fa-chevron-circle-left"></i></button>
+      <button class="glider-next"><i class="fas fa-chevron-circle-right"></i></button>
+
+ 
+</div>
+  </div>
+  <div class="container border border-dark mb-3 d-flex justify-content-center flex-wrap myDIV" id="mode-cards" id="contenedor__productos" >
+    {% for product in products %}
+    {% if product.status %}
+      <div class="card m-3 p-2 blog-inner" id="mode-cards" style="width: 18rem;">
+          <img src="{{product.image.url}}"  style="height:200px;" id="modalimagen"  class="card-img-top" alt="...">
+          <div class="card-body ">
+            <h5 class="card-title text-center py-1">{{product.name}}</h5>
+            <hr>
+            <div class="row">
+                <div class="col-6">
+                      <strong>Precio:</strong>
+                </div>
+              <div class="col-6">
+                  <p id="precio_producto"  class="text-center border border-3 py-1">{{prod.price}}{{product.price|floatformat}} $ </p>
+              </div>
+            </div>
+              <strong style="display: none;" class="id" > {{product.id}} </strong>
+              <strong style="display: none;" class="stock" > {{product.stock}} </strong>
+              <strong style="display: none;" class="descripcion" > {{product.description}} </strong>
+              <button type="button" class="btn botonAgregar d-block"  >Agregar</button>
+          </div>
+      </div>
+      <div class="alert alert-danger my-3 w-75 text-center" id="alerta_busqueda"  style="display: none !important;" role="alert">
+        <strong>Tu búsqueda no se encuentra</strong> 
+      </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+   {% include 'partials/alertas.html' %}
+   
+</section>
+{% include 'partials/accesibilidad.html' %}
+
+{% include 'modals/m-product.html' %}
+{% endblock %}
+
+

@@ -1,0 +1,95 @@
+{% extends 'partials/body.html' %}
+{% block title %}Carrito{% endblock title %}
+{% load static %}
+{% block contenido %}
+<div class="btn-flotante">
+    <figure class="imagenAyuda" id="ayuda"><img class="imgAyuda" src="{% static 'img/icons/help.svg' %}"data-bs-toggle="modal" data-bs-target="#modalAyuda" alt="Ayuda"></figure>
+</div>
+<div id="">
+    <section class="container p-5 h-auto rounded" data-admin id="cuerpo" style="width: 95%">
+        <div class="container titulo d-flex pt-4 my-3 ">
+            <h1>Tu Carrito</h1>
+            <img src="{% static 'img/icons/shopping-car.svg' %}" id="carrito" width="45" alt="">
+        </div>
+        <div class="container" id="contenedor__productos">
+            <div class="row p-3 w-100">
+                <div class="col-lg-7 d-flex flex-column " style="max-height: 340px; overflow-y: auto;"  >
+                    {% if request.session.carro.items %}
+                       {% for key, value in request.session.carro.items %}
+                    <div class="card mb-2 mx-auto w-100" style="max-width: 540px; ">
+                        <div class="row g-0 ">
+                        <div class="col-md-5" >
+                            <img src="{{value.imagen}}" class="img-fluid rounded-start w-100" style="height: 150px !important;" alt="...">
+                        </div>
+                        <div class="col-md-7 border d-flex align-items-center">
+                            <div class="card-body">
+                                <div class="w-100 d-flex justify-content-between">
+                                    <span class="fs-5 " id="nombre_producto" >{{value.nombre}}</span> 
+                                    <div class=" d-flex align-items-center">  
+                                        <a href="{% url 'restar_producto' value.producto_id   %}" class="btn btn-sm  me-1 text-light " style="background-color: #223016;" >-</a>   
+                                        <span class=" badge bg-success " style="font-size:18px !important" id="nombre_cantidad" >{{value.cantidad}}</span> <a href="{% url 'agregar_producto_carrito' value.producto_id   %}" class="btn btn-sm  ms-1 text-light"  style="background-color: #223016;">+</a>  
+                                    </div> 
+                                        <span class="fs-5" id="nombre_precio">{{value.precio|floatformat}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                                <div class="row">
+                                    <div class="alert alert-danger text-center text-danger fs-5 fw-bold">
+                                        Sin productos.
+                                    </div>
+                                </div>
+                    {% endif %}
+                </div>
+                <div class=" col-lg-5 mt-1">
+                    <div class="card m-0" id="mode-cards">
+                        <div class="card-header " style="background-color: #91b939;" >
+                            <span class="fs-5 text-light" >Total Carrito</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <span class="card-text fs-5" >Total:  </span>
+                                </div>
+                                <div class="col">
+                                    <span class="card-text fs-5" id="precio_total" >{{total_carrito|floatformat}}</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <a href="{% url 'limpiar_producto' %}" class="btn border border-1 mt-2" id="texto" style="color:black !important;">Limpiar Carrito</a>
+                </div>
+                
+            </div>
+            <div class="d-flex justify-content-between mt-3">
+                <a href="{% url 'inicio' %}" class="btn border border-3 btn-sm p-1 text-decoration-none text-light" style="font-size:1.1rem; color:black !important;" >Agregar productos</a>
+                <button type="button" class="btn  border border-3 btn-sm p-1 text-decoration-none text-light" id="agregar_factura" style="font-size:1.1rem; color:black !important; " >Siguiente paso</button>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div class="toast-container position-fixed bottom-0 mb-3 start-0 ms-5 p-3">
+    <div id="liveToast4" class="toast bg-success" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-header bg-success">
+        <strong class="me-auto"></strong>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+      <div class="toast-body text-light">
+          <div class="row   align-items-center  text-center">
+                  <div class="col">
+                      <img src="{% static 'img/exito.png' %}" class="rounded me-2" alt="...">
+                  </div>
+                  <div class="col-8">
+                      <strong class="card-text " style="font-size: 18px !important ;" > Se ha limpiado correctamente el carrito.</strong>
+                  </div>
+          </div>
+      </div>
+    </div>
+  </div>
+{% include 'partials/accesibilidad.html' %}
+{% endblock %}

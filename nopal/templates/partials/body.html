@@ -1,0 +1,55 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{% static 'img/icon.png' %}">
+    <link rel="stylesheet" href=" {% static 'css/bootstrap/style.css' %} ">
+    <link rel="stylesheet" href="{% static 'css/bootstrap/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'datatable/Bootstrap-5-5.1.3/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'datatable/DataTables-1.12.1/css/dataTables.bootstrap5.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'datatable/Buttons-2.2.3/css/buttons.bootstrap5.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'datatable/SearchBuilder-1.3.3/css/searchBuilder.bootstrap5.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'datatable/Responsive-2.3.0/css/responsive.bootstrap5.min.css' %}">
+    <script type="text/javascript" src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap/swiper-bundle.min.css' %}"> 
+    <link rel="stylesheet" type="text/css" href="{% static 'css/glider/glider.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/glider/glider.min.css' %}">
+    
+    <title>{% block title %}
+
+    {% endblock %}</title>
+</head>
+<body data-dark>
+    {% include "partials/header.html" %}
+    {% include 'modals/m-help.html' %}
+
+
+    {% block contenido %}
+    {% include "modals/modal.html" %}
+    {% endblock %}
+    
+    {% include 'partials/footer.html' %}
+
+    {% if messages %}
+        {% for message in  messages %}
+            <script>
+                const toastLiveSuccess = document.getElementById('{{message.tags}}')
+                  if (toastLiveSuccess) {
+                        const toast = new bootstrap.Toast(toastLiveSuccess)
+                        toast.show()
+                    }
+                    const toastLiveExample4 = document.getElementById('liveToast4')
+                    if (toastLiveExample4) {
+                        const toast = new bootstrap.Toast(toastLiveExample4)
+                        toast.show()
+                    }
+            </script>
+        {% endfor %}    
+    {% endif %}
+     
+    {% include 'partials/extrajs.html' %}
+</body>
+</html>

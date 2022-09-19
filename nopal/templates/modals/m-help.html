@@ -1,0 +1,111 @@
+{% load crispy_forms_tags %}
+{% load static %}
+  <div class="modal fade" id="modalAyuda" tabindex="-1" aria-labelledby="modalAyudaLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content" >
+        <div class="d-flex align-items-center justify-content-between border border-bottom-1 mb-2"style="height: 30px;">
+          <h5 style="font-size: auto;" id="modalAyudaLabel">Ayuda</h5>
+          <button type="button" class="btn btn-outline-success p-0 px-2"><a href=""><img src="{% static 'img/icons/exit.svg' %}" alt="Cerrar"></a></button>
+        </div>
+        <div class="modal-body">
+          <h3 class="text-center" style="font-size: 22px;">
+            <img src="{% static 'img/icons/help.svg' %}" alt="Ayuda">Selecciona una opción en la que necesites ayuda
+          </h3>
+        </div>
+        <div class="py-1 px-4 mb-2">
+            <button class="botonOpcionesAyuda d-block align-items-center p-1 m-2 rounded text-decoration-none" style="width: 95%;" data-bs-target="#modalAyudaToggle3" data-bs-toggle="modal" data-bs-dismiss="modal"><img
+                  src="{% static 'img/icons/detail.svg' %}" alt="Detalles">Detalles de un producto</button>
+            <button class="botonOpcionesAyuda d-block align-items-center p-1 m-2 rounded text-decoration-none"style="width: 95%;" id="opcionesAyuda" data-bs-target="#modalAyudaToggle4" data-bs-toggle="modal" data-bs-dismiss="modal"><img
+                  src="{% static 'img/icons/buy.svg' %}" alt="Comprar">Comprar un producto</button>
+            <button class="botonOpcionesAyuda d-block align-items-center p-1 m-2 rounded text-decoration-none"style="width: 95%;" id="opcionesAyuda" data-bs-target="#modalAyudaToggle5" data-bs-toggle="modal" data-bs-dismiss="modal"><img
+                  src="{% static 'img/icons/shopping-car.svg' %}" alt="Carrito">Mi carrito</button>
+            <button class="botonOpcionesAyuda d-block align -items-center p-1 m-2 rounded text-decoration-none"style="width: 95%;" id="opcionesAyuda"><a href="{% static 'document/MANUAL-USUARIO.pdf' %}"><img
+                  src="{% static 'img/icons/download.svg' %}" alt="Descargar">Descargar manual</a></button>
+          </div>
+        </div>
+      </div>
+    </div>
+      
+  <div class="modal fade" id="modalAyudaToggle3" tabindex="-1" aria-labelledby="modalAyudaToggleLabel3"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="d-flex align-items-center justify-content-between border border-bottom-1 mb-2"style="height: 30px;">
+          <h5 style="font-size: auto;" id="modalAyudaToggleLabel3">Ayuda</h5>
+          <div class="p-0">
+            <button type="button" class="btn btn-outline-success p-0 px-2" data-bs-target="#modalAyuda" data-bs-toggle="modal" data-bs-dismiss="modal"><img src="{% static 'img/icons/back.svg' %}" alt="Atrás"></button>
+            <button type="button" class="btn btn-outline-success p-0 px-2"><a href=""><img src="{% static 'img/icons/exit.svg' %}" alt="Cerrar"></a></button>
+          </div>
+        </div>
+        <div class="modal-body">
+          <h3 class="text-center" style="font-size: 22px;">
+            <img src="{% static 'img/icons/detail.svg' %}" alt="Detalle">Detalles de un producto
+        </div>
+        <div class="py-1 px-4 mb-2">
+          <p><img src="{% static 'img/icons/point.svg' %}">En la página en la parte superior hay una barra de opciones
+            desplegables dónde puede encontrar la categoría del producto que necesite.</p>
+          <p><img src="{% static 'img/icons/point.svg' %}">Para buscar un producto en especifico, hay un buscador principal al
+            lado del icono de "Iniciar sesión" dónde allí puede escribir el nombre del producto y dar enter.</p>
+          <p><img src="{% static 'img/icons/point.svg' %}">En el producto, al dar click en el botón "Agregar" se visualizará
+            una ventana emergente sobre el detalle del producto.</p>
+          <p><img src="{% static 'img/icons/point.svg' %}">Si quiere comprar el producto, ya visualizando el detalle del
+            producto, de click en "Agregar al carrito".</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="modalAyudaToggle4" tabindex="-1" aria-labelledby="modalAyudaToggleLabel4" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="d-flex align-items-center justify-content-between border border-bottom-1 mb-2"style="height: 30px;">
+          <h5 style="font-size: auto;" id="modalAyudaToggleLabel4">Ayuda</h5>
+          <div class="p-0">
+            <button type="button" class="btn btn-outline-success p-0 px-2" data-bs-target="#modalAyuda" data-bs-toggle="modal" data-bs-dismiss="modal"><img src="{% static 'img/icons/back.svg' %}" alt="Atrás"></button>
+            <button type="button" class="btn btn-outline-success p-0 px-2"><a  href=""><img src="{% static 'img/icons/exit.svg' %}" alt="Cerrar"></a></button>
+          </div>
+        </div>
+        <div class="modal-body">
+          <h3 class="text-center" style="font-size: 22px;">
+            <img src="{% static 'img/icons/buy.svg' %}" alt="Comprar">Comprar un producto
+        </div>
+        <div class="py-1 px-4 mb-2">
+          <p><img src="{% static 'img/icons/point.svg' %}">Al ingresar a la página, en la parte superior se encuentra
+            una barra de opciones dónde puede seleccionar la categoría del producto que quiere comprar.
+            Luego de seleccionar la categoría y encontrar su producto, de click al botón "Agregar al
+            Carrito".</p>
+          <p><img src="{% static 'img/icons/point.svg' %}">A continuación, de click en la parte superior "Tu carrito" y allí
+            podrá hacer modificaciones en sus productos.</p>
+            <p><img src="{% static 'img/icons/point.svg' %}">Seguido de hacer las modificaciones de click en
+              "Siguiente paso".</p>
+          <p><img src="{% static 'img/icons/point.svg' %}">Whatsapp</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="modalAyudaToggle5" tabindex="-1" aria-labelledby="modalAyudaToggleLabel5" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="d-flex align-items-center justify-content-between border border-bottom-1 mb-2"style="height: 30px;">
+          <h5 style="font-size: auto;" id="modalAyudaToggleLabel5">Ayuda</h5>
+          <div class="p-0">
+            <button type="button" class="btn btn-outline-success p-0 px-2" data-bs-target="#modalAyuda" data-bs-toggle="modal" data-bs-dismiss="modal"><img src="{% static 'img/icons/back.svg' %}" alt="Atrás"></button>
+            <button type="button" class="btn btn-outline-success p-0 px-2"><a  href=""><img src="{% static 'img/icons/exit.svg' %}" alt="Cerrar"></a></button>
+          </div>
+        </div>
+        <div class="modal-body">
+          <h3 class="text-center" style="font-size: 22px;">
+            <img src="{% static 'img/icons/shopping-car.svg' %}" alt="Carrito">Tu carrito
+        </div>
+        <div class="py-1 px-4 mb-2">
+          <p><img src="{% static 'img/icons/point.svg' %}">De click en el icono "Tu carrito" que aparece en el lado superior
+            derecho.</p>
+          <p><img src="{% static 'img/icons/point.svg' %}">Seguido de la opción anterior lo dirigirá a la ventana del carrito,
+            dónde allí encontrará los productos que ha agregado, pudiendo allí modificar su cantidad.</p>
+          <p><img src="{% static 'img/icons/point.svg' %}">En el costado derecho aparece el monto total a pagar, si quiere
+            concretar su compra, diríjase a "Siguiente paso".</p>
+          <p><img src="{% static 'img/icons/point.svg' %}">Si quiere seguir agregando productos, de click en la opción "Agregar
+            productos" y este lo llevará de vuelta a la página para seguir agregando.</p>
+        </div>
+      </div>
+    </div>
+  </div>

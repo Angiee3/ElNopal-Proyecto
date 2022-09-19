@@ -1,0 +1,31 @@
+{% extends 'partials/body_login.html' %}
+{% load crispy_forms_tags %}
+{% block title %}{{title_pag}} - INICIAR SESION{% endblock title %}
+{% load static %}
+{% block contenido %}
+<div class="background_login">
+    <div class="container_login" id="c_login">
+        <figure class="p-0">
+            <img class="img-fluid" src="{% static 'img/Logo.png' %}" alt="">
+        </figure>
+
+        <p class="title_login">INICIAR SESIÓN</p>
+
+        <form action="" method="POST" class="d-flex flex-column align-content-center flex-wrap">
+            <div class="form-floating w-75 mb-1">
+
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+
+                <div class="text-end">
+                    <a class="link_login" href="{% url 'password-reset' %}">Olvidé mi contraseña</a>
+                </div>
+
+                <a href="{% url 'index-admin' %}" class="text-decoration-none"><input type="submit" value="Iniciar sesión" class="btn_login"></a>
+            </div>
+        </form>
+
+    </div>
+</div>
+{% endblock %}
