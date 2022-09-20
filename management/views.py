@@ -1,3 +1,4 @@
+import email
 import imp, os
 from datetime import datetime, date
 from django.shortcuts import render , redirect
@@ -9,7 +10,8 @@ from store.models import *
 from django.contrib.auth.decorators import login_required
 from django.db.models import Sum
 from invoice.models import *
-
+from .forms import UserRegisterForm
+from django.contrib.auth.models import User
 # Create your views here.
 
 def index_admin(request):
@@ -472,11 +474,13 @@ def provider_modal(request, modal, pk):
     return render(request, 'admin/modal-provider.html', context)
     
 ################################ USER ##############################
-def user(request):
+def user(request, pk):
     location = True
     admin = True
     title_pag = "Usuario"
     registers = User.objects.all()
+    registers_obj = User.objects.get(id=pk)
+
     # fields = [f.name for f in Subcategory()._meta.get_fields()][2:-1]
     fields = ['username','email','name','lastName','tDocument','nDocument','phone','dateBirth','user_admin']
     # print(fields)
@@ -485,6 +489,9 @@ def user(request):
         form = UserForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
+            User.objects.filter(id=pk).update(
+                email=form.cleaned_data.get('email')
+            )
             name = form.cleaned_data.get('username')
             messages.success(request,f'El usuario {name} se agregó correctamente!')
             return redirect('user')
@@ -495,6 +502,7 @@ def user(request):
         'title_pag':title_pag,
         'admin':admin,
         'registers': registers,
+        'registers_obj':registers_obj,
         'location':location,
         'fields':fields,
         'atributes':atributes
@@ -607,3 +615,20 @@ def backup(request, tipo):
     }
     return render(request, 'admin/backup.html',context) 
 
+# /////////////////////////RegistroUser////////////////////
+
+
+def registrar(request):
+	register= User.objects.all(
+	)
+	if request.method == 'POST':
+		form = UserRegisterForm(request.POST)
+		if form.is_valid() :
+			form.save()
+			return redirect('admin-login')
+	else:
+		form = UserRegisterForm()
+	context = { 'form' : form,
+            	'register':register
+	}
+	return render(request, 'admin/register.html', context)
