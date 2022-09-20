@@ -35,5 +35,6 @@ urlpatterns = [
     path('reset_password_send/', auth_views.PasswordResetDoneView.as_view(template_name='login/password_reset_done.html'), name='password_reset_done'),
     path('reset/<uidb64>/<token>', auth_views.PasswordResetConfirmView.as_view(template_name='login/new-password.html'), name='password_reset_confirm'),
     path('reset_password_complete/', auth_views.PasswordResetCompleteView.as_view(template_name='login/account-recovery.html'), name='password_reset_complete'),
+    path('reset/password_change/', auth_views.PasswordChangeView.as_view(template_name='login/login-wifi.html'),name='password_change'),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

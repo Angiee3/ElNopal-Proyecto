@@ -1,0 +1,18 @@
+{% extends 'partials/body_login.html' %}
+{% load crispy_forms_tags %}
+{% block title %}{{titulo_pagina}} - INICIAR SESION{% endblock title %}
+{% load static %}
+{% block contenido %}
+<div class="background_login">
+    <div class="container_login">
+        <div id="c_top">
+            <h2 class="subtitles_login ps-3">Cambio contraseña</h2>
+        </div>
+            <form method="POST" class="d-flex flex-column align-content-center flex-wrap">                {% csrf_token %}
+                {{ form.as_p}}
+                <button class="btn btn-secondary">Cambiar contraseña</button>
+            </form>
+    </div>
+</div>
+
+{% endblock %}
