@@ -167,15 +167,13 @@ def category_modal(request, modal, pk):
     modal_submit = ''
     url_back="/administracion/categoria/"
     registers = Category.objects.all()
-    register_id = Category.objects.get(id=pk)
-    
-    
+    register_id = Category.objects.get(id=pk)  
     
     if modal == 'eliminar':
         modal_title = 'Eliminar categoría'
         modal_txt = 'eliminar la categoría'
         modal_submit = 'eliminar'
-        form = SubcategoryForm(request.POST, request.FILES)
+        form = CategoryForm(request.POST, request.FILES)
         if request.method == 'POST':
             print('----------------------------------------ELIMINANDO')
             Category.objects.filter(id=pk).update(

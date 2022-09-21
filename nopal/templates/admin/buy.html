@@ -45,7 +45,7 @@
                                     <td id="texto">{{register.status}}</td>
                                     <td>
                                         {% if register.status == "Abierta" %}
-                                            <a href="" class="btn btn-md border"><img class="img-fluid" src="{% static 'img/icons/update.svg' %}" id="edit" alt=""></a>
+                                            <a href="{%url 'buy-modal' modal='editar' pk=register.id %}" class="btn btn-md border"><img class="img-fluid" src="{% static 'img/icons/update.svg' %}" id="edit" alt=""></a>
                                             {% if user.is_staff %}
                                             <a href="" class="btn btn-md border"><img class="img-fluid" src="{% static 'img/icons/delete.svg' %}" id="eliminar"  alt=""></a>
                                             {% endif %}

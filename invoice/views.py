@@ -297,3 +297,60 @@ def detail_sale(request, pk):
         'modal':modal
     }
     return render(request, 'admin/detail.html', context)
+def buy_modal(request, modal, pk):
+    title_pag = "Compra"
+    location = True
+    admin = True
+    modal_title = ''
+    modal_txt = ''
+    modal_submit = ''
+    url_back="/administracion/compra/"
+    registers = Buy.objects.all()
+    register_id = Buy.objects.get(id=pk)
+    if modal == 'eliminar':
+        # modal_title = 'Eliminar compra'
+        # modal_txt = 'eliminar la compra'
+        # modal_submit = 'eliminar'
+        # form = BuyForm(request.POST, request.FILES)
+        # if request.method == 'POST':
+        #     print('----------------------------------------ELIMINANDO')
+        #     Category.objects.filter(id=pk).update(
+        #         status = False
+        #     )
+        #     print('Eliminado')
+        #     categoryName = register_id.name.title()
+        #     messages.success(request, f'La categoría {categoryName} se eliminó correctamente!')
+        #     return redirect ('category')
+        # else:
+        #     form = CategoryForm()
+        print('----------------------------------------> Eliminar compra vacía')
+    elif modal == 'editar':
+        modal_title = 'Editar compra'
+        modal_txt = 'editar la compra'
+        modal_submit = 'guardar'
+        form = BuyForm(request.POST, request.FILES, instance=register_id)
+        if request.method == 'POST':
+            print('----------------------------------------> Editar compra')                
+            if form.is_valid():
+                form.save()
+                buyId = form.cleaned_data.get('id')
+                print(buyId)
+                messages.success(request, f'La compra {buyId} se editó correctamente!')
+                return redirect ('buy')
+        else:
+            form = BuyForm(instance=register_id)
+            
+    context ={
+        'form':form,
+        'modal_title':modal_title,
+        'modal_txt':modal_txt,
+        'modal_submit':modal_submit,
+        'url_back':url_back,
+        'modal':modal,
+        'register_id':register_id,
+        'title_pag':title_pag,
+        'admin':admin,
+        'registers':registers,
+        'location':location,
+    }
+    return render(request, 'admin/modal-buy.html', context)
