@@ -21,5 +21,6 @@ urlpatterns = [
     path('usuario/<str:modal>/<int:pk>', user_modal, name="user-modal"),
 
     path('registrar/', registrar, name='registrar'),
+    
 ]
 

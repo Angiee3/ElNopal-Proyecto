@@ -31,6 +31,66 @@ footer{
     width: 20% !important;
 }
 
+/* ///////////////WIZARD/////////////// */
+
+  /* Progressbar */
+  .progressbar {
+    counter-reset: step;
+    margin: 2rem 0 4rem;
+  }
+  
+  .progressbar::before,
+  .progress {
+    content: "";
+    position: absolute;
+    top: 50%;
+    height: 4px;
+    width: 100%;
+    background-color: var(--verdeoscuro);
+    z-index: -1;
+  }
+  
+  .progress {
+    background-color: var(--verdeoscuro);
+    width: 0%;
+    transition: 0.3s;
+  }
+  
+  .progress-step {
+    width: 2.1875rem;
+    height: 2.1875rem;
+    background-color: var(--verde);
+  }
+  
+  .progress-step::before {
+    counter-increment: step;
+    content: counter(step);
+  }
+  /* Para texto en steps */
+  .progress-step::after {
+    content: attr(data-title);
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    font-size: 0.85rem;
+  }
+  
+  /* Form */
+  .form {
+    width: clamp(320px, 30%, 430px);
+  }
+  
+  .form-step {
+    display: none;
+    transform-origin: top;
+    animation: animate 0.5s;
+  }
+  
+  .form-step-active {
+    display: block;
+  }
+  
+
+
 /* ////////////LOGIN/////////// */
 
 /* Login - Reset password */
