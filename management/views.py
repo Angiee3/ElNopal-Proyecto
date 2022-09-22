@@ -138,28 +138,42 @@ def subcategory_modal(request, modal, pk):
     return render(request, 'admin/modal-category.html', context)
 
 ############################# CATEGORY #############################
+# def category(request):
+#     location = True
+#     admin = True
+#     title_pag = "Categoría"
+#     registers = Category.objects.all()
+#     if request.method == 'POST':
+#         form = CategoryForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             form.save()
+#             name = form.cleaned_data.get('name')
+#             messages.success(request,f'La categoría {name} se agregó correctamente!')
+#             return redirect('category')
+#     else:
+#         form = CategoryForm()
+#     context = {
+#         'form':form,
+#         'title_pag':title_pag,
+#         'admin':admin,
+#         'registers': registers,
+#         'location':location,
+#     }
+#     return render(request, 'modals/m-category.html', context)
 def category(request):
-    location = True
-    admin = True
-    title_pag = "Categoría"
-    registers = Category.objects.all()
-    if request.method == 'POST':
-        form = CategoryForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            name = form.cleaned_data.get('name')
-            messages.success(request,f'La categoría {name} se agregó correctamente!')
-            return redirect('category')
-    else:
-        form = CategoryForm()
-    context = {
-        'form':form,
-        'title_pag':title_pag,
-        'admin':admin,
-        'registers': registers,
-        'location':location,
-    }
-    return render(request, 'admin/category.html', context)
+	register= Category.objects.all(
+	)
+	if request.method == 'POST':
+		form = CategoryForm(request.POST, request.FILES)
+		if form.is_valid() :
+			form.save()
+			return redirect('category')
+	else:
+		form = CategoryForm()
+	context = { 'form' : form,
+            	'register':register
+	}
+	return render(request, 'admin/category.html', context)
 def category_modal(request, modal, pk):
     title_pag = "Categoría"
     location = True

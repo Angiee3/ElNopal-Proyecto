@@ -11,15 +11,29 @@
                 <div class="border p-3 rounded shadow mt-3" id="mode-cards">
                     <h3 class="text-start">Nuevo Registro </h3>
                     <form action="" method="POST" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        {{form|crispy}}
+                        {% comment %} {% csrf_token %}
+                        {{form|crispy}} {% endcomment %}
+                        <div id="div_id_name" class="mb-3">
+                            <label for="id_name" class="form-label requiredField">Nombre
+                                <span class="asteriskField">*</span>
+                            </label>
+                            <input type="text" name="name" class="form-control textinput textInput" maxlength="50" required id="id_name">
+                        </div>
+
                         <input type="hidden" id="modal-status" value="Agregar">
                         <button class="btn_agregar d-block m-auto text-center text-decoration-none py-1 rounded border border-none"
                         style="width: 120px;" >Agregar</button>
 
                     </form>
+
+                    <div class="d-flex">
+                        <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCategory"  >
+                            Categoria
+                          </a>
+                      </div>
                 </div>
             </div>
+
             <div class="col-md-8">
                 <table id="tabla" class="display table table-striped table-hover text-nowrap mt-3" style="width:100%">
                     <thead style="background-color: var(--verde); color: var(--verdeoscuro);">
