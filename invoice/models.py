@@ -18,7 +18,6 @@ class Buy(models.Model):
     payment = models.CharField(max_length=11, choices=Payment.choices, default=Payment.eft, verbose_name=u"Método de Pago", blank=False)
     finalPrice = models.IntegerField(default=0, null=False, blank=True)
     status = models.CharField(max_length=10, choices=Status.choices, verbose_name="Estado", default=Status.ABIERTA)
-    statusBuy = models.BooleanField(default=True)
     def __str__(self) -> str:
         return ' %s' %(self.date)
     class Meta:
@@ -48,7 +47,6 @@ class Sale(models.Model):
     finalPrice = models.IntegerField(default=0, null=False, blank=True)
     payment = models.CharField(max_length=11, choices=Payment.choices, default=Payment.eft, verbose_name=u"Método de Pago", blank=False)
     status = models.CharField(max_length=10, choices=Status.choices, verbose_name="Estado", default=Status.ABIERTA)
-    statusSale = models.BooleanField(default=True)
     def __str__(self) -> str:
         return ' %s' %(self.date)
     def clean(self):

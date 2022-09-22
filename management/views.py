@@ -167,15 +167,13 @@ def category_modal(request, modal, pk):
     modal_submit = ''
     url_back="/administracion/categoria/"
     registers = Category.objects.all()
-    register_id = Category.objects.get(id=pk)
-    
-    
+    register_id = Category.objects.get(id=pk)  
     
     if modal == 'eliminar':
         modal_title = 'Eliminar categoría'
         modal_txt = 'eliminar la categoría'
         modal_submit = 'eliminar'
-        form = SubcategoryForm(request.POST, request.FILES)
+        form = CategoryForm(request.POST, request.FILES)
         if request.method == 'POST':
             print('----------------------------------------ELIMINANDO')
             Category.objects.filter(id=pk).update(
@@ -262,6 +260,10 @@ def brand_modal(request, modal, pk):
     url_back="/administracion/marca/"
     registers = Brand.objects.all()
     register_id = Brand.objects.get(id=pk)
+    
+    
+    
+    
     if modal == 'eliminar':
         modal_title = 'Eliminar marca'
         modal_txt = 'eliminar la marca'
@@ -276,6 +278,11 @@ def brand_modal(request, modal, pk):
             return redirect ('brand')
         else:
             form=BrandForm()
+            
+            
+            
+            
+            
     elif modal == 'editar':
         modal_title = 'Editar marca'
         modal_txt = 'editar la marca'
@@ -290,6 +297,12 @@ def brand_modal(request, modal, pk):
                 return redirect ('brand')
         else:
             form=BrandForm(instance=register_id)
+            
+            
+            
+            
+            
+            
     context ={
         'form':form,
         'modal_title':modal_title,

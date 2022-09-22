@@ -37,17 +37,16 @@
 
                     <tbody>
                     {% for register in registers %}
-                            {% if register.statusBuy %}
                                 <tr>
                                     <td id="texto">{{register.date}}</td>
-                                    <td id="texto">{{register.user}}</td>
+                                    <td id="texto">{{register.provider}}</td>
                                     <td id="texto">{{register.payment}}</td>
                                     <td id="texto">{{register.status}}</td>
                                     <td>
                                         {% if register.status == "Abierta" %}
-                                            <a href="" class="btn btn-md border"><img class="img-fluid" src="{% static 'img/icons/update.svg' %}" id="edit" alt=""></a>
+                                            <a href="{%url 'buy-modal' modal='editar' pk=register.id %}" class="btn btn-md border"><img class="img-fluid" src="{% static 'img/icons/update.svg' %}" id="edit" alt=""></a>
                                             {% if user.is_staff %}
-                                            <a href="" class="btn btn-md border"><img class="img-fluid" src="{% static 'img/icons/delete.svg' %}" id="eliminar"  alt=""></a>
+                                            <a href="{%url 'buy-modal' modal='eliminar' pk=register.id %}" class="btn btn-md border"><img class="img-fluid" src="{% static 'img/icons/delete.svg' %}" id="eliminar"  alt=""></a>
                                             {% endif %}
                                             <a href="{% url 'buy-detail' pk=register.id %}" class="btn btn-md border"><img class="img-fluid" src="{% static 'img/icons/plus.svg' %}" alt=""></a> 
                                         {% elif register.status == "Cerrada" %}
@@ -57,7 +56,6 @@
                                         {% endif %}
                                     </td>    
                                 </tr>
-                            {% endif %}
                     {% endfor %}
                     </tbody> 
 

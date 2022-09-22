@@ -6,7 +6,6 @@ from store.views import *
 urlpatterns = [
     path('',index_admin, name="index-admin"),
     path('backup/<str:tipo>/', backup , name="backup"), 
-    
     path('categoria/', category, name="category"),
     path('categoria/<str:modal>/<int:pk>', category_modal, name='category-modal'),
     path('subcategoria/', subcategory, name="subcategory"),
