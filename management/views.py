@@ -260,6 +260,10 @@ def brand_modal(request, modal, pk):
     url_back="/administracion/marca/"
     registers = Brand.objects.all()
     register_id = Brand.objects.get(id=pk)
+    
+    
+    
+    
     if modal == 'eliminar':
         modal_title = 'Eliminar marca'
         modal_txt = 'eliminar la marca'
@@ -274,6 +278,11 @@ def brand_modal(request, modal, pk):
             return redirect ('brand')
         else:
             form=BrandForm()
+            
+            
+            
+            
+            
     elif modal == 'editar':
         modal_title = 'Editar marca'
         modal_txt = 'editar la marca'
@@ -288,6 +297,12 @@ def brand_modal(request, modal, pk):
                 return redirect ('brand')
         else:
             form=BrandForm(instance=register_id)
+            
+            
+            
+            
+            
+            
     context ={
         'form':form,
         'modal_title':modal_title,
