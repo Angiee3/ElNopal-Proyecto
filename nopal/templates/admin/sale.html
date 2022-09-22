@@ -16,7 +16,7 @@
                         {{form|crispy}}
                         <input type="hidden" id="modal-status" value="Agregar">
                         <button class="btn_agregar d-block m-auto text-center text-decoration-none py-1 rounded border border-none"
-                        style="width: 120px;" >Agregar</button>
+                        style="width: 120px;" data-bs-toggle="tooltip" data-bs-placement="right" title="Agregar a la venta">Agregar</button>
 
                     </form>
                 </div>
@@ -44,13 +44,13 @@
                                     <td id="texto">{{register.status}}</td>
                                     <td id="texto">{{register.client.title}} - {{register.nDocument}}/{{register.address}}</td>
                                     <td id="texto">{% if register.status == "Abierta" %}
-                                        <a href="" class="btn btn-md border"><img class="img-fluid" src="{% static 'img/icons/update.svg' %}" id="edit" alt=""></a>
+                                        <a href="" class="btn btn-md border" data-bs-toggle="tooltip" data-bs-placement="right" title="Editar"><img class="img-fluid" src="{% static 'img/icons/update.svg' %}" id="edit" alt=""></a>
                                         {% if user.is_staff %}
-                                        <a href="" class="btn btn-md border"><img class="img-fluid" src="{% static 'img/icons/delete.svg' %}" id="eliminar" alt=""></a>
+                                        <a href="" class="btn btn-md border" data-bs-toggle="tooltip" data-bs-placement="right" title="Eliminar"><img class="img-fluid" src="{% static 'img/icons/delete.svg' %}" id="eliminar" alt=""></a>
                                         {% endif %}
-                                        <a href="{% url 'sale-detail' pk=register.id %}" class="btn btn-md border"><img class="img-fluid" src="{% static 'img/icons/plus.svg' %}" alt=""></a> 
+                                        <a href="{% url 'sale-detail' pk=register.id %}" class="btn btn-md border" data-bs-toggle="tooltip" data-bs-placement="right" title="Agregar productos"><img class="img-fluid" src="{% static 'img/icons/plus.svg' %}" alt=""></a> 
                                     {% elif register.status == "Cerrada" %}
-                                        <a href="" class="btn btn-md border"><img class="img-fluid" src="{% static 'img/icons/eye.svg' %}" alt=""></a> 
+                                        <a href="" class="btn btn-md border" data-bs-toggle="tooltip" data-bs-placement="right" title="Visualizar factura"><img class="img-fluid" src="{% static 'img/icons/eye.svg' %}" alt=""></a> 
                                     {% elif register.status ==  "Anulada" %}
                                         <p>Está factura se encuentra anulada</p>
                                     {% endif %}
