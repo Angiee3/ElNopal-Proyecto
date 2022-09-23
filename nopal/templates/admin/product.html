@@ -3,7 +3,9 @@
 {% block title %}{{title_pag}} - El Nopal Supermercado{% endblock title %}
 {% load static %}
 {% block contenido %}
+
 <div >
+    
     <section class="container p-5 h-auto" id="mode-cards" data-admin id="cuerpo" style="width: 95%">
         <h1>Gestionar {{title_pag}}</h1>
         <div class="row my-4">
@@ -11,26 +13,30 @@
                 <div class="border p-3 rounded shadow mt-3" id="mode-cards">
                     <h3 class="text-start">Nuevo Registro </h3>
                     <form action="" method="POST" enctype="multipart/form-data">
-                        {% comment %} {% csrf_token %}
-                        {{form|crispy}} {% endcomment %}
+                       {% csrf_token %}
+                        <!-- {{form|crispy}}  -->
                         <div id="div_id_name" class="mb-3">
                             <label for="id_name" class="form-label requiredField">Nombre
                                 <span class="asteriskField">*</span>
                             </label>
                             <input type="text" name="name" class="form-control textinput textInput" maxlength="50" required id="id_name">
                         </div>
+                        <div id="div_id_subcategory" class="mb-3">
+                            <label for="id_subcategory" class="form-label requiredField">Subcategoría
+                                <span class="asteriskField">*</span>
+                            </label>
+                            <select name="category" class="form-control select form-select" required id="id_subcategory">
+                            </select>
+                            <a type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                <img src="{% static 'img/icons/plus.svg' %}">
+                            </a>
+                        </div>
 
                         <input type="hidden" id="modal-status" value="Agregar">
                         <button class="btn_agregar d-block m-auto text-center text-decoration-none py-1 rounded border border-none"
                         style="width: 120px;" >Agregar</button>
-
                     </form>
 
-                    <div class="d-flex">
-                        <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCategory"  >
-                            Categoria
-                          </a>
-                      </div>
                 </div>
             </div>
 
@@ -89,4 +95,6 @@
 
 
 {% include 'partials/accesibilidad.html' %}
+{% include 'modals/ejemplo.html' %}
+
 {% endblock %}

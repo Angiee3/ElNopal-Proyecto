@@ -8,9 +8,9 @@ urlpatterns = [
     path('backup/<str:tipo>/', backup , name="backup"), 
     
     path('categoria/', category, name="category"),
-    # path('categoria/<str:modal>/<int:pk>', category_modal, name='category-modal'),
+    path('categoria/<str:modal>/<int:pk>', category_modal, name='category-modal'),
     path('subcategoria/', subcategory, name="subcategory"),
-    path('subcategoria/<str:modal>/<int:pk>', subcategory_modal, name="subcategory-modal"),
+    # path('subcategoria/<str:modal>/<int:pk>', subcategory_modal, name="subcategory-modal"),
     path('marca/', brand, name="brand"),
     path('marca/<str:modal>/<int:pk>', brand_modal, name="brand-modal"),
     path('producto/', product, name="product"),

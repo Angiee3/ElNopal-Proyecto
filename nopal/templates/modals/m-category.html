@@ -1,34 +1,35 @@
 {% load crispy_forms_tags %}
 {% load static %}
 
-<main class="">
+{% comment %} <main class="">
     <div>
         <h1 class="text-center">Gestionar {{title_pag}}</h1>
     </div>
-</main>
-<div class="modal fade show" id="categoryModal" tabindex="-1"
-    aria-labelledby="categoryModalLabel" aria-hidden="true" role="dialog" style="display: block;">
-    <div class="modal-dialog">
-        <div class="modal-content">
+</main> {% endcomment %}
+<div class="modal fade" id="modalCategory" tabindex="-1" aria-labelledby="modalCategoryLabel" aria-hidden="true" role="dialog" style="display: block;">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content" >
             <div class="modal-header">
-                <h5 class="modal-title" id="categoryModalLabel">Nuevo Registro</h5>
-                <a class="btn-close" data-bs-target="#modalCategory" data-bs-toggle="modal"
-                data-bs-dismiss="modal" href="{% url 'product' %}" aria-label="Close"></a>
+                <h5 class="modal-title" id="modalCategoryLabel">Nuevo Registro</h5>
+                {% comment %} <a class="btn-close" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#modalCategory" href="{% url 'product' %}" aria-label="Close"></a> {% endcomment %}
+                <div class="p-0">
+                    <button type="button" class="btn btn-outline-success p-0 px-2"  data-bs-dismiss="modal"><img src="{% static 'img/icons/back.svg' %}" alt="Atrás"></button>
+                  </div>
             </div>
-            <div class="modal-body" >
+
+        <div class="modal-body">
                 <form action="" method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
                     {{ form|crispy }}
-
-            </div>
+        </div>
             <div class="modal-footer">
-                <a class="btn btn-danger Btn-White"data-bs-dismiss="modal" href="{% url 'product' %}">Cancelar</a>
+                <a class="btn btn-danger Btn-White" data-bs-dismiss="modal" href="{% url 'product' %}">Cancelar</a>
                 <input type="hidden" id="modal-status" value="Agregar" class="btn btn-success">
                 <button class="btn_agregar d-block m-auto text-center text-decoration-none py-1 rounded border border-none"
                         style="width: 120px;" data-bs-toggle="tooltip" data-bs-placement="right" title="Agregar categoría" >Agregar</button>
                 </form>
             </div>
-        </div>
+      </div>
     </div>
 </div>
-<div class="modal-backdrop fade show"></div>
+  

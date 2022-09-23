@@ -1,0 +1,25 @@
+{% load crispy_forms_tags %}                 
+{% load static %}
+
+    <div class="modal fade show" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">Nueva Subcategoría</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form|crispy }}            
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <input type="hidden" id="modal-status" value="Agregar" class="btn btn-success">
+            <button class="btn_agregar d-block m-auto text-center text-decoration-none py-1 rounded border border-none"
+                    style="width: 120px;" data-bs-toggle="tooltip" data-bs-placement="right" title="Agregar categoría" >Agregar</button>
+            </form>           
+            </div>
+        </div>
+        </div>
+    </div>
