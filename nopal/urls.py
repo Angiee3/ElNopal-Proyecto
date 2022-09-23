@@ -18,7 +18,7 @@ from django.urls import path , include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
-from management.views import cambiarContra
+# from management.views import cambiarContra
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -37,6 +37,6 @@ urlpatterns = [
     path('reset/<uidb64>/<token>', auth_views.PasswordResetConfirmView.as_view(template_name='login/new-password.html'), name='password_reset_confirm'),
     path('reset_password_complete/', auth_views.PasswordResetCompleteView.as_view(template_name='login/account-recovery.html'), name='password_reset_complete'),
     path('reset/password_change/', auth_views.PasswordChangeView.as_view(template_name='login/login-wifi.html'),name='password_change'),
-    path('cambioC', cambiarContra, name="password_change"),
+    # path('cambioC', cambiarContra, name="password_change"),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

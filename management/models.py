@@ -90,13 +90,14 @@ class Backup(models.Model):
     file = models.FileField(upload_to="backup",validators=[validate_file_extension])
     date = models.DateTimeField(auto_now = True)
     
-class User(models.Model):
-    username = models.CharField(max_length=20, verbose_name=u"Nombre de usuario", blank=False, unique=True)
-    class Meta:
-        verbose_name = "Usuario"
-        verbose_name_plural = "Usuarios"
-        
-class CambiarContra(models.Model):
-    username = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, verbose_name=u"Nombre de usuario",unique=True)
-    password1 = models.CharField(max_length=20, verbose_name=u"Contraseña", blank=False)
-    password2 =models.CharField(max_length=20, verbose_name=u"Confirmar contraseña", blank=False)
+# class UserRegister(models.Model):
+#     username = models.CharField(max_length=20, verbose_name=u"Nombre de usuario", blank=False, unique=True)
+#     class Meta:
+#         verbose_name = "Usuario"
+#         verbose_name_plural = "Usuarios"
+    
+  
+# class CambiarContra(models.Model):
+#     username = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, verbose_name=u"Nombre de usuario",unique=True)
+#     password1 = models.CharField(max_length=20, verbose_name=u"Contraseña", blank=False)
+#     password2 =models.CharField(max_length=20, verbose_name=u"Confirmar contraseña", blank=False)

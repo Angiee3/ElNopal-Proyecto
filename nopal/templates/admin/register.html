@@ -4,9 +4,58 @@
 {% load static %}
 {% block contenido %}
 
-<div class="container-fluid">
+<div>
+    <section class="container p-5 h-auto" id="mode-cards" data-admin id="cuerpo" style="width: 95%">
+        <h1>Gestionar {{title_pag}}</h1>
+        <div class="row my-4">
+            <div class="col-md-4">
+                <div class="border p-3 rounded shadow mt-3" id="mode-cards">
+                    <h3 class="text-start">Nuevo Registro </h3>
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#registerModal">
+                        Registrar nuevo usuario
+                    
+                      </button>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <table id="tabla" class="display table table-striped table-hover text-nowrap mt-3" style="width:100%">
+                    <thead style="background-color: var(--verde); color: var(--verdeoscuro);">
+                        <tr>
+                            <th scope="col">Nombre Usuario</th>
+                            {% comment %} <th scope="col">Nombre</th>
+                            <th scope="col">Apellido</th>
+                            <th scope="col">Tipo de Documento</th>
+                            <th scope="col">Número de Documento</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Celular</th> {% endcomment %}
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                    {% for register in registers %}
+                                <tr>
+                                    <td id="texto">{{register.username}}</td>
+                                    {% comment %} <td id="texto">{{register.name}}</td>
+                                    <td id="texto">{{register.lastname}}</td>
+                                    <td id="texto">{{register.tDocument}}</td>
+                                    <td id="texto">{{register.nDocument}}</td>
+                                    <td id="texto">{{register.email}}</td>
+                                    <td id="texto">{{register.phone}}</td> {% endcomment %}
+  
+                                </tr>
+                    {% endfor %}
+                    </tbody> 
+
+                </table>
+        </div>
+    </section>
 </div>
 
-{% include "modals/m-register.html" %}
+{% include 'partials/accesibilidad.html' %}
 
 {% endblock %}
+
+
+
+
+

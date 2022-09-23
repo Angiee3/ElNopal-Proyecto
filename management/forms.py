@@ -73,8 +73,8 @@ class UserRegisterForm(UserCreationForm):
 		fields = ['username', 'password1', 'password2']
 		help_texts = {k:"" for k in fields }
   
-class CambiarContraForm(forms.ModelForm):
-    class Meta:
-        model= CambiarContra
-        fields= ['username','password1','password2']
+# class CambiarContraForm(forms.ModelForm):
+#     class Meta:
+#         model= CambiarContra
+#         fields= ['username','password1','password2']
         

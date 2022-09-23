@@ -522,31 +522,31 @@ def provider_modal(request, modal, pk):
 #         'atributes':atributes
 #     }
 #     return render(request, 'admin/user.html', context)
-def cambiarContra(request,pk):
-    admin = True
-    title_pag = "Cambiar contraseña"
-    registers = CambiarContra.objects.all()
-    registers_id = CambiarContra.objects.get(id=pk)
-    if request.method=='POST':
-        form = CambiarContraForm(request.POST)
-        if form.is_valid():
-            form.save()
-            CambiarContra.objects.filter(id=pk).update(
-                password1=form.cleaned_data.get('password1')
-            )
-            messages.success(request,f'La contraseña se reestableció correctamente!')
-            return redirect('cambiarContra')
-    else:
-        form = CambiarContraForm()
-    context={
-        'form':form,
-        'title_pag':title_pag,
-        'admin':admin,
-        'registers':registers,
-        'registers_id':registers_id,
+# def cambiarContra(request,pk):
+#     admin = True
+#     title_pag = "Cambiar contraseña"
+#     registers = CambiarContra.objects.all()
+#     registers_id = CambiarContra.objects.get(id=pk)
+#     if request.method=='POST':
+#         form = CambiarContraForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             CambiarContra.objects.filter(id=pk).update(
+#                 password1=form.cleaned_data.get('password1')
+#             )
+#             messages.success(request,f'La contraseña se reestableció correctamente!')
+#             return redirect('cambiarContra')
+#     else:
+#         form = CambiarContraForm()
+#     context={
+#         'form':form,
+#         'title_pag':title_pag,
+#         'admin':admin,
+#         'registers':registers,
+#         'registers_id':registers_id,
         
-    }
-    return render(request, 'modals/login-wifi.html', context)
+#     }
+#     return render(request, 'modals/login-wifi.html', context)
         
     
 
@@ -661,7 +661,7 @@ def backup(request, tipo):
 
 
 def registrar(request):
-	register= User.objects.all()
+	registers= User.objects.all()
 	if request.method == 'POST':
 		form = UserRegisterForm(request.POST)
 		if form.is_valid() :
@@ -670,6 +670,6 @@ def registrar(request):
 	else:
 		form = UserRegisterForm()
 	context = { 'form' : form,
-            	'register':register
+            	'registers':registers
 	}
 	return render(request, 'admin/register.html', context)
