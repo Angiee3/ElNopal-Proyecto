@@ -13,28 +13,76 @@
                 <div class="border p-3 rounded shadow mt-3" id="mode-cards">
                     <h3 class="text-start">Nuevo Registro </h3>
                     <form action="" method="POST" enctype="multipart/form-data">
-                       {% csrf_token %}
-                        <!-- {{form|crispy}}  -->
+                       {% csrf_token %} 
+                        {% comment %} {{form|crispy}}  {% endcomment %}
                         <div id="div_id_name" class="mb-3">
                             <label for="id_name" class="form-label requiredField">Nombre
                                 <span class="asteriskField">*</span>
                             </label>
                             <input type="text" name="name" class="form-control textinput textInput" maxlength="50" required id="id_name">
                         </div>
+                        <div id="div_id_price" class="mb-3">
+                            <label for="id_price" class="form-label requiredField">Precio
+                                <span class="asteriskField">*</span>
+                            </label>
+                            <input type="number" name="price" class="form-control numberinput numberInput" maxlength="50" required id="id_price">
+                        </div>
+                        
                         <div id="div_id_subcategory" class="mb-3">
                             <label for="id_subcategory" class="form-label requiredField">Subcategoría
                                 <span class="asteriskField">*</span>
                             </label>
-                            <select name="category" class="form-control select form-select" required id="id_subcategory">
+                            
+                            <select name="subcategory" class="form-control select form-select" required id="id_subcategory">
+                                {% for register in registers %}
+                                <option id="texto">{{register.subcategory.name}}</option>
+                                
+                                {% endfor %}
                             </select>
                             <a type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                                 <img src="{% static 'img/icons/plus.svg' %}">
+
                             </a>
+                        </div>
+                        <div id="div_id_brand" class="mb-3">
+                            <label for="id_brand" class="form-label requiredField">Marca
+                                <span class="asteriskField">*</span>
+                            </label>
+                            {% for register in registers %}
+                            <select name="brand" class="form-control select form-select" required id="id_brand">
+                                <option id="texto">{{register.brand.name}}</option>
+                            {% endfor %}
+                            </select>
+                            {% comment %} <a type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                <img src="{% static 'img/icons/plus.svg' %}">
+                            </a> {% endcomment %}
+                        </div>
+                        <div id="div_id_unitMeasurement" class="mb-3">
+                            <label for="id_unitMeasurement" class="form-label requiredField">Unidad de medida
+                                <span class="asteriskField">*</span>
+                            </label>
+                            <select name="unitMeasurement" class="form-control select form-select " required id="id_unitMeasurement">
+                                <option id="texto">Lb</option>
+                            </select>
+                            {% comment %} <a type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                <img src="{% static 'img/icons/plus.svg' %}">
+                            </a> {% endcomment %}
+                        </div>
+                        <div id="div_id_image" class="mb-3">
+                            <label for="id_image" class="form-label requiredField">Imagen
+                            </label>
+                            <input type="file" name="image" class="form-control " accept="image/jpg" id="id_image">
+                        </div>
+                        <div id="div_id_description" class="mb-3">
+                            <label for="id_description" class="form-label requiredField">Descripción
+                            </label>
+                            <input type="text" name="description" class="form-control textinput textInput" maxlength="80" id="id_description">
                         </div>
 
                         <input type="hidden" id="modal-status" value="Agregar">
                         <button class="btn_agregar d-block m-auto text-center text-decoration-none py-1 rounded border border-none"
-                        style="width: 120px;" >Agregar</button>
+                            style="width: 120px;" data-bs-toggle="tooltip" data-bs-placement="right"
+                            title="Agregar subcategoría">Agregar</button>
                     </form>
 
                 </div>

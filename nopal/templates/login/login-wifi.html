@@ -8,8 +8,21 @@
         <div id="c_top">
             <h2 class="subtitles_login ps-3">Cambio contraseña</h2>
         </div>
-            <form method="POST" class="d-flex flex-column align-content-center flex-wrap">                {% csrf_token %}
-                {{ form.as_p}}
+            <form method="POST" class="d-flex flex-column align-content-center flex-wrap">                
+                {% csrf_token %}
+                {% comment %} {{ form.as_p}} {% endcomment %}
+                <p>
+                    <label for="id_username">Nombre de usuario</label>
+                    <input type="text" name="username" required id="id_username">
+                </p>
+                <p>
+                    <label for="id_new_password1">Contraseña nueva</label>
+                    <input type="password" name="new_password1" required id="id_new_password1">
+                </p>
+                <p>
+                    <label for="id_new_password2">Confirmación contraseña</label>
+                    <input type="password" name="new_password2" required id="id_new_password2">
+                </p>
                 <button class="btn btn-secondary">Cambiar contraseña</button>
             </form>
     </div>
