@@ -30,6 +30,7 @@
                             <th scope="col">Fecha</th>
                             <th scope="col">Proveedor</th>
                             <th scope="col">Método de Pago</th>
+                            <th scope="col">Vr. Total</th>
                             <th scope="col">Estado</th>
                             <th scope="col">Acciones</th>
                         </tr>
@@ -38,9 +39,10 @@
                     <tbody>
                     {% for register in registers %}
                                 <tr>
-                                    <td id="texto">{{register.date}}</td>
+                                    <td id="texto">{{register.date|date:"M d, Y -" }}{{register.date|time:"h:i a" }}</td>
                                     <td id="texto">{{register.provider}}</td>
                                     <td id="texto">{{register.payment}}</td>
+                                    <td id="texto">{{register.finalPrice}}</td>
                                     <td id="texto">{{register.status}}</td>
                                     <td>
                                         {% if register.status == "Abierta" %}
