@@ -1,90 +1,71 @@
 {% extends 'partials/body.html' %}
-{% load crispy_forms_tags %} 
+{% load crispy_forms_tags %}
 {% block title %}{{title_pag}} - El Nopal Supermercado{% endblock title %}
 {% load static %}
 {% block contenido %}
 
-<div >
-    
+<div>
+
     <section class="container p-5 h-auto" id="mode-cards" data-admin id="cuerpo" style="width: 95%">
         <h1>Gestionar {{title_pag}}</h1>
         <div class="row my-4">
             <div class="col-md-4">
                 <div class="border p-3 rounded shadow mt-3" id="mode-cards">
                     <h3 class="text-start">Nuevo Registro </h3>
-                    <form action="" method="POST" enctype="multipart/form-data">
-                       {% csrf_token %} 
-                        {% comment %} {{form|crispy}}  {% endcomment %}
-                        <div id="div_id_name" class="mb-3">
-                            <label for="id_name" class="form-label requiredField">Nombre
-                                <span class="asteriskField">*</span>
-                            </label>
-                            <input type="text" name="name" class="form-control textinput textInput" maxlength="50" required id="id_name">
-                        </div>
-                        <div id="div_id_price" class="mb-3">
-                            <label for="id_price" class="form-label requiredField">Precio
-                                <span class="asteriskField">*</span>
-                            </label>
-                            <input type="number" name="price" class="form-control numberinput numberInput" maxlength="50" required id="id_price">
-                        </div>
-                        
-                        <div id="div_id_subcategory" class="mb-3">
-                            <label for="id_subcategory" class="form-label requiredField">Subcategoría
-                                <span class="asteriskField">*</span>
-                            </label>
-                            
-                            <select name="subcategory" class="form-control select form-select" required id="id_subcategory">
-                                {% for register in registers %}
-                                <option id="texto">{{register.subcategory.name}}</option>
-                                
-                                {% endfor %}
-                            </select>
-                            <a type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                                <img src="{% static 'img/icons/plus.svg' %}">
 
-                            </a>
-                        </div>
-                        <div id="div_id_brand" class="mb-3">
-                            <label for="id_brand" class="form-label requiredField">Marca
+                    <form method='POST' action='' enctype="multipart/form-data" novalidate id="product-form">
+                        {% csrf_token %}
+                        <label for="product-name" class="control-label">Nombre</label>
+                        <span class="asteriskField">*</span>
+                        {{form.name }}
+                        <label for="product-price" class="control-label">Precio</label>
+                        <span class="asteriskField">*</span>
+                        {{form.price }}
+                        <label for="product-description" class="control-label">Descripción</label>
+                        {{form.description }}
+                        <label for="product-subcategory" class="control-label">Subcategoria</label>
+                        <span class="asteriskField">*</span>
+                        {{form.subcategory }}
+                        <a href="{% url 'm_subcategory' %}" id="add_subcategory"
+                            onclick="return showAddPopup(this);"><img src="{% static 'img/icons/plus.svg' %}" data-bs-toggle="tooltip" data-bs-placement="right" title="Agregar subcategoria"></a>
+                        <br>
+                        <label for="product-brand" class="control-label">Marca</label>
+                        <span class="asteriskField">*</span>
+                        {{form.brand }}
+                        <a href="{% url 'm_brand' %}" id="add_brand"
+                            onclick="return showAddPopup(this);"><img src="{% static 'img/icons/plus.svg' %}" data-bs-toggle="tooltip" data-bs-placement="right" title="Agregar marca"></a>
+                        <br>
+                        <div id="div_id_expirationDate" class="mb-3">
+                            <label for="product-expirationDate" class="form-label numberinput numberInput">Fecha de
+                                Vencimiento
                                 <span class="asteriskField">*</span>
                             </label>
-                            {% for register in registers %}
-                            <select name="brand" class="form-control select form-select" required id="id_brand">
-                                <option id="texto">{{register.brand.name}}</option>
-                            {% endfor %}
-                            </select>
-                            {% comment %} <a type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                                <img src="{% static 'img/icons/plus.svg' %}">
-                            </a> {% endcomment %}
+                            <input type="date" name="expirationDate" class="form-control dateinput dateInput" required
+                                id="id_expirationDate">
+                            {{form.expirationDate }}
                         </div>
-                        <div id="div_id_unitMeasurement" class="mb-3">
-                            <label for="id_unitMeasurement" class="form-label requiredField">Unidad de medida
+
+                        <label for="product-unitMeasurement" class="control-label">Unidad de medida</label>
+                        {{form.unitMeasurement }}
+                        <div id="div_id_stock" class="mb-3">
+                            <label for="product-stock" class="form-label numberinput numberInput">Stock
                                 <span class="asteriskField">*</span>
                             </label>
-                            <select name="unitMeasurement" class="form-control select form-select " required id="id_unitMeasurement">
-                                <option id="texto">Lb</option>
-                            </select>
-                            {% comment %} <a type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                                <img src="{% static 'img/icons/plus.svg' %}">
-                            </a> {% endcomment %}
+                            <input type="number" name="stock" class="form-control numberinput numberInput"
+                                maxlength="50" required id="id_stock">
+                            {{form.stock }}
                         </div>
+
                         <div id="div_id_image" class="mb-3">
-                            <label for="id_image" class="form-label requiredField">Imagen
+                            <label for="product-image" class="form-label requiredField">Imagen
                             </label>
                             <input type="file" name="image" class="form-control " accept="image/jpg" id="id_image">
                         </div>
-                        <div id="div_id_description" class="mb-3">
-                            <label for="id_description" class="form-label requiredField">Descripción
-                            </label>
-                            <input type="text" name="description" class="form-control textinput textInput" maxlength="80" id="id_description">
-                        </div>
 
-                        <input type="hidden" id="modal-status" value="Agregar">
-                        <button class="btn_agregar d-block m-auto text-center text-decoration-none py-1 rounded border border-none"
-                            style="width: 120px;" data-bs-toggle="tooltip" data-bs-placement="right"
-                            title="Agregar subcategoría">Agregar</button>
+                        <input type="submit" class="btn_agregar d-block m-auto text-center text-decoration-none py-1 rounded border border-none" 
+                        style="width: 120px;" data-bs-toggle="tooltip" data-bs-placement="right" title="Agregar producto" value="Agregar" />
+                        
                     </form>
-
                 </div>
             </div>
 
@@ -106,25 +87,29 @@
                     </thead>
 
                     <tbody>
-                    {% for register in registers %}
-                            {% if register.status %}
-                                <tr>
-                                    <td id="texto">{{register.name}}</td>
-                                    <td id="texto">{{register.price}}</td>
-                                    <td id="texto">{{register.description}}</td>
-                                    <td id="texto">{{register.subcategory.name}}</td>
-                                    <td id="texto">{{register.brand.name}}</td>
-                                    <td id="texto">{{register.expirationDate}}</td>
-                                    <td id="texto">{{register.unitMeasurement}}</td>
-                                    <td id="texto">{{register.stock}}</td>
-                                    <td id="texto">{{register.image.url}}</td>
-                                    <td><a href="{%url 'product-modal' modal='editar' pk=register.id %}" class="btn btn-md border"><img class="img-fluid" src="{% static 'img/icons/update.svg' %}" id="edit" alt=""></a>
-                                        <a href="{%url 'product-modal' modal='eliminar' pk=register.id%}" class="btn btn-md border"><img class="img-fluid" src="{% static 'img/icons/delete.svg' %}" id="eliminar" alt=""></a> 
-                                    </td>    
-                                </tr>
-                            {% endif %}
-                    {% endfor %}
-                    </tbody> 
+                        {% for register in registers %}
+                        {% if register.status %}
+                        <tr>
+                            <td id="texto">{{register.name}}</td>
+                            <td id="texto">{{register.price}}</td>
+                            <td id="texto">{{register.description}}</td>
+                            <td id="texto">{{register.subcategory.name}}</td>
+                            <td id="texto">{{register.brand.name}}</td>
+                            <td id="texto">{{register.expirationDate}}</td>
+                            <td id="texto">{{register.unitMeasurement}}</td>
+                            <td id="texto">{{register.stock}}</td>
+                            <td id="texto">{{register.image.url}}</td>
+                            <td><a href="{%url 'product-modal' modal='editar' pk=register.id %}"
+                                    class="btn btn-md border"><img class="img-fluid"
+                                        src="{% static 'img/icons/update.svg' %}" id="edit" alt=""></a>
+                                <a href="{%url 'product-modal' modal='eliminar' pk=register.id%}"
+                                    class="btn btn-md border"><img class="img-fluid"
+                                        src="{% static 'img/icons/delete.svg' %}" id="eliminar" alt=""></a>
+                            </td>
+                        </tr>
+                        {% endif %}
+                        {% endfor %}
+                    </tbody>
 
                 </table>
                 {% if messages %}

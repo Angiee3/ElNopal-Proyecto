@@ -1,0 +1,49 @@
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% comment %} <main class="">
+    <div>
+        <h1 class="text-center">Gestionar {{title_pag}}</h1>
+    </div>
+</main> {% endcomment %}
+<div class="modal fade" id="modalSubcategory" tabindex="-1" aria-labelledby="modalSubcategoryLabel" aria-hidden="true" role="dialog" style="display: block;">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content" >
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalSubcategoryLabel">Nuevo Registro</h5>
+                {% comment %} <a class="btn-close" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#modalCategory" href="{% url 'product' %}" aria-label="Close"></a> {% endcomment %}
+                <div class="p-0">
+                    <button type="button" class="btn btn-outline-success p-0 px-2"  data-bs-dismiss="modal"><img src="{% static 'img/icons/back.svg' %}" alt="Atrás"></button>
+                  </div>
+            </div>
+
+        <div class="modal-body">
+            <form method='POST' action='' enctype="multipart/form-data" novalidate id="subcategory-form">
+                {% csrf_token %}
+                <label for="subcategory-name" class="control-label">Nombre</label>
+                <span class="asteriskField">*</span>
+                {{form.name }}
+                <label for="subcategory-category" class="control-label">Categoría</label>
+                <span class="asteriskField">*</span>
+                {{form.category }}
+                <a href="{% url 'm-category' %}" id="add_category" onclick="return showAddPopup(this);"><img
+                        src="{% static 'img/icons/plus.svg' %}" data-bs-toggle="tooltip" data-bs-placement="right" title="Agregar categoría"></a>
+
+                <div id="div_id_image" class="mb-3">
+                    <label for="subcategory-image" accept="image/*" class="form-label requiredField">Imagen
+                    </label>
+                    <!-- <input type="file" name="image" class="form-control " accept="image/*" id="id_image">Imagen -->
+                    {{form.image }}
+
+                </div>        
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-danger Btn-White" data-bs-dismiss="modal" href="{% url 'product' %}">Cancelar</a>
+                <input type="submit" class="btn_agregar d-block m-auto text-center text-decoration-none py-1 rounded border border-none" 
+                style="width: 120px;" data-bs-toggle="tooltip" data-bs-placement="right" title="Agregar producto" value="Agregar" />
+                </form>
+            </div>
+      </div>
+    </div>
+</div>
+  

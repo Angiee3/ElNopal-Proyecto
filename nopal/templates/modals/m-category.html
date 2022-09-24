@@ -1,11 +1,7 @@
 {% load crispy_forms_tags %}
 {% load static %}
 
-{% comment %} <main class="">
-    <div>
-        <h1 class="text-center">Gestionar {{title_pag}}</h1>
-    </div>
-</main> {% endcomment %}
+
 <div class="modal fade" id="modalCategory" tabindex="-1" aria-labelledby="modalCategoryLabel" aria-hidden="true" role="dialog" style="display: block;">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content" >
@@ -18,15 +14,15 @@
             </div>
 
         <div class="modal-body">
-                <form action="" method="POST" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    {{ form|crispy }}
-        </div>
+            <form method = 'POST' action= '' enctype = "multipart/form-data" novalidate id = "category-form">
+                {% csrf_token %}
+                {{form.as_p}}
+               
+            </form>
             <div class="modal-footer">
                 <a class="btn btn-danger Btn-White" data-bs-dismiss="modal" href="{% url 'product' %}">Cancelar</a>
-                <input type="hidden" id="modal-status" value="Agregar" class="btn btn-success">
-                <button class="btn_agregar d-block m-auto text-center text-decoration-none py-1 rounded border border-none"
-                        style="width: 120px;" data-bs-toggle="tooltip" data-bs-placement="right" title="Agregar categoría" >Agregar</button>
+                <input type="submit" class="btn_agregar d-block m-auto text-center text-decoration-none py-1 rounded border border-none" 
+                style="width: 120px;" data-bs-toggle="tooltip" data-bs-placement="right" title="Agregar producto" value="Agregar" />
                 </form>
             </div>
       </div>

@@ -2,6 +2,7 @@ import email
 import imp, os
 from datetime import datetime, date
 from django.shortcuts import render , redirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 from management.forms import *
 from management.models import *
@@ -53,41 +54,50 @@ def index_admin(request):
 
 ########################### SUBCATEGORY ############################
 ########################### SUBCATEGORY ############################
-# def subcategory(request):
-#     location = True
-#     admin = True
-#     title_pag = "Subcategoría"
-#     registers = Subcategory.objects.all()
-#     if request.method == 'POST':
-#         form = SubcategoryForm(request.POST, request.FILES)
-#         if form.is_valid():
-#             form.save()
-#             name = form.cleaned_data.get('name')
-#             messages.success(request,f'La subcategoría {name} se agregó correctamente!')
-#             return redirect('subcategory')
-#     else:
-#         form = SubcategoryForm()
-#     context = {
-#         'form':form,
-#         'title_pag':title_pag,
-#         'admin':admin,
-#         'registers': registers,
-#         'location':location,
-#     }
-#     return render(request, 'admin/subcategory.html', context)
 def subcategory(request):
-	register= Subcategory.objects.all()
-	if request.method == 'POST':
-		form = SubcategoryForm(request.POST, request.FILES)
-		if form.is_valid() :
-			form.save()
-			return redirect('subcategory')
-	else:
-		form = SubcategoryForm()
-	context = { 'form' : form,
-            	'register':register
-	}
-	return render(request, 'admin/subcategory.html', context)
+    location = True
+    admin = True
+    title_pag = "Subcategoría"
+    registers = Subcategory.objects.all()
+    if request.method == 'POST':
+        form = SubcategoryForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            name = form.cleaned_data.get('name')
+            messages.success(request,f'La subcategoría {name} se agregó correctamente!')
+            return redirect('subcategory')
+    else:
+        form = SubcategoryForm()
+    context = {
+        'form':form,
+        'title_pag':title_pag,
+        'admin':admin,
+        'registers': registers,
+        'location':location,
+    }
+    return render(request, 'admin/subcategory.html', context)
+
+def subcategoryCreatePopup(request):
+    location = True
+    admin = True
+    title_pag = "Subcategoría"
+    registers = Subcategory.objects.all()    
+    form = SubcategoryForm(request.POST, request.FILES ) 
+
+    if form.is_valid():
+        instance = form.save()
+        name = form.cleaned_data.get('name')
+        messages.success(request,f'La subcategoría {name} se agregó correctamente!')
+        return HttpResponse('<script>opener.closePopup(window, "%s", "%s", "#id_subcategory");</script>' % (instance.pk, instance))
+    context={
+        'form':form,
+        'title_pag':title_pag,
+        'admin':admin,
+        'registers': registers,
+        'location':location,
+    }
+    return render(request, "admin/m_subcategory.html", context)
+
 def subcategory_modal(request, modal, pk):
     location = True
     admin = True
@@ -173,6 +183,26 @@ def category(request):
         'location':location,
     }
     return render(request, 'admin/category.html', context)
+def categoryCreatePopup(request):
+    location = True
+    admin = True
+    title_pag = "Categoría"
+    registers = Category.objects.all()    
+    form = CategoryForm(request.POST, request.FILES) 
+
+    if form.is_valid():
+        instance = form.save()
+        name = form.cleaned_data.get('name')
+        messages.success(request,f'La categoría {name} se agregó correctamente!')
+        return HttpResponse('<script>opener.closePopup(window, "%s", "%s", "#id_subcategory");</script>' % (instance.pk, instance))
+    context={
+        'form':form,
+        'title_pag':title_pag,
+        'admin':admin,
+        'registers': registers,
+        'location':location,
+    }
+    return render(request, "admin/m_category.html", context)
 
 def category_modal(request, modal, pk):
     title_pag = "Categoría"
@@ -268,6 +298,28 @@ def brand(request):
         'atributes':atributes
     }
     return render(request, 'admin/brand.html', context)
+
+def brandCreatePopup(request):
+    location = True
+    admin = True
+    title_pag = "Marca"
+    registers = Brand.objects.all()    
+    form = BrandForm(request.POST, request.FILES) 
+
+    if form.is_valid():
+        instance = form.save()
+        name = form.cleaned_data.get('name')
+        messages.success(request,f'La marca {name} se agregó correctamente!')
+        return HttpResponse('<script>opener.closePopup(window, "%s", "%s", "#id_subcategory");</script>' % (instance.pk, instance))
+    context={
+        'form':form,
+        'title_pag':title_pag,
+        'admin':admin,
+        'registers': registers,
+        'location':location,
+    }
+    return render(request, "admin/m_brand.html", context)
+
 def brand_modal(request, modal, pk):
     title_pag = "Marca"
     modal_title = ''

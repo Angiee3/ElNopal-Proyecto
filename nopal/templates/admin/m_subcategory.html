@@ -1,42 +1,42 @@
+{% extends 'partials/body.html' %}
 {% load crispy_forms_tags %}
+{% block title %} El Nopal Supermercado{% endblock title %}
 {% load static %}
+{% block contenido %}
 
-<div class="modal fade show" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Nueva Subcategoría</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
+<div>
+    <section class="container p-5 h-auto" id="mode-cards" data-admin id="cuerpo" style="width: 95%">
+        <h1>Gestionar {{title_pag}}</h1>
+        <div class="row my-4">
+            <div class="border p-3rounded shadow mt-3" id="mode-cards">
+                <h3 class="text-start">Nuevo Registro </h3>
                 <form method='POST' action='' enctype="multipart/form-data" novalidate id="subcategory-form">
                     {% csrf_token %}
+
                     <label for="subcategory-name" class="control-label">Nombre</label>
                     <span class="asteriskField">*</span>
                     {{form.name }}
-    
+
                     <label for="subcategory-category" class="control-label">Categoría</label>
                     <span class="asteriskField">*</span>
                     {{form.category }}
                     <a href="{% url 'm_category' %}" id="add_category" onclick="return showAddPopup(this);"><img
                             src="{% static 'img/icons/plus.svg' %}" data-bs-toggle="tooltip" data-bs-placement="right" title="Agregar categoría"></a>
-    
+
                     <div id="div_id_image" class="mb-3">
                         <label for="subcategory-image" accept="image/*" class="form-label requiredField">Imagen
                         </label>
                         <!-- <input type="file" name="image" class="form-control " accept="image/*" id="id_image">Imagen -->
                         {{form.image }}
-    
-                    </div>        
-                </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
 
-                <input type="submit" class="btn_agregar d-block m-auto text-center text-decoration-none py-1 rounded border border-none" 
-                style="width: 120px;" data-bs-toggle="tooltip" data-bs-placement="right" title="Agregar producto" value="Agregar" />
+                    </div>
+
+                    <input type="submit" class="btn_agregar d-block m-auto text-center text-decoration-none py-1 rounded border border-none" 
+                    style="width: 120px;" data-bs-toggle="tooltip" data-bs-placement="right" title="Agregar producto" value="Agregar" />
                 </form>
             </div>
         </div>
-    </div>
+    </section>
 </div>
+
+{% endblock %}
