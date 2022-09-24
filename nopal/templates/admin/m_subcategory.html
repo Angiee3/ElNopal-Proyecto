@@ -1,0 +1,23 @@
+{% extends 'partials/body.html' %}
+{% load crispy_forms_tags %} 
+{% block title %} El Nopal Supermercado{% endblock title %}
+{% load static %}
+{% block contenido %}
+
+<div>
+<section class="container p-5 h-auto" id="mode-cards" data-admin id="cuerpo" style="width: 95%">
+    <h1>Gestionar {{title_pag}}</h1>
+    <div class="row my-4">
+            <div class="border p-3rounded shadow mt-3" id="mode-cards">
+                <h3 class="text-start">Nuevo Registro </h3>
+                <form method = 'POST' action= '' enctype = "multipart/form-data" novalidate id = "subcategory-form">
+                    {% csrf_token %}
+                    {{form.as_p}}
+                    <input type="submit" value = "Submit" />
+                </form>
+        </div>
+    </div>
+</section>
+</div>
+
+{% endblock %}

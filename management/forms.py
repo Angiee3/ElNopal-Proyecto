@@ -11,15 +11,23 @@ class CategoryForm(forms.ModelForm):
             'name':forms.TextInput(attrs={'class':'form-control'})
         }
         
+# class SubcategoryForm(forms.ModelForm):
+#     class Meta:
+#         model = Subcategory
+#         fields = ['name','category','image']
+#         widgets = {
+#             'name':forms.TextInput(attrs={'class':'form-control'}),
+#             'category':forms.Select(attrs={'class':'form-control'}),
+#             'image':forms.FileInput(attrs={'class':'form-control'})
+#         }     
 class SubcategoryForm(forms.ModelForm):
     class Meta:
         model = Subcategory
-        fields = ['name','category','image']
+        fields = ['name']
         widgets = {
             'name':forms.TextInput(attrs={'class':'form-control'}),
-            'category':forms.Select(attrs={'class':'form-control'}),
-            'image':forms.FileInput(attrs={'class':'form-control'})
-        }     
+           
+        }  
 
 class BrandForm(forms.ModelForm):
     class Meta:
@@ -43,7 +51,7 @@ class ProductForm(forms.ModelForm):
             'stock':forms.NumberInput(attrs={'class':'form-control'}),
             'image':forms.FileInput(attrs={'class':'form-control'})            
         }
-
+        
 class ProviderForm(forms.ModelForm):
     class Meta:
         model = Provider

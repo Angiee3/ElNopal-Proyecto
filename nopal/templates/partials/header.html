@@ -8,15 +8,15 @@
                 <img src="{% static 'img/Logo.png' %}" id="nopal" width="250px" alt="Logo - nopal Supermercado">
             </div>
             <div class="col container-fluid d-flex justify-content-center align-items-center px-0">
-                <a class="text-decoration-none p-0" style="color: var(--verdeoscuro);" href="{% url 'admin-login' %}"><figure class="d-flex flex-column px-4">
+                <a class="text-decoration-none p-0" style="color: var(--verdeoscuro);" href=""><figure class="d-flex flex-column px-4">
                     <img src="{% static 'img/icons/user.svg'%}" id="user" class="mx-auto d-block" width="45" alt="Administrador">
-                    <a class="text-decoration-none" href="{% url 'admin-login' %}" id="texto">{{user.get_username}}</a>
+                    <a class="text-decoration-none" href="" id="texto">{{user.get_username}}</a>
 
                     {% comment %} <a class="text-decoration-none" href="{% url 'admin-login' %}" id="texto">Iniciar sesión</a> {% endcomment %}
                 </figure></a>
-                <a class="text-decoration-none p-0" style="color: var(--verdeoscuro);"  href="{% url 'inicio' %}"><figure class="d-flex flex-column align-items-center px-4">
+                <a class="text-decoration-none p-0" style="color: var(--verdeoscuro);"  href=""><figure class="d-flex flex-column align-items-center px-4">
                     <img src="{% static 'img/icons/exit.svg' %}" id="salir" class="mx-auto d-block" width="45" alt="Salir">
-                    <a class="text-decoration-none" href="{% url 'inicio' %}" id="texto">Salir</a>
+                    <a class="text-decoration-none" href="" id="texto">Salir</a>
                 </figure></a>
                 <a class="text-decoration-none p-0" style="color: var(--verdeoscuro);"  href=""><figure class="d-flex flex-column px-4">
                     <img src="{% static 'img/icons/help.svg' %}" id="ayuda"  class="mx-auto d-block" width="45" alt="Ayuda">
@@ -33,29 +33,29 @@
         
                 <ul class="menu__links" id="menuCentro" >
                     <li class="menu__item" >
-                        <a href="{% url 'index-admin' %}" class="menu__linkC">Inicio</a>
+                        <a href="" class="menu__linkC">Inicio</a>
                     </li>
                     <li class="menu__item" >
-                        <a href="{% url 'buy' %}" class="menu__linkC">Compra</a>
+                        <a href="" class="menu__linkC">Compra</a>
                     </li>
                     <li class="menu__item" >
-                        <a href="{% url 'sale' %}" class="menu__linkC">Venta</a>
+                        <a href="" class="menu__linkC">Venta</a>
                     </li>
                     
                     <ul class="navbar-nav">
                         <li class="nav-item dropdown menu__item">
-                          <a class="nav-link dropdown-toggle menu__linkC" href="{% url 'category' %}" id="" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          <a class="nav-link dropdown-toggle menu__linkC" href="" id="" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Gestión
                           </a>
                           <ul class="model dropdown-menu " aria-labelledby="">
                             <li class="menu__item menu__item--show">
-                                <a href="{% url 'category' %}" class="menu__linkC menu__link--inside">Categoría</a>
-                                <a href="{% url 'subcategory' %}" class="menu__linkC menu__link--inside">Subcategoría</a>
-                                <a href="{% url 'brand' %}" class="menu__linkC menu__link--inside">Marca</a>
-                                <a href="{% url 'product' %}" class="menu__linkC menu__link--inside">Product0</a>
-                                <a href="{% url 'provider' %}" class="menu__linkC menu__link--inside">Proveedor</a>
-                                <a href="{% url 'registrar' %}" class="menu__linkC menu__link--inside">Usuario</a>
-                                <a href="{% url 'buy-w' %}" class="menu__linkC menu__link--inside">Compra-W</a>
+                                <a href="" class="menu__linkC menu__link--inside">Categoría</a>
+                                <a href="" class="menu__linkC menu__link--inside">Subcategoría</a>
+                                <a href="" class="menu__linkC menu__link--inside">Marca</a>
+                                <a href="" class="menu__linkC menu__link--inside">Product0</a>
+                                <a href="" class="menu__linkC menu__link--inside">Proveedor</a>
+                                <a href="" class="menu__linkC menu__link--inside">Usuario</a>
+                                <a href="" class="menu__linkC menu__link--inside">Compra-W</a>
 
                             </li>
                           </ul>
@@ -85,11 +85,11 @@
 
                     <figure class="d-flex flex-column align-items-center  px-4">
                         <img src="{% static 'img/icons/user.svg' %}" id="user" data-bs-toggle="modal" data-bs-target="#modalSesion"class="mx-auto d-block my-2" width="45" alt="">
-                        <a href="{% url 'admin-login' %}" id="texto" class="text-decoration-none p-0" style="color: var(--verdeoscuro);" >Iniciar sesión</a>
+                        <a href="" id="texto" class="text-decoration-none p-0" style="color: var(--verdeoscuro);" >Iniciar sesión</a>
                     </figure>
                     <figure class="d-flex flex-column align-items-center px-4">
                         <img src="{% static 'img/icons/shopping-car.svg' %}" id="carrito" class="mx-auto d-block my-2" width="45" alt="">
-                        <a href="{% url 'usuario-carrito' %}" id="texto" class="text-decoration-none p-0" style="color: var(--verdeoscuro);">Tu carrito</a>
+                        <a href="" id="texto" class="text-decoration-none p-0" style="color: var(--verdeoscuro);">Tu carrito</a>
                     </figure>
                 </div>
             </div>
@@ -100,7 +100,7 @@
             
                     <ul class="menu__links" >
                         <li class="menu__item" >
-                            <a href="{% url 'inicio' %}" class="menu__link" >Inicio</a>
+                            <a href="" class="menu__link" >Inicio</a>
                         </li>
 
                         {% for category in MENU_USER_CATEGORIA %}
@@ -125,7 +125,7 @@
                     {% endfor %}
 
                     <li class="menu__item" >
-                        <a href="{% url 'usuario-contacto' %}" class="menu__link" >Contacto</a>
+                        <a href="" class="menu__link" >Contacto</a>
                     </li>
 
                     </ul>
