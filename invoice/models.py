@@ -1,7 +1,7 @@
 from django.db import models
 from management.models import *
 from django.utils.translation import gettext_lazy as _
-
+from management.forms import UserRegisterForm
         
 class Payment(models.TextChoices):
         dtf = 'Datáfono', _('Datafono')
@@ -37,7 +37,7 @@ class DetailBuy(models.Model):
         
 class Sale(models.Model):
     date = models.DateField(auto_now=True, verbose_name="Fecha de Venta")
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, verbose_name=u"Empleado")
+    user = models.ForeignKey(UserRegister, on_delete=models.SET_NULL, null=True, verbose_name=u"Empleado")
     client = models.CharField(blank=True, null=False, max_length=50, verbose_name=u"Cliente", default=u"Cliente local")
     nDocument = models.CharField(blank=True, null=False, max_length=20, verbose_name=u"Número de Documento / NIT", default=1234567890)
     address = models.CharField(blank=True, null=False, verbose_name=u"Dirección", max_length=254, default=u"Local")

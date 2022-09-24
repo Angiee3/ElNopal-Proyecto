@@ -22,12 +22,7 @@
                     <thead style="background-color: var(--verde); color: var(--verdeoscuro);">
                         <tr>
                             <th scope="col">Nombre Usuario</th>
-                            {% comment %} <th scope="col">Nombre</th>
-                            <th scope="col">Apellido</th>
-                            <th scope="col">Tipo de Documento</th>
-                            <th scope="col">Número de Documento</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Celular</th> {% endcomment %}
+
                         </tr>
                     </thead>
 
@@ -35,12 +30,7 @@
                     {% for register in registers %}
                                 <tr>
                                     <td id="texto">{{register.username}}</td>
-                                    {% comment %} <td id="texto">{{register.name}}</td>
-                                    <td id="texto">{{register.lastname}}</td>
-                                    <td id="texto">{{register.tDocument}}</td>
-                                    <td id="texto">{{register.nDocument}}</td>
-                                    <td id="texto">{{register.email}}</td>
-                                    <td id="texto">{{register.phone}}</td> {% endcomment %}
+                                
   
                                 </tr>
                     {% endfor %}

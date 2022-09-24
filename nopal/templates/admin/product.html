@@ -3,9 +3,8 @@
 {% block title %}{{title_pag}} - El Nopal Supermercado{% endblock title %}
 {% load static %}
 {% block contenido %}
-
-<div>
-
+<div >
+    
     <section class="container p-5 h-auto" id="mode-cards" data-admin id="cuerpo" style="width: 95%">
         <h1>Gestionar {{title_pag}}</h1>
         <div class="row my-4">
@@ -13,55 +12,32 @@
                 <div class="border p-3 rounded shadow mt-3" id="mode-cards">
                     <h3 class="text-start">Nuevo Registro </h3>
 
-                    <form method='POST' action='' enctype="multipart/form-data" novalidate id="product-form">
+                    <form method = 'POST' action= '' enctype = "multipart/form-data" novalidate id = "product-form">
                         {% csrf_token %}
                         <label for="product-name" class="control-label">Nombre</label>
-                        <span class="asteriskField">*</span>
                         {{form.name }}
                         <label for="product-price" class="control-label">Precio</label>
-                        <span class="asteriskField">*</span>
                         {{form.price }}
-                        <label for="product-description" class="control-label">Descripción</label>
-                        {{form.description }}
                         <label for="product-subcategory" class="control-label">Subcategoria</label>
-                        <span class="asteriskField">*</span>
                         {{form.subcategory }}
-                        <a href="{% url 'm_subcategory' %}" id="add_subcategory"
-                            onclick="return showAddPopup(this);"><img src="{% static 'img/icons/plus.svg' %}" data-bs-toggle="tooltip" data-bs-placement="right" title="Agregar subcategoria"></a>
+                        <a href="{% url 'm_subcategory' %}" id="add_subcategory" onclick="return showAddPopup(this);"><img src = "{% static 'img/icons/plus.svg' %}"></a>
                         <br>
                         <label for="product-brand" class="control-label">Marca</label>
-                        <span class="asteriskField">*</span>
                         {{form.brand }}
-                        <a href="{% url 'm_brand' %}" id="add_brand"
-                            onclick="return showAddPopup(this);"><img src="{% static 'img/icons/plus.svg' %}" data-bs-toggle="tooltip" data-bs-placement="right" title="Agregar marca"></a>
+                        <a href="{% url 'm_brand' %}" id="add_subcategory" onclick="return showAddPopup(this);"><img src = "{% static 'img/icons/plus.svg' %}"></a>
                         <br>
-                        <div id="div_id_expirationDate" class="mb-3">
-                            <label for="product-expirationDate" class="form-label numberinput numberInput">Fecha de
-                                Vencimiento
-                                <span class="asteriskField">*</span>
-                            </label>
-                            <input type="date" name="expirationDate" class="form-control dateinput dateInput" required
-                                id="id_expirationDate">
-                            {{form.expirationDate }}
-                        </div>
 
                         <label for="product-unitMeasurement" class="control-label">Unidad de medida</label>
                         {{form.unitMeasurement }}
-                        <div id="div_id_stock" class="mb-3">
-                            <label for="product-stock" class="form-label numberinput numberInput">Stock
-                                <span class="asteriskField">*</span>
-                            </label>
-                            <input type="number" name="stock" class="form-control numberinput numberInput"
-                                maxlength="50" required id="id_stock">
-                            {{form.stock }}
-                        </div>
+                
 
                         <div id="div_id_image" class="mb-3">
-                            <label for="product-image" class="form-label requiredField">Imagen
+                            <label for="id_image" class="form-label requiredField">Imagen
                             </label>
                             <input type="file" name="image" class="form-control " accept="image/jpg" id="id_image">
                         </div>
-
+                        <label for="product-description" class="control-label">Descripción</label>
+                        {{form.description }}
                         <input type="submit" class="btn_agregar d-block m-auto text-center text-decoration-none py-1 rounded border border-none" 
                         style="width: 120px;" data-bs-toggle="tooltip" data-bs-placement="right" title="Agregar producto" value="Agregar" />
                         
@@ -75,13 +51,11 @@
                         <tr>
                             <th scope="col">Nombre</th>
                             <th scope="col">Precio</th>
-                            <th scope="col">Descripción</th>
                             <th scope="col">Subcategoría</th>
                             <th scope="col">Marca</th>
-                            <th scope="col">Fecha de Vencimiento</th>
                             <th scope="col">Unidad de Medida</th>
-                            <th scope="col">Stock</th>
                             <th scope="col">Imagen</th>
+                            <th scope="col">Descripción</th>
                             <th scope="col">Acciones</th>
                         </tr>
                     </thead>
@@ -92,13 +66,12 @@
                         <tr>
                             <td id="texto">{{register.name}}</td>
                             <td id="texto">{{register.price}}</td>
-                            <td id="texto">{{register.description}}</td>
                             <td id="texto">{{register.subcategory.name}}</td>
                             <td id="texto">{{register.brand.name}}</td>
-                            <td id="texto">{{register.expirationDate}}</td>
                             <td id="texto">{{register.unitMeasurement}}</td>
-                            <td id="texto">{{register.stock}}</td>
                             <td id="texto">{{register.image.url}}</td>
+                            <td id="texto">{{register.description}}</td>
+
                             <td><a href="{%url 'product-modal' modal='editar' pk=register.id %}"
                                     class="btn btn-md border"><img class="img-fluid"
                                         src="{% static 'img/icons/update.svg' %}" id="edit" alt=""></a>

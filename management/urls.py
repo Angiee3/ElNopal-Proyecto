@@ -20,13 +20,18 @@ urlpatterns = [
     path('marca/<str:modal>/<int:pk>', brand_modal, name="brand-modal"),
 
     path('producto/', product, name="product"),
+    path('producto/crear/', productCreatePopup, name = "m_product"),
     path('producto/<str:modal>/<int:pk>', product_modal, name="product-modal"),
+
     path('proveedor/', provider, name="provider"),
+    path('proveedor/crear/', providerCreatePopup, name = "m_provider"),
     path('proveedor/<str:modal>/<int:pk>', provider_modal, name="provider-modal"),
     # path('usuario/<int:pk>', user, name="user"),
     path('usuario/<str:modal>/<int:pk>', user_modal, name="user-modal"),
 
-    path('registrar/', registrar, name='registrar'),
+    path('registrar/', register, name='register'),
+    path('registrar/crear/', registerCreatePopup, name = "m_register"),
+
     
 ]
 

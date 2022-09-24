@@ -7,16 +7,7 @@ from .forms import *
 from django.contrib import messages
 from datetime import datetime
 
-def buy_w(request):
-    location = True
-    admin = True
-    title_pag = "Compra"
-    context={
-        'location':location,
-        'admin':admin,
-        'title_pag':title_pag
-    }
-    return render(request, 'admin/buy-wizard.html',context)
+
 def buy(request):
     location = True
     admin = True
