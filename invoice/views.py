@@ -35,7 +35,7 @@ def buy(request):
         'location':location,
         'buy_template':buy_template,
     }
-    return render(request, 'admin/buy.html', context)
+    return render(request, 'invoice/buy.html', context)
 def detail_buy(request, pk):
     location = True
     admin = True
@@ -144,7 +144,7 @@ def detail_buy(request, pk):
         'factura':factura,
         'modal':modal
     }
-    return render(request, 'admin/detail.html', context)
+    return render(request, 'invoice/detail.html', context)
 def sale(request):
     location = True
     admin = True
@@ -181,7 +181,7 @@ def sale(request):
         'location':location,
         'buy_template':buy_template,
     }
-    return render(request, 'admin/sale.html', context)
+    return render(request, 'invoice/sale.html', context)
 def detail_sale(request, pk):
     location = True
     admin = True
@@ -296,7 +296,7 @@ def detail_sale(request, pk):
         'factura':factura,
         'modal':modal
     }
-    return render(request, 'admin/detail.html', context)
+    return render(request, 'invoice/detail.html', context)
 def buy_modal(request, modal, pk):
     title_pag = "Compra"
     location = True
@@ -306,13 +306,14 @@ def buy_modal(request, modal, pk):
     modal_submit = ''
     url_back = "/facturacion/compra/"
     registers = Buy.objects.all()
-    register_id = Buy.objects.get(id=pk)
+    register = Buy.objects.get(id=pk)
+    register_id = register.id
     
     if modal == 'eliminar':
         detail = DetailBuy.objects.filter(buy=pk)
         print(detail)    
         if detail.exists():
-            messages.warning(request, f'La compra no se puede eliminar, tiene detalles de compra.')
+            messages.warning(request, f'La compra No.{pk} no se puede eliminar, tiene detalles de compra.')
             return redirect ('buy')
         else: 
             modal_title = 'Eliminar compra'
@@ -326,7 +327,7 @@ def buy_modal(request, modal, pk):
                     status = "Inactiva"
                 )
                 print('Eliminado')
-                messages.success(request, f'La compra {pk} se eliminó correctamente!')
+                messages.success(request, f'La compra No.{pk} se eliminó correctamente!')
                 return redirect ('buy')
             else:
                 form = BuyForm()
@@ -336,7 +337,7 @@ def buy_modal(request, modal, pk):
         modal_title = 'Editar compra'
         modal_txt = 'editar la compra'
         modal_submit = 'guardar'
-        form = BuyForm(request.POST, instance=register_id)
+        form = BuyForm(request.POST, instance=register)
         print(form)
         if request.method == 'POST':
             print('----------------------------------------> Editar compra')                
@@ -345,7 +346,7 @@ def buy_modal(request, modal, pk):
                 messages.success(request, f'La compra No.{pk} se editó correctamente!')
                 return redirect ('buy')
         else:
-            form = BuyForm(instance=register_id)            
+            form = BuyForm(instance=register)            
             
     context ={
         'form':form,
@@ -354,10 +355,10 @@ def buy_modal(request, modal, pk):
         'modal_submit':modal_submit,
         'url_back':url_back,
         'modal':modal,
-        'register_id':register_id,
         'title_pag':title_pag,
         'admin':admin,
+        'register_id':register_id,
         'registers':registers,
         'location':location,
     }
-    return render(request, 'admin/modal-buy.html', context)
+    return render(request, 'invoice/modal-buy.html', context)
