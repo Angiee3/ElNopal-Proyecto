@@ -11,36 +11,46 @@
             <div class="col-md-4">
                 <div class="border  p-3 rounded shadow mt-3" id="mode-cards">
                     <h3 class="text-start">Nuevo Registro </h3>
-                    <form method = 'POST' action= '' enctype = "multipart/form-data" novalidate id = "sale-form">
+                    <form action="" method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
-              
-                        
-                        <div id="div_id_typeSale" class="mb-3"> 
-                            <label for="id_typeSale" class="form-label requiredField">
-                            Tipo de Venta
-                            <span class="asteriskField">*</span> 
-                        </label> 
-                        {{form.typeSale }}
-            
-                    </div>
+                        {{form|crispy}}
 
-                        <label for="sale-payment" class="control-label">Método de pago</label>
-                        {{form.payment }}
+                        {% comment %} <form method = 'POST' action= '' enctype = "multipart/form-data" novalidate id = "sale-form">
+                            {% csrf_token %}
+                  
+                            <label for="sale-payment" ></label>
+                            {{form.date }}
 
-                        <div id="div_id_client" class="mb-3"> <label for="id_client" class="form-label">
-                            Cliente
-                        </label> 
-                        <input type="text" name="client" value="Cliente local" class="form-control textinput textInput" maxlength="50" id="id_client"> </div>
+                            <label for="sale-user" id="id_username" class="control-label">Empleado</label>
+                            {{form.user }}
+                            <a href="{% url 'm_register' %}" id="add_register" onclick="return showAddPopup(this);"><img src = "{% static 'img/icons/plus.svg' %}"></a>
+                            <br> 
 
-                        <div id="div_id_nDocument" class="mb-3"> <label for="id_nDocument" class="form-label">
-                            Número de Documento / NIT
-                        </label> <input type="number" name="nDocument" value="1234567890" class="form-control numberinput" maxlength="20" id="id_nDocument"> </div>
-
-                        <div id="div_id_address" class="mb-3"> <label for="id_address" class="form-label">
-                            Dirección
-                        </label> <input type="text" name="address" value="Local" class="form-control textinput textInput" maxlength="254" id="id_address"> </div>
-
-
+                            <div id="div_id_typeSale" class="mb-3"> 
+                                <label for="id_typeSale" class="form-label requiredField">
+                                Tipo de Venta
+                                <span class="asteriskField">*</span> 
+                            </label> 
+                            {{form.typeSale }}
+                
+                        </div>
+    
+                            <label for="sale-payment" class="control-label">Método de pago</label>
+                            {{form.payment }}
+    
+                            <div id="div_id_client" class="mb-3"> <label for="id_client" class="form-label">
+                                Cliente
+                            </label> 
+                            <input type="text" name="client" value="Cliente local" class="form-control textinput textInput" maxlength="50" id="id_client"> </div>
+    
+                            <div id="div_id_nDocument" class="mb-3"> <label for="id_nDocument" class="form-label">
+                                Número de Documento / NIT
+                            </label> <input type="number" name="nDocument" value="1234567890" class="form-control numberinput" maxlength="20" id="id_nDocument"> </div>
+    
+                            <div id="div_id_address" class="mb-3"> <label for="id_address" class="form-label">
+                                Dirección
+                            </label> <input type="text" name="address" value="Local" class="form-control textinput textInput" maxlength="254" id="id_address"> </div>
+    {% endcomment %}
                         <input type="hidden" id="modal-status" value="Agregar">
                         <button class="btn_agregar d-block m-auto text-center text-decoration-none py-1 rounded border border-none"
                         style="width: 120px;" data-bs-toggle="tooltip" data-bs-placement="right" title="Agregar a la venta">Agregar</button>

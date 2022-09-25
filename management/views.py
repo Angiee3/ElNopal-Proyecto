@@ -37,9 +37,10 @@ def index_admin(request):
         else:
            registros_grupos_final[j['product']]= j['total_registros']
 
-    fecha_stats=registroci.values('date')
+    # fecha_stats=registroci.values('date')
     
-    # fecha_stats=registros.values('date').annotate(total_registros=Sum(('amount'), output_field=models.PositiveIntegerField()))
+    fecha_stats=registroci.values('date')
+    registros.annotate(total_registros=Sum(('amount'), output_field=models.PositiveIntegerField()))
 
     context = {
         'title_pag':title_pag,
