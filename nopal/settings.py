@@ -89,9 +89,9 @@ WSGI_APPLICATION = 'nopal.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'db_elnopal',
+        'NAME': 'db_elnopal3',
         'USER':'root',
-        'PASSWORD':'Angie1053442155',
+        'PASSWORD':'JuliethRojas123.',
         'HOST':'localhost',
         'PORT':'3306'
     }

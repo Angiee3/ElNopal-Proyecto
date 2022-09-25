@@ -17,26 +17,33 @@ def index_admin(request):
     admin = True
     title_pag = "Menú de Administracion"
     registros=DetailSale.objects.all()
-    
-    registroci = Sale.objects.all()
+    registrosci=Sale.objects.all()
+
     registros_stats=registros.values('product').annotate(total_registros=Sum(('amount'), output_field=models.PositiveIntegerField())).order_by('total_registros')
     total_registros=DetailSale.objects.aggregate(Sum('amount'))['amount__sum']
 
-    for i in registros_stats:
-        i['product']=Product.objects.get(id=i['product'])
-    registros_grupos=registros_stats.all()
-    registros_grupos_final={}
-    
-    for j in registros_grupos:
-        j['product']=Product.objects.get(id=j['product']).subcategory
-        if registros_grupos_final.get(j['product']) != None:
-           registros_grupos_final[j['product']]+= j['total_registros']
-        else:
-           registros_grupos_final[j['product']]= j['total_registros']
+    # for mes in range(12):
+    #     fecha_stats1=Sale.objects.get(id=mes['sale'])
+    #     mes['sale'].append(Sale.filter(date__month=mes+1, date__year=datetime.now().year)
+        
+    #     mes['DetailSale'].objects.agreggate(Sum('amount'))['amount__sum']) 
 
-    fecha_stats=registroci.values('date')
+    # for i in registros_stats:
+    #     i['product']=Product.objects.get(id=i['product'])
+    # registros_grupos=registros_stats.all()
+    # registros_grupos_final={}
     
-    # fecha_stats=registros.values('date').annotate(total_registros=Sum(('amount'), output_field=models.PositiveIntegerField()))
+    # for j in registros_grupos:
+    #     j['product']=Product.objects.get(id=j['product']).subcategory
+    #     if registros_grupos_final.get(j['product']) != None:
+    #        registros_grupos_final[j['product']]+= j['total_registros']
+    #     else:
+    #        registros_grupos_final[j['product']]= j['total_registros']
+
+    fecha_stats=registrosci.values("date")
+    # fecha_aux = datetime.now().strftime("%Y-%m-%d")
+
+    valor=registros.annotate(total_registros=Sum(('amount'),  output_field=models.IntegerField()))
 
     context = {
         'title_pag':title_pag,
@@ -44,8 +51,9 @@ def index_admin(request):
         'location':location,
         'registros_stats':registros_stats,
         'fecha_stats':fecha_stats,
+        'valor':valor,
         'total_registros':total_registros,
-        'registros_grupos':registros_grupos_final
+        # 'registros_grupos':registros_grupos_final
     }
     return render(request, "admin/index-admin.html", context)
 

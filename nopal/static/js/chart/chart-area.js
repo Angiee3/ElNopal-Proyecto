@@ -12,36 +12,38 @@ $(document).ready(function(){
             labels: $('#tags-area').html().slice(0,-1).split(','),
             datasets:[{
                 label: "Ventas",
-                lineTension: 0.3,
-                backgroundColor: "rgba(255,103,18,0.2)",
+                lineTension: 0.2,
+                backgroundColor:  'rgba(255, 205, 86, 0.2)',
                 borderColor: "rgba(255,103,18,1)",
-                pointRadius: 5,
+                pointRadius: 4,
                 pointBackgroundColor: "rgba(255,103,18,1)",
                 pointBorderColor: "rgba(255,255,255,0.8)",
-                pointHoverRadius: 5,
                 pointHoverBackgroundColor: "255,103,18,1)",
-                pointHitRadius: 50,
-                pointBorderWidth: 2,
+
                 data: $('#data-area').html().slice(0,-1).split(',')
         }]},
     options: {
     scales: {
         xAxes: [{
             time: {
-                unit: 'date'
+                unit: 'date',
+                displayFormats: {
+                    date: '%d-%m-%Y',
+                },
             },
             gridLines: {
                 display: false
             },
             ticks: {
-                maxTicksLimit: 7
+                maxTicksLimit: 1
             }
         }],
         yAxes: [{
             ticks: {
                 min: 0,
-                max: 6000,
-                maxTicksLimit: 5
+                max: 200,
+                maxTicksLimit: 7
+            
             },
             gridLines: {
                 color: "rgba(0, 0, 0, .125)",
@@ -55,5 +57,3 @@ $(document).ready(function(){
     });
     
     });
-    
-    
