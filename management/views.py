@@ -9,7 +9,9 @@ from store.models import *
 from django.contrib.auth.decorators import login_required
 from django.db.models import Sum
 from invoice.models import *
-
+from django.http import HttpResponse, HttpResponseRedirect
+from .forms import UserRegisterForm
+from django.contrib.auth.models import User
 # Create your views here.
 
 def index_admin(request):
@@ -189,6 +191,27 @@ def category(request):
         'location':location,
     }
     return render(request, 'admin/category.html', context)
+def categoryCreatePopup(request):
+    location = True
+    admin = True
+    title_pag = "Categoría"
+    registers = Category.objects.all()    
+    form = CategoryForm(request.POST, request.FILES) 
+
+    if form.is_valid():
+        instance = form.save()
+        name = form.cleaned_data.get('name')
+        messages.success(request,f'La categoría {name} se agregó correctamente!')
+        return HttpResponse('<script>opener.closePopup(window, "%s", "%s", "#id_subcategory");</script>' % (instance.pk, instance))
+    context={
+        'form':form,
+        'title_pag':title_pag,
+        'admin':admin,
+        'registers': registers,
+        'location':location,
+    }
+    return render(request, "m-forms/m_category.html", context)
+
 def category_modal(request, modal, pk):
     title_pag = "Categoría"
     location = True
@@ -198,13 +221,15 @@ def category_modal(request, modal, pk):
     modal_submit = ''
     url_back="/administracion/categoria/"
     registers = Category.objects.all()
-    register_id = Category.objects.get(id=pk)  
+    register_id = Category.objects.get(id=pk)
+    
+    
     
     if modal == 'eliminar':
         modal_title = 'Eliminar categoría'
         modal_txt = 'eliminar la categoría'
         modal_submit = 'eliminar'
-        form = CategoryForm(request.POST, request.FILES)
+        form = SubcategoryForm(request.POST, request.FILES)
         if request.method == 'POST':
             print('----------------------------------------ELIMINANDO')
             Category.objects.filter(id=pk).update(
