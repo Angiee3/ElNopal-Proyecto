@@ -81,6 +81,28 @@ def subcategory(request):
         'location':location,
     }
     return render(request, 'admin/subcategory.html', context)
+
+def subcategoryCreatePopup(request):
+    location = True
+    admin = True
+    title_pag = "Subcategoría"
+    registers = Subcategory.objects.all()    
+    form = SubcategoryForm(request.POST, request.FILES ) 
+
+    if form.is_valid():
+        instance = form.save()
+        name = form.cleaned_data.get('name')
+        messages.success(request,f'La subcategoría {name} se agregó correctamente!')
+        return HttpResponse('<script>opener.closePopup(window, "%s", "%s", "#id_subcategory");</script>' % (instance.pk, instance))
+    context={
+        'form':form,
+        'title_pag':title_pag,
+        'admin':admin,
+        'registers': registers,
+        'location':location,
+    }
+    return render(request, "m-forms/m_subcategory.html", context)
+
 def subcategory_modal(request, modal, pk):
     location = True
     admin = True
@@ -142,6 +164,7 @@ def subcategory_modal(request, modal, pk):
         'location':location
     }
     return render(request, 'admin/modal-category.html', context)
+
 
 ############################# CATEGORY #############################
 def category(request):
@@ -258,6 +281,28 @@ def brand(request):
         'atributes':atributes
     }
     return render(request, 'admin/brand.html', context)
+
+def brandCreatePopup(request):
+    location = True
+    admin = True
+    title_pag = "Marca"
+    registers = Brand.objects.all()    
+    form = BrandForm(request.POST, request.FILES) 
+
+    if form.is_valid():
+        instance = form.save()
+        name = form.cleaned_data.get('name')
+        messages.success(request,f'La marca {name} se agregó correctamente!')
+        return HttpResponse('<script>opener.closePopup(window, "%s", "%s", "#id_subcategory");</script>' % (instance.pk, instance))
+    context={
+        'form':form,
+        'title_pag':title_pag,
+        'admin':admin,
+        'registers': registers,
+        'location':location,
+    }
+    return render(request, "m-forms/m_brand.html", context)
+
 def brand_modal(request, modal, pk):
     title_pag = "Marca"
     modal_title = ''
@@ -268,10 +313,6 @@ def brand_modal(request, modal, pk):
     url_back="/administracion/marca/"
     registers = Brand.objects.all()
     register_id = Brand.objects.get(id=pk)
-    
-    
-    
-    
     if modal == 'eliminar':
         modal_title = 'Eliminar marca'
         modal_txt = 'eliminar la marca'
@@ -286,11 +327,6 @@ def brand_modal(request, modal, pk):
             return redirect ('brand')
         else:
             form=BrandForm()
-            
-            
-            
-            
-            
     elif modal == 'editar':
         modal_title = 'Editar marca'
         modal_txt = 'editar la marca'
@@ -305,12 +341,6 @@ def brand_modal(request, modal, pk):
                 return redirect ('brand')
         else:
             form=BrandForm(instance=register_id)
-            
-            
-            
-            
-            
-            
     context ={
         'form':form,
         'modal_title':modal_title,
@@ -355,6 +385,28 @@ def product(request):
         'atributes':atributes
     }
     return render(request, 'admin/product.html', context)
+
+def productCreatePopup(request):
+    location = True
+    admin = True
+    title_pag = "Producto"
+    registers = Product.objects.all()    
+    form = ProductForm(request.POST, request.FILES) 
+
+    if form.is_valid():
+        instance = form.save()
+        name = form.cleaned_data.get('name')
+        messages.success(request,f'El producto {name} se agregó correctamente!')
+        return HttpResponse('<script>opener.closePopup(window, "%s", "%s", "#id_subcategory");</script>' % (instance.pk, instance))
+    context={
+        'form':form,
+        'title_pag':title_pag,
+        'admin':admin,
+        'registers': registers,
+        'location':location,
+    }
+    return render(request, "m-forms/m_product.html", context)
+
 def product_modal(request, modal, pk):
     title_pag = "Producto"
     modal_title = ''
@@ -438,6 +490,28 @@ def provider(request):
         'atributes':atributes
     }
     return render(request, 'admin/provider.html', context)
+
+def providerCreatePopup(request):
+    location = True
+    admin = True
+    title_pag = "Proveedor"
+    registers = Provider.objects.all()    
+    form = ProviderForm(request.POST, request.FILES) 
+
+    if form.is_valid():
+        instance = form.save()
+        name = form.cleaned_data.get('name')
+        messages.success(request,f'El proveedor {name} se agregó correctamente!')
+        return HttpResponse('<script>opener.closePopup(window, "%s", "%s", "#id_subcategory");</script>' % (instance.pk, instance))
+    context={
+        'form':form,
+        'title_pag':title_pag,
+        'admin':admin,
+        'registers': registers,
+        'location':location,
+    }
+    return render(request, "m-forms/m_provider.html", context)
+
 def provider_modal(request, modal, pk):
     title_pag = "Proveedor"
     modal_title = ''
@@ -493,34 +567,68 @@ def provider_modal(request, modal, pk):
     return render(request, 'admin/modal-provider.html', context)
     
 ################################ USER ##############################
-def user(request):
-    location = True
-    admin = True
-    title_pag = "Usuario"
-    registers = User.objects.all()
-    # fields = [f.name for f in Subcategory()._meta.get_fields()][2:-1]
-    fields = ['username','email','name','lastName','tDocument','nDocument','phone','dateBirth','user_admin']
-    # print(fields)
-    atributes = ['Username','Correo Electrónico','Nombre','Apellido','Tipo de Documento','Número de Documento','Celular','Fecha de Nacimiento','¿Es administrador?']
-    if request.method == 'POST':
-        form = UserForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            name = form.cleaned_data.get('username')
-            messages.success(request,f'El usuario {name} se agregó correctamente!')
-            return redirect('user')
-    else:
-        form = UserForm()
-    context = {
-        'form':form,
-        'title_pag':title_pag,
-        'admin':admin,
-        'registers': registers,
-        'location':location,
-        'fields':fields,
-        'atributes':atributes
-    }
-    return render(request, 'admin/user.html', context)
+# def user(request, pk):
+#     location = True
+#     admin = True
+#     title_pag = "Usuario"
+#     registers = User.objects.all()
+#     registers_obj = User.objects.get(id=pk)
+
+#     # fields = [f.name for f in Subcategory()._meta.get_fields()][2:-1]
+#     fields = ['username','email','name','lastName','tDocument','nDocument','phone','dateBirth','user_admin']
+#     # print(fields)
+#     atributes = ['Username','Correo Electrónico','Nombre','Apellido','Tipo de Documento','Número de Documento','Celular','Fecha de Nacimiento','¿Es administrador?']
+#     if request.method == 'POST':
+#         form = UserForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             form.save()
+#             User.objects.filter(id=pk).update(
+#                 email=form.cleaned_data.get('email')
+#             )
+#             name = form.cleaned_data.get('username')
+#             messages.success(request,f'El usuario {name} se agregó correctamente!')
+#             return redirect('user')
+#     else:
+#         form = UserForm()
+#     context = {
+#         'form':form,
+#         'title_pag':title_pag,
+#         'admin':admin,
+#         'registers': registers,
+#         'registers_obj':registers_obj,
+#         'location':location,
+#         'fields':fields,
+#         'atributes':atributes
+#     }
+#     return render(request, 'admin/user.html', context)
+# def cambiarContra(request,pk):
+#     admin = True
+#     title_pag = "Cambiar contraseña"
+#     registers = CambiarContra.objects.all()
+#     registers_id = CambiarContra.objects.get(id=pk)
+#     if request.method=='POST':
+#         form = CambiarContraForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             CambiarContra.objects.filter(id=pk).update(
+#                 password1=form.cleaned_data.get('password1')
+#             )
+#             messages.success(request,f'La contraseña se reestableció correctamente!')
+#             return redirect('cambiarContra')
+#     else:
+#         form = CambiarContraForm()
+#     context={
+#         'form':form,
+#         'title_pag':title_pag,
+#         'admin':admin,
+#         'registers':registers,
+#         'registers_id':registers_id,
+        
+#     }
+#     return render(request, 'modals/login-wifi.html', context)
+        
+    
+
 def user_modal(request, modal, pk):
     title_pag = "Usuario"
     modal_title = ''
@@ -628,3 +736,38 @@ def backup(request, tipo):
     }
     return render(request, 'admin/backup.html',context) 
 
+# /////////////////////////RegistroUser////////////////////
+
+
+def register(request):
+	registers= User.objects.all()
+	if request.method == 'POST':
+		form = UserRegisterForm(request.POST)
+		if form.is_valid() :
+			form.save()
+			return redirect('register')
+	else:
+		form = UserRegisterForm()
+	context = { 'form' : form,
+            	'registers':registers
+	}
+	return render(request, 'admin/register.html', context)
+
+def registerCreatePopup(request):
+    location = True
+    admin = True
+    title_pag = "Registro"
+    registers = User.objects.all()    
+    form = UserRegisterForm(request.POST, request.FILES) 
+
+    if form.is_valid():
+        instance = form.save()
+        return HttpResponse('<script>opener.closePopup(window, "%s", "%s", "#id_subcategory");</script>' % (instance.pk, instance))
+    context={
+        'form':form,
+        'title_pag':title_pag,
+        'admin':admin,
+        'registers': registers,
+        'location':location,
+    }
+    return render(request, "m-forms/m_register.html", context)

@@ -60,3 +60,14 @@ class BackupForm(forms.ModelForm):
             'name':forms.TextInput(attrs={'class':'form-control'}),
             'file':forms.FileInput(attrs={'class':'form-control'})
         }
+
+class UserRegisterForm(UserCreationForm):
+    
+	username = forms.CharField()
+	password1 = forms.CharField(label='Contraseña', widget=forms.PasswordInput)
+	password2 = forms.CharField(label='Confirmar contraseña', widget=forms.PasswordInput)
+
+	class Meta:
+		model = User
+		fields = ['username', 'password1', 'password2']
+		help_texts = {k:"" for k in fields }

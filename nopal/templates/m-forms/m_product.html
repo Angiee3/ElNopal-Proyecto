@@ -1,0 +1,49 @@
+{% extends 'partials/body.html' %}
+{% load crispy_forms_tags %} 
+{% block title %} El Nopal Supermercado{% endblock title %}
+{% load static %}
+{% block contenido %}
+
+<div>
+<section class="container p-5 h-auto" id="mode-cards" data-admin id="cuerpo" style="width: 95%">
+    <h1>Gestionar {{title_pag}}</h1>
+    <div class="row my-4">
+            <div class="border p-3rounded shadow mt-3" id="mode-cards">
+                <h3 class="text-start">Nuevo Registro </h3>
+                <form method = 'POST' action= '' enctype = "multipart/form-data" novalidate id = "product-form">
+                    {% csrf_token %}
+                    <label for="product-name" class="control-label">Nombre</label>
+                    {{form.name }}
+                    <label for="product-price" class="control-label">Precio</label>
+                    {{form.price }}
+                    <label for="product-subcategory" class="control-label">Subcategoria</label>
+                    {{form.subcategory }}
+                    <a href="{% url 'm_subcategory' %}" id="add_subcategory" onclick="return showAddPopup(this);"><img src = "{% static 'img/icons/plus.svg' %}"></a>
+                    <br>
+                    <label for="product-brand" class="control-label">Marca</label>
+                    {{form.brand }}
+                    <a href="{% url 'm_brand' %}" id="add_subcategory" onclick="return showAddPopup(this);"><img src = "{% static 'img/icons/plus.svg' %}"></a>
+                    <br>
+
+                    <label for="product-unitMeasurement" class="control-label">Unidad de medida</label>
+                    {{form.unitMeasurement }}
+            
+
+                    <div id="div_id_image" class="mb-3">
+                        <label for="id_image" class="form-label requiredField">Imagen
+                        </label>
+                        <input type="file" name="image" class="form-control " accept="image/jpg" id="id_image">
+                    </div>
+                    <label for="product-description" class="control-label">Descripción</label>
+                    {{form.description }}
+                    <input type="submit" class="btn_agregar d-block m-auto text-center text-decoration-none py-1 rounded border border-none" 
+                    style="width: 120px;" data-bs-toggle="tooltip" data-bs-placement="right" title="Agregar producto" value="Agregar" />
+                    
+                </form>
+            </div>
+
+    </div>
+</section>
+</div>
+
+{% endblock %}

@@ -5,18 +5,26 @@
 {% block contenido %}
 
 <div id="fondo_cuerpo">
-    <section class="container bg-light p-5 h-auto" id="mode-cards" data-admin id="cuerpo" style="width: 99%">
+    <section class="container  p-5 h-auto" id="mode-cards" data-admin id="cuerpo" style="width: 95%">
         <h1>Gestionar {{title_pag}}</h1>
         <div class="row my-4">
             <div class="col-md-4">
                 <div class="border p-3 rounded shadow mt-3" id="mode-cards">
                     <h3 class="text-start">Nuevo Registro </h3>
-                    <form action="" method="POST" enctype="multipart/form-data">
+                    <form method = 'POST' action= '' enctype = "multipart/form-data" novalidate id = "buy-form">
                         {% csrf_token %}
-                        {{form|crispy}}
+
+                        <label for="buy-provider" class="control-label">Proveedor</label>
+                        {{form.provider }}
+                        <a href="{% url 'm_provider' %}" id="add_provider" onclick="return showAddPopup(this);"><img src = "{% static 'img/icons/plus.svg' %}"></a>
+                        <br> 
+
+                        <label for="buy-payment" class="control-label">Método de pago</label>
+                        {{form.payment }}
+                                       
                         <input type="hidden" id="modal-status" value="Agregar">
                         <button class="btn_agregar d-block m-auto text-center text-decoration-none py-1 rounded border border-none"
-                        style="width: 120px;" >Agregar</button>
+                        style="width: 120px;" data-bs-toggle="tooltip" data-bs-placement="right" title="Agregar a la compra">Agregar</button>
 
                     </form>
                 </div>
