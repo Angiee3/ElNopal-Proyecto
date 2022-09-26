@@ -4,7 +4,7 @@
 {% load static %}
 {% block contenido %}
 
-<div id="fondo_cuerpo">
+<div>
     <section class="container  p-5 h-auto" id="mode-cards" data-admin id="cuerpo" style="width: 95%">
         <h1>Gestionar {{title_pag}}</h1>
         <div class="row my-4">
@@ -15,7 +15,7 @@
                         {% csrf_token %}
 
                         <label for="buy-provider" class="control-label">Proveedor</label>
-                        {{form.provider }}
+                        {{form.user }}
                         <a href="{% url 'm_provider' %}" id="add_provider" onclick="return showAddPopup(this);"><img src = "{% static 'img/icons/plus.svg' %}"></a>
                         <br> 
 
