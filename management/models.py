@@ -96,5 +96,5 @@ def validate_file_extension(value):
 
 class Backup(models.Model):
     name = models.CharField(max_length = 200,default="Copia de Seguridad", blank=True)
-    file = models.FileField(upload_to="backup",validators=[validate_file_extension])
+    file = models.FileField(upload_to="media",validators=[validate_file_extension])
     date = models.DateTimeField(auto_now = True)
