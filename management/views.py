@@ -708,27 +708,36 @@ def user_modal(request, modal, pk):
     }
     return render(request, 'admin/modal-user.html', context)
 ############################# BACKUP ###############################
-def export_data():
+def export_data(request):
     date_now = date.today()
-    os.system(f"mysqldump --add-drop-table --column-statistics=0 --password=Angie1053442155 -u root db_nopal> nopal/static/backup/BKP_{date_now}.sql")
+    tabla = request.POST['opcion']
+    os.system(f"mysqldump --add-drop-table --column-statistics=0 --password=%Brayan2021-2021-2021%# -u root db_elnopal --tables {tabla}> nopal/static/tablas/BKP_{tabla}_{date_now}.sql")
+    print('imprimio la tabla ', tabla )
     print('-------------------------------------------------------Hecho')
-def import_data(file):
+def import_data(file, request):
     print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>LISTO PA´ IMPRIMIR')
     try:
         print('------------------------IMPORTAR')
-        os.system(f"mysql --password=Angie1053442155 -u root db_nopal < {file[1:]}")
+        url = f'media/{file[1:]}'
+        os.system(f"mysql --password=%Brayan2021-2021-2021%# -u root db_elnopal < {url} ")
+        print('28288282',url)
+        messages.success(request,'su backup fue realizado correctamente')
         print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><Salio')
-    except:
-        print('<<<<<<<<<<<<<<<<<<<<<<<<<<<< CHALE')
-        print("Problemas al importar")
+    except Exception as err:
+        messages.warning(request,f'error {err} ')
+        print('error ', err)
 def backup(request, tipo):
     title_pag = "Backup"
     location = True
     admin = True
-    example_dir = 'nopal/static/backup/'
+    example_dir = 'nopal/static/tablas/'
     with os.scandir (example_dir) as ficheros:
         ficheros = [fichero.name for fichero in ficheros if fichero.is_file()]
-    print(ficheros)
+    
+    ruta = 'nopal/static/backup'
+    with os.scandir(ruta) as bases:
+       bases = [base.name for base in bases if base.is_file()]
+    
     backups = Backup.objects.all()
     if request.method == 'POST' and tipo== "U":
         print('----------------------------------INTENTO')
@@ -737,7 +746,7 @@ def backup(request, tipo):
             name= request.POST['name']
             file = request.FILES['file']
             insert = Backup(name=name, file=file)
-            import_data(insert.file.url)
+            import_data(insert.file.url, request)
             insert.save()
             print('<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<GUARDÓ')
             return redirect('backup','A')
@@ -745,7 +754,7 @@ def backup(request, tipo):
             print( ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Error al procesar el formulario")
               
     elif request.method == 'POST' and tipo== "D":
-        export_data()
+        export_data(request)
         return redirect('backup','A')
     
     else:
@@ -753,6 +762,7 @@ def backup(request, tipo):
         
     context ={
         "ficheros":ficheros,
+        'bases':bases,
         "form":form,
         "backups":backups,
         'title_pag':title_pag,
