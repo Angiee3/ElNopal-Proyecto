@@ -148,7 +148,7 @@ CREATE TABLE `django_migrations` (
   `name` varchar(255) NOT NULL,
   `applied` datetime(6) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 26 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 27 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: django_session
@@ -349,6 +349,7 @@ CREATE TABLE `management_unit` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   `type` varchar(30) NOT NULL,
+  `status` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 3 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
@@ -1385,6 +1386,15 @@ VALUES
     '0004_alter_buy_observation_alter_sale_observation',
     '2022-09-25 15:53:30.967116'
   );
+INSERT INTO
+  `django_migrations` (`id`, `app`, `name`, `applied`)
+VALUES
+  (
+    26,
+    'management',
+    '0003_unit_status',
+    '2022-09-26 02:59:34.585882'
+  );
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: django_session
@@ -2133,13 +2143,13 @@ VALUES
 # ------------------------------------------------------------
 
 INSERT INTO
-  `management_unit` (`id`, `name`, `type`)
+  `management_unit` (`id`, `name`, `type`, `status`)
 VALUES
-  (1, 'Unidad', 'Masa');
+  (1, 'Unidad', 'Masa', 1);
 INSERT INTO
-  `management_unit` (`id`, `name`, `type`)
+  `management_unit` (`id`, `name`, `type`, `status`)
 VALUES
-  (2, 'Litro', 'Volumen');
+  (2, 'Litro', 'Volumen', 1);
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: store_user
