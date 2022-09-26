@@ -4,10 +4,11 @@ from .models import *
 class BuyForm(forms.ModelForm):
     class Meta:
         model = Buy
-        fields =['provider','payment']
+        fields =['user','payment']
         widgets = {
             'user':forms.Select(attrs={'class':'form-control'}),
-            'payment':forms.Select(attrs={'class':'form-control'})
+            'payment':forms.Select(attrs={'class':'form-control'}),
+            'observations':forms.Select(attrs={'class':'form-control'})
         }
         
 class DetailBuyForm(forms.ModelForm):
@@ -29,7 +30,8 @@ class SaleForm(forms.ModelForm):
             'payment':forms.Select(attrs={'class':'form-control'}),
             'client':forms.TextInput(attrs={'class':'form-control'}),
             'nDocument':forms.NumberInput(attrs={'class':'form-control'}),
-            'address':forms.TextInput(attrs={'class':'form-control'})
+            'address':forms.TextInput(attrs={'class':'form-control'}),
+            'observations':forms.Select(attrs={'class':'form-control'})
         }
         
 class DetailSaleForm(forms.ModelForm):

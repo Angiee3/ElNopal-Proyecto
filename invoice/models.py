@@ -4,19 +4,24 @@ from django.utils.translation import gettext_lazy as _
 
         
 class Payment(models.TextChoices):
-        dtf = 'Datáfono', _('Datafono')
-        eft = 'Efectivo', _('Efectivo')
-        tsc = 'Transacción', _('Transaccion')
+        DATAFONO = 'Datáfono', _('Datafono')
+        EFECTIVO = 'Efectivo', _('Efectivo')
+        TRANSACCION = 'Transacción', _('Transaccion')
 class Status(models.TextChoices):
         ABIERTA='Abierta', _('Abierta')
         CERRADA='Cerrada', _('Cerrada')
         ANULADA='Anulada', _('Anulada')
+class Observation(models.TextChoices):
+        DEVOLUCION = 'Devolución',_('Devolución')
+        CAMBIO = 'Cambio',_('Cambio')        
+        OTRO = 'Otro',_('Otro')
         
 class Buy(models.Model):
     date = models.DateTimeField(auto_now_add=True, verbose_name="Fecha de Compra")
-    provider = models.ForeignKey(Provider, on_delete=models.SET_NULL, null=True, verbose_name=u"Proveedor")
-    payment = models.CharField(max_length=11, choices=Payment.choices, default=Payment.eft, verbose_name=u"Método de Pago", blank=False)
+    user = models.ForeignKey(Provider, on_delete=models.SET_NULL, null=True, verbose_name=u"Proveedor")
+    payment = models.CharField(max_length=11, choices=Payment.choices, default=Payment.EFECTIVO, verbose_name=u"Método de Pago", blank=False)
     finalPrice = models.IntegerField(default=0, null=False, blank=True)
+    observation = models.CharField(max_length=15, choices=Observation.choices, verbose_name=u"Observaciones", null=False, blank=True)
     status = models.CharField(max_length=10, choices=Status.choices, verbose_name="Estado", default=Status.ABIERTA)
     def __str__(self) -> str:
         return ' %s' %(self.date)
@@ -45,7 +50,8 @@ class Sale(models.Model):
         address = 'Domicilio', _('Domicilio')
     typeSale = models.CharField(max_length=9, choices=TypeSale.choices, default=TypeSale.store, verbose_name=u"Tipo de Venta")
     finalPrice = models.IntegerField(default=0, null=False, blank=True)
-    payment = models.CharField(max_length=11, choices=Payment.choices, default=Payment.eft, verbose_name=u"Método de Pago", blank=False)
+    payment = models.CharField(max_length=11, choices=Payment.choices, default=Payment.EFECTIVO, verbose_name=u"Método de Pago", blank=False)
+    observation = models.CharField(max_length=15, choices=Observation.choices, verbose_name=u"Observaciones", null=False, blank=True)
     status = models.CharField(max_length=10, choices=Status.choices, verbose_name="Estado", default=Status.ABIERTA)
     def __str__(self) -> str:
         return ' %s' %(self.date)

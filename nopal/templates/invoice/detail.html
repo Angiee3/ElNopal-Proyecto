@@ -19,6 +19,16 @@
                         style="width: 120px;">Agregar</button>
                     </form>
                 </div>
+
+                {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show my-3" role="alert">
+                    <strong>{{ message }}</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {% endfor %}
+                {% endif %}
+
             </div>
             <div class="col-md-8">
 
@@ -33,19 +43,19 @@
                         </tr>
                         <tr>
                             <td style="font-weight: 600" colspan="2">Proveedor:</td>
-                            <td colspan="3">{{factura.provider}}</td>
+                            <td colspan="3">{{factura.user}}</td>
                         </tr>
                         <tr>
                             <td style="font-weight: 600" colspan="1">Celular:</td>
-                            <td colspan="1">{{factura.provider.phone}}</td>
+                            <td colspan="1">{{factura.user.phone}}</td>
                             <td style="font-weight: 600" colspan="1">Correo:</td>
-                            <td colspan="2">{{factura.provider.email}}</td>
+                            <td colspan="2">{{factura.user.email}}</td>
                         </tr>
                         <tr>
                             <td colspan="1"></td>
                             <td colspan="1"></td>
                             <td style="font-weight: 600; font-size:20px" colspan="1">Total a pagar:</td>
-                            <td style="font-size:25px" colspan="2">${{factura.finalPrice}}</td>
+                            <td style="font-size:25px" colspan="2">${{factura.finalPrice|floatformat:3}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -82,15 +92,6 @@
                    </tbody>
                 </table>
                 <a class="btn_agregar d-block m-auto text-center text-decoration-none py-1 rounded border border-none" style="width: 120px;">Cerrar Factura</a>
-
-                {% if messages %}
-                {% for message in messages %}
-                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-                    <strong>{{ message }}</strong>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-                {% endfor %}
-                {% endif %}
 
             </div>
         </div>

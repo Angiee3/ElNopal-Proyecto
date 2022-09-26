@@ -11,11 +11,11 @@
                     data-bs-dismiss="modal" href="{{url_back}}" aria-label="Close"></button></a>
             </div>
             <div class="modal-body">
-                <p>¿Está seguro de {{modal_txt}} "{{register_id}}"?</p>
+                <p>¿Está seguro de {{modal_txt}} "{{factura.id}}{{register_id}}"?</p>
                 {% if modal == 'editar' %}
                 <form action="" method="POST" enctype="multipart/form-data">
                     {{form|crispy}}{% csrf_token %}
-                {% elif modal == 'eliminar' %}
+                {% elif modal == 'eliminar' or modal == 'cerrar'%}
                 <form action="" method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
                 {% endif %}
