@@ -28,9 +28,8 @@
                         <br>
 
                         <label for="product-unitMeasurement" class="control-label">Unidad de medida</label>
-                        {{form.unitMeasurement }}
-                
-
+                        
+                        {{form2.type}}
                         <div id="div_id_image" class="mb-3">
                             <label for="id_image" class="form-label requiredField">Imagen
                             </label>
@@ -103,3 +102,19 @@
 {% include 'partials/accesibilidad.html' %}
 
 {% endblock %}
+
+{% block extrajs %}
+    <script>
+        $(()=>{
+            $('select[name="type"]').on('change',()=>{
+                
+            })
+        })
+        $('.select2').select2({
+            theme:'bootstrap5',
+            language:'es'
+          });
+
+
+    </script>
+{% endblock  %}

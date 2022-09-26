@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'invoice',
     'crispy_forms',
     'crispy_bootstrap5',
+    'django_select2',
 ]
 
 
@@ -91,7 +92,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'db_elnopal',
         'USER':'root',
-        'PASSWORD':'Angie1053442155',
+        'PASSWORD':'%Brayan2021-2021-2021%#',
         'HOST':'localhost',
         'PORT':'3306'
     }
