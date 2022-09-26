@@ -2,18 +2,43 @@
 {% load crispy_forms_tags %}
 {% load static %}
 {% block contenido %}
-
 <div >
     <div class="container bg-white p-5 h-auto">
         <div class="row">
             <div class="col">
-                <h2>Exportar</h2>
+                <h2>Exportar Base de datos</h2>
+                <div class="mb-3">
+                    {% for modelo in bases %}
+                    <div class="mb-3 ">
+                        <a href="{% static 'backup' %}/{{modelo}}">{{modelo}}</a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="col">
+                <h2>Exportar Tablas</h2>
                 <form action="{% url 'backup' tipo='D' %}" method="POST">
                     {% csrf_token %}
+                    <div class="my-3" >
+                        <select class="form-select" aria-label="Default select example" name="opcion" >
+                            <option value="management_brand" selected >Marca</option>
+                            <option value="management_category">Categoria</option>
+                            <option value="management_product">Producto</option>
+                            <option value="management_provider">Proveedor</option>
+                            <option value="management_subcategory">Subcategoria</option>
+                            <option value="management_unit">Unidad</option>
+                            <option value="store_user">Usuario Tienda</option>
+                            <option value="invoice_buy">Factura Compra</option>
+                            <option value="invoice_detailbuy">Factura Detalle compra</option>
+                            <option value="invoice_detailsale">Factura Detalle Venta</option>
+                            <option value="invoice_sale">Factura Venta</option>
+                        </select>
+                      </div>
                     <div class="mb-3">
                         {% for modelo in ficheros %}
                         <div class="mb-3 ">
-                            <a href="{% static 'backup' %}/{{modelo}}">{{modelo}}</a>
+                            <a href="{% static 'tablas' %}/{{modelo}}">{{modelo}}</a>
                         </div>
                         {% endfor %}
                     </div>
@@ -28,6 +53,14 @@
                     {{form|crispy}}
                     <input type="submit" class="btn_agregar d-block text-center text-decoration-none py-1 rounded border border-none" style="width: 120px;" value="Enviar">
                 </form>
+                {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show my-2 text-center" role="alert">
+                    <strong>{{ message }}</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {% endfor %}
+                {% endif %}
             </div>
         </div>
         <div class="row">
@@ -45,9 +78,9 @@
                     <tbody>
                         {% for backup in backups %}
                         <tr>
-                            <td>{{backup.name}} </td>
-                            <td>{{backup.file.url}} </td>
-                            <td>{{backup.date}} </td>
+                            <td class="text">{{backup.name}} </td>
+                            <td class="text">{{backup.file.url}} </td>
+                            <td class="text">{{backup.date}} </td>
                         </tr>
                         {% endfor%}
                     </tbody>
