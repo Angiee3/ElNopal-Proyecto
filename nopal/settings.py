@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'invoice',
     'crispy_forms',
     'crispy_bootstrap5',
+    'django_select2'
 ]
 
 

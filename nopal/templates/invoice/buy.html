@@ -28,7 +28,7 @@
 
                     </form>
                 </div>
-                <a class="btn_agregar d-block m-auto text-center text-decoration-none py-1 my-3 rounded border border-none"
+                <a class="btn_agregar d-block m-auto text-center text-decoration-none py-1 my-3 rounded border border-none" href="{%url 'buy-status' %}"
                         style="width: 200px;">Ver Inactivas/Pendientes</a>
             
             {% if messages %}
@@ -74,12 +74,8 @@
                                     <a href="{% url 'buy-detail' pk=register.id %}" class="btn btn-md border" title="Añadir detalle"><img class="img-fluid" src="{% static 'img/icons/plus.svg' %}"></a> 
                                 {% elif register.status == "Cerrada" %}
                                     <a href="{% url 'buy-modal' modal='ver' pk=register.id %}" class="btn btn-md border" title="Ver detalle"><img class="img-fluid" src="{% static 'img/icons/eye.svg' %}"></a> 
-                                    <a href="" class="btn btn-md border" title="Marcar"><img class="img-fluid" src="{% static 'img/icons/unmark.svg' %}"></a> 
-                                {% elif register.status ==  "Pendiente" %}
-                                    <a href="" class="btn btn-md border" title="Desmarcar"><img class="img-fluid" src="{% static 'img/icons/mark.svg' %}"></a> 
-                                    {% if user.is_staff %}
-                                    <a href="" class="btn btn-md border" title="Eliminar"><img class="img-fluid" src="{% static 'img/icons/delete.svg' %}" id="eliminar"></a>
-                                    {% endif %}
+                                    <a href="{%url 'buy-modal' modal='marcar' pk=register.id %}" class="btn btn-md border" title="Marcar"><img class="img-fluid" src="{% static 'img/icons/unmark.svg' %}"></a> 
+                                    
                                 {% endif %}
                             </td>    
                         </tr>
@@ -93,6 +89,14 @@
         </div>
     </section>
 </div>
+
+<script>
+    $(document).ready(function() {
+        $('.js-example-basic-single').select2({
+            theme: 'bootstrap-5'
+        });
+    });
+</script>
 
 
 {% include 'partials/accesibilidad.html' %}

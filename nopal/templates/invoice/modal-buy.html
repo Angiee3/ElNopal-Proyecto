@@ -3,8 +3,10 @@
 {% load static %}
 {% block contenido %}
 
-{% if inactivas %}
-    {% include "modals/m-inactivas.html" %}
+{% if ver_compra %}
+    {% include "modals/m-invoice.html" %}
+{% elif ver_inactivas%}
+{% include "modals/m-inactivas.html" %}
 {% else %}
     {% include "modals/modal.html" %}
 {% endif %}
