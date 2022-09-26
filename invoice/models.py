@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 
         
 class Payment(models.TextChoices):
-        DATAFONO = 'Datáfono', _('Datafono')
+        DATAFONO = 'Datáfono', _('Datáfono')
         EFECTIVO = 'Efectivo', _('Efectivo')
         TRANSACCION = 'Transacción', _('Transaccion')
 class Status(models.TextChoices):
@@ -21,7 +21,7 @@ class Buy(models.Model):
     user = models.ForeignKey(Provider, on_delete=models.SET_NULL, null=True, verbose_name=u"Proveedor")
     payment = models.CharField(max_length=11, choices=Payment.choices, default=Payment.EFECTIVO, verbose_name=u"Método de Pago", blank=False)
     finalPrice = models.IntegerField(default=0, null=False, blank=True)
-    observation = models.CharField(max_length=15, choices=Observation.choices, verbose_name=u"Observaciones", null=False, blank=True)
+    observation = models.CharField(max_length=15, choices=Observation.choices, verbose_name=u"Observaciones", null=True, blank=True, default=" ")
     status = models.CharField(max_length=10, choices=Status.choices, verbose_name="Estado", default=Status.ABIERTA)
     def __str__(self) -> str:
         return ' %s' %(self.date)
@@ -51,7 +51,7 @@ class Sale(models.Model):
     typeSale = models.CharField(max_length=9, choices=TypeSale.choices, default=TypeSale.store, verbose_name=u"Tipo de Venta")
     finalPrice = models.IntegerField(default=0, null=False, blank=True)
     payment = models.CharField(max_length=11, choices=Payment.choices, default=Payment.EFECTIVO, verbose_name=u"Método de Pago", blank=False)
-    observation = models.CharField(max_length=15, choices=Observation.choices, verbose_name=u"Observaciones", null=False, blank=True)
+    observation = models.CharField(max_length=15, choices=Observation.choices, verbose_name=u"Observaciones", null=True, blank=True, default=" ")
     status = models.CharField(max_length=10, choices=Status.choices, verbose_name="Estado", default=Status.ABIERTA)
     def __str__(self) -> str:
         return ' %s' %(self.date)

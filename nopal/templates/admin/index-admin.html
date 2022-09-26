@@ -30,7 +30,8 @@
                 </div>
         
             </div>
-        
+            <a href="{% url 'backup' tipo='A' %}">Copia de seguridad</a></button>
+
             <!-- Datos chart area-->
             <div class="d-none" id="tags-area">{% for tag in fecha_stats %}{{tag.date}},{% endfor %}</div>
             <div class="d-none" id="data-area">{% for tag in valor %}{{tag.total_registros}},{% endfor %}</div>
