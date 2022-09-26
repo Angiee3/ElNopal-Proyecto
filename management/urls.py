@@ -29,7 +29,7 @@ urlpatterns = [
     
     path('usuario/<int:pk>', user, name="user"),
     path('usuario/<str:modal>/<int:pk>', user_modal, name="user-modal"),
-    path('registrar/', registrar, name='registrar'),
+    path('registrar/', register, name='register'),
     
     path('unidad_medida/', unit, name="unit"),
     path('unidad_medida/<str:modal>/<int:pk>', unit_modal, name="unit-modal"),

@@ -1,5 +1,4 @@
-import email
-import imp, os
+import os
 from datetime import datetime, date
 from django.shortcuts import render , redirect
 from django.contrib import messages
@@ -13,6 +12,7 @@ from invoice.models import *
 
 from .forms import UserRegisterForm
 from django.contrib.auth.models import User
+from django.http import HttpResponse, HttpResponseRedirect
 # Create your views here.
 
 def index_admin(request):
@@ -825,7 +825,7 @@ def unit_modal(request, modal, pk):
     return render(request, 'admin/modal-unit.html', context)
 
 
-def registrar(request):
+def register(request):
 	register= User.objects.all(
 	)
 	if request.method == 'POST':
