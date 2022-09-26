@@ -3,6 +3,10 @@
 {% load static %}
 {% block contenido %}
 
-{% include "modals/modal.html" %}
+{% if inactivas %}
+    {% include "modals/m-inactivas.html" %}
+{% else %}
+    {% include "modals/modal.html" %}
+{% endif %}
 
 {% endblock %}
