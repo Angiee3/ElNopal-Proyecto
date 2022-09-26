@@ -60,3 +60,12 @@ class BackupForm(forms.ModelForm):
             'name':forms.TextInput(attrs={'class':'form-control'}),
             'file':forms.FileInput(attrs={'class':'form-control'})
         }
+        
+class UnitForm(forms.ModelForm):
+    class Meta:
+        model = Unit
+        fields = ['name','type']
+        widgets = {
+            'name':forms.TextInput(attrs={'class':'form-control'}),
+            'type':forms.Select(attrs={'class':'form-control'}),
+        }

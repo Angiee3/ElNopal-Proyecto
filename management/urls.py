@@ -18,5 +18,7 @@ urlpatterns = [
     path('proveedor/<str:modal>/<int:pk>', provider_modal, name="provider-modal"),
     path('usuario/', user, name="user"),
     path('usuario/<str:modal>/<int:pk>', user_modal, name="user-modal"),
+    path('unidad_medida/', unit, name="unit"),
+    path('unidad_medida/<str:modal>/<int:pk>', unit_modal, name="unit-modal"),
 ]
 
