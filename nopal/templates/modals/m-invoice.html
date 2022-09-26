@@ -48,7 +48,6 @@
                             <th scope="col">Cantidad</th>
                             <th scope="col">Vr. Unitario</th>
                             <th scope="col">Vr. Total</th>
-                            <th scope="col">Acciones</th>
                         </tr>
                     </thead>
                    <tbody>
@@ -60,11 +59,6 @@
                                     <td>{{detail.amount}}</td>
                                     <td>${{detail.product.price}}</td>
                                     <td>${{detail.total}}</td>
-                                                            
-                                <td>
-                                    <a href="" class="btn btn-md border" ><img class="img-fluid " src=" {% static 'img/icons/update.svg' %} " alt=""></a>
-                                    <a href="" class="btn btn-md border" ><img class="img-fluid " src=" {% static 'img/icons/delete.svg' %}" alt=""></a> 
-                                </td>
                             </tr>
                             {% endif %}
                         {% endfor %}

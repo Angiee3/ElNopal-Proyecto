@@ -11,7 +11,7 @@
             <div class="col-md-4">
                 <div class="border p-3 rounded shadow mt-3" id="mode-cards">
                     <h3 class="text-start">Nuevo Registro </h3>
-                    <form method = 'POST' action= '' enctype = "multipart/form-data" novalidate id = "buy-form">
+                    <form method = 'POST' action= '' enctype = "multipart/form-data">
                         {% csrf_token %}
 
                         <label for="buy-provider" class="control-label">Proveedor</label>
@@ -22,7 +22,8 @@
                         <label for="buy-payment" class="control-label">Método de pago</label>
                         {{form.payment }}
                                        
-                        <input type="hidden" id="modal-status" value="Agregar">
+                        <input type="hidden" value="Agregar">
+
                         <button class="btn_agregar d-block m-auto text-center text-decoration-none py-1 rounded border border-none"
                         style="width: 120px;" data-bs-toggle="tooltip" data-bs-placement="right" title="Agregar a la compra">Agregar</button>
 
@@ -71,7 +72,7 @@
                                     {% if user.is_staff %}
                                     <a href="{%url 'buy-modal' modal='eliminar' pk=register.id %}" class="btn btn-md border" title="Eliminar"><img class="img-fluid" src="{% static 'img/icons/delete.svg' %}" id="eliminar"></a>
                                     {% endif %}
-                                    <a href="{% url 'buy-detail' pk=register.id %}" class="btn btn-md border" title="Añadir detalle"><img class="img-fluid" src="{% static 'img/icons/plus.svg' %}"></a> 
+                                    <a href="" class="btn btn-md border" title="Añadir detalle"><img class="img-fluid" src="{% static 'img/icons/plus.svg' %}"></a> 
                                 {% elif register.status == "Cerrada" %}
                                     <a href="{% url 'buy-modal' modal='ver' pk=register.id %}" class="btn btn-md border" title="Ver detalle"><img class="img-fluid" src="{% static 'img/icons/eye.svg' %}"></a> 
                                     <a href="{%url 'buy-modal' modal='marcar' pk=register.id %}" class="btn btn-md border" title="Marcar"><img class="img-fluid" src="{% static 'img/icons/unmark.svg' %}"></a> 
@@ -89,14 +90,6 @@
         </div>
     </section>
 </div>
-
-<script>
-    $(document).ready(function() {
-        $('.js-example-basic-single').select2({
-            theme: 'bootstrap-5'
-        });
-    });
-</script>
 
 
 {% include 'partials/accesibilidad.html' %}

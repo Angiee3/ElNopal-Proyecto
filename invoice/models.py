@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 
         
 class Payment(models.TextChoices):
-        DATAFONO = 'Datáfono', _('Datafono')
+        DATAFONO = 'Datáfono', _('Datáfono')
         EFECTIVO = 'Efectivo', _('Efectivo')
         TRANSACCION = 'Transacción', _('Transaccion')
 class Status(models.TextChoices):
