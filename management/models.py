@@ -48,6 +48,8 @@ class Unit(models.Model):
         MASA = 'Masa',_('Masa')
         VOLUMEN = 'Volumen',_('Volumen')
     type = models.CharField(max_length=30, choices=Type.choices, default=Type.MASA, verbose_name="Tipo de medida")
+    status = models.BooleanField(default=True)
+    
     def __str__(self) -> str:
         return (self.name)
     def clean(self):
