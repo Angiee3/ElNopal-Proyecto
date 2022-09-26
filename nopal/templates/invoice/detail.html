@@ -11,12 +11,20 @@
             <div class="col-md-4">
                 <div class="border bg-white p-3 rounded shadow mt-3" id="mode-cards">
                     <h3 class="text-start">Nuevo Registro </h3>
-                    <form action="" method="POST" enctype="multipart/form-data">
+                    <form method = 'POST' action= '' enctype = "multipart/form-data" novalidate id = "detail-form">
                         {% csrf_token %}
-                        {{form|crispy}}
+
+                        <label for="detail-product" class="control-label">Producto</label>
+                        {{form.product }}
+                        <a href="{% url 'm_product' %}" id="add_product" onclick="return showAddPopup(this);"><img src = "{% static 'img/icons/plus.svg' %}"></a>
+                        <br>           
+
+                        <label for="detail-amount" class="control-label">Cantidad</label>
+                        {{form.amount }}
+
                         <input type="hidden" id="modal-status" value="Agregar">
                         <button class="btn_agregar d-block m-auto text-center text-decoration-none py-1 rounded border border-none"
-                        style="width: 120px;">Agregar</button>
+                        style="width: 120px;" >Agregar</button>
                     </form>
                 </div>
 
