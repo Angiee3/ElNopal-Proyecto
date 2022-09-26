@@ -1,8 +1,9 @@
+from select import select
 from django import forms
 from management.models import *
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-
+from django_select2.forms import ModelSelect2Widget
 class CategoryForm(forms.ModelForm):
     class Meta:
         model = Category
@@ -39,7 +40,7 @@ class ProductForm(forms.ModelForm):
             'description':forms.Textarea(attrs={'class':'form-control'}),
             'subcategory':forms.Select(attrs={'class':'form-control'}),
             'brand':forms.Select(attrs={'class':'form-control'}),
-            'unitMeasurement':forms.Select(attrs={'class':'form-control'}),
+            'unitMeasurement':forms.Select(attrs={'class':'form-control select2'}),
             'stock':forms.NumberInput(attrs={'class':'form-control'}),
             'image':forms.FileInput(attrs={'class':'form-control'})            
         }
@@ -69,7 +70,7 @@ class UnitForm(forms.ModelForm):
         fields = ['name','type']
         widgets = {
             'name':forms.TextInput(attrs={'class':'form-control'}),
-            'type':forms.Select(attrs={'class':'form-control'}),
+            'type':forms.Select(attrs={'class':'form-control select2'}),
         }
 
 class UserRegisterForm(UserCreationForm):
@@ -81,3 +82,30 @@ class UserRegisterForm(UserCreationForm):
 		model = User
 		fields = ['username', 'email', 'password1', 'password2']
 		help_texts = {k:"" for k in fields }
+
+
+
+# class  enlace(forms.Form):
+    # unit = forms.ModelChoiceField(
+    #     queryset=Unit.objects.all(),
+    #     label=u"Unit",
+    #     widget=ModelSelect2Widget(
+    #         model=Unit,
+    #         search_fields=['name__icontains'],
+    #     )
+    # )
+
+#     product = forms.ModelChoiceField(
+#         queryset=Product.objects.all(),
+#         label=u"Product",
+#         widget=ModelSelect2Widget(
+#             model=Product,
+#             search_fields=['name__icontains'],
+#             dependent_fields={'unit': 'unit'},
+#             max_results=500,
+#         )
+#     )
+
+
+class  textform(forms.Form):
+    unit = forms.ModelChoiceField(queryset=Unit.objects.none(), widget= forms.Select(attrs={'class':'form-control select2'}) )
