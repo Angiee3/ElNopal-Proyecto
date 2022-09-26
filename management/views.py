@@ -288,7 +288,7 @@ def brand(request):
     fields = ['name']
     # print(fields)
     atributes = ['Nombre']
-    if request.method == 'POST':
+    if request.method   == 'POST':
         form = BrandForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
@@ -408,7 +408,8 @@ def product(request):
         'registers': registers,
         'location':location,
         'fields':fields,
-        'atributes':atributes
+        'atributes':atributes,
+        'form2':UnitForm()
     }
     return render(request, 'admin/product.html', context)
 
