@@ -7,6 +7,8 @@ $(document).ready(function() {
         responsive: true,
         paging: true,
         autoWidth: true,
+        height: 300,
+        margin: 20,
         buttons: [{
             extend: 'excel',
             text: '<svg xmlns="http://www.w3.org/2000/svg" width="50" height="30" style="color:#dfe0e0  " fill="currentColor" class="bi bi-file-earmark-excel" viewBox="0 0 16 16"><path d="M5.884 6.68a.5.5 0 1 0-.768.64L7.349 10l-2.233 2.68a.5.5 0 0 0 .768.64L8 10.781l2.116 2.54a.5.5 0 0 0 .768-.641L8.651 10l2.233-2.68a.5.5 0 0 0-.768-.64L8 9.219l-2.116-2.54z"/><path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"/></svg>',
@@ -34,76 +36,7 @@ $(document).ready(function() {
                 search: 'applied',
                 order: 'applied'
             },
-            customize: function (doc) {
-                doc.content.splice(0,1);{
-                    var now= new Date();
-                    var jsDate=now.getDate()+'/'+(now.getMonth()+1)+'/'+now.getFullYear();
-                    logo.src = '\nopal\static\img\Logo.png';
-                    doc.pageMargins = [30 , 120 , 80 , 40 ];
-                    doc.defaultStyle.fontSize = 8;
-                    doc.styles.tableHeader.fontSize = 8;  
-                    
-                    doc['header']=(function() {
-                        
-                        return {
-                            columns: [
-
-                                {
-                                    image: logo,
-                                    width: 100,
-                                    height:55,
-                                },
-                                {
-                                    alignment: 'left',
-                                    text: 'EL NOPAL',
-                                    FontFace:'Corbel Light',
-                                    fontSize: 20,
-                                    margin: [5,20],
-                                },
-                                {
-                                    alignment: 'left',
-                                    text: $('title').text(),
-                                    fontSize: 20,
-                                    margin: [15,40],
-                                },
-                            {
-                                alignment: 'center',
-                                fontSize: 9,
-                                text: [{ text: jsDate }],   
-                            },
-                            
-
-                            ],
-                            margin: 20,
-                        }
-                    });
-                    doc['footer']=(function(page, pages) {
-                        return {
-                                columns: [       
-                                {
-                                    text:'SENA :)',
-                                    fontSize: 9,
-                                },
-                                {
-                                    alignment: 'right',
-                                    text: ['Pagina ', { text: page.toString() },	' de ',	{ text: pages.toString() }],
-                                    fontSize:9,
-
-                                }
-                            ],
-                            margin: 20
-                        }
-                    });
-                    var objLayout = {};
-                    objLayout['hLineWidth'] = function(i) { return .5; };
-                    objLayout['vLineWidth'] = function(i) { return .5; };
-                    objLayout['hLineColor'] = function(i) { return '#aaa'; };
-                    objLayout['vLineColor'] = function(i) { return '#aaa'; };
-                    objLayout['paddingLeft'] = function(i) { return 10; };
-                    objLayout['paddingRight'] = function(i) { return 10; };
-                    doc.content[0].layout = objLayout;
-                }
-            },
+            
     },
         ],
         "bDestroy": true,

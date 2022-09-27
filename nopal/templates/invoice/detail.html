@@ -42,28 +42,28 @@
 
                 <table class="display table table-striped text-center table-hover text-nowrap mt-3" style="width:100% ">
                     <thead style="background-color: var(--verde); color: var(--verdeocuro);">
-                        <tr><th colspan="5">Compra No.{{factura.id}}</td></tr>
+                        <tr><th id="factura" colspan="5">Compra No.{{factura.id}}</td></tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td style="font-weight: 600" colspan="2">Fecha:</td>
-                            <td colspan="3">{{factura.date}}</td>
+                            <td id="fecha_reporte" colspan="3">{{factura.date}}</td>
                         </tr>
                         <tr>
                             <td style="font-weight: 600" colspan="2">Proveedor:</td>
-                            <td colspan="3">{{factura.user}}</td>
+                            <td id="proveedor" colspan="3">{{factura.user}}</td>
                         </tr>
                         <tr>
                             <td style="font-weight: 600" colspan="1">Celular:</td>
-                            <td colspan="1">{{factura.user.phone}}</td>
+                            <td id="celular" colspan="1">{{factura.user.phone}}</td>
                             <td style="font-weight: 600" colspan="1">Correo:</td>
-                            <td colspan="2">{{factura.user.email}}</td>
+                            <td id="correo" colspan="2">{{factura.user.email}}</td>
                         </tr>
                         <tr>
                             <td colspan="1"></td>
                             <td colspan="1"></td>
                             <td style="font-weight: 600; font-size:20px" colspan="1">Total a pagar:</td>
-                            <td style="font-size:25px" colspan="2">${{factura.finalPrice|floatformat:3}}</td>
+                            <td id="valorTotal" style="font-size:25px" colspan="2">${{factura.finalPrice|floatformat:3}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -99,11 +99,13 @@
                         {% endfor %}
                    </tbody>
                 </table>
+                
                 <a class="btn_agregar d-block m-auto text-center text-decoration-none py-1 rounded border border-none" style="width: 120px;">Cerrar Factura</a>
-
+                <button type="button" id="botonReporte" class="btn btn-success">Reportes</button>
             </div>
         </div>
     </section>
 </div>
+<table id="my-table"></table>
 {% include 'partials/accesibilidad.html' %}
  {% endblock %}

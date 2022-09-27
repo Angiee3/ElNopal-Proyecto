@@ -19,7 +19,7 @@ def buy(request):
             date_aux = datetime.now().strftime("%Y-%m-%d")
             buy = Buy.objects.create(
                 date = date_aux,
-                provider = form.cleaned_data['provider'],
+                # provider = form.cleaned_data['provider'],
                 payment = request.POST['payment']
             )
             messages.success(
@@ -217,6 +217,24 @@ def buy_modal(request, modal, pk):
     }
     return render(request, 'invoice/modal-buy.html', context)
 
+from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import A4
+
+w, h = A4
+
+c = canvas.Canvas("Compra.pdf", pagesize=A4)
+c.drawImage("nopal\static\img\Logo.png", 50, h - 100, width=150, height=75)
+c.drawString(400, h - 70, "Compra N° {{factura.id}}")
+c.drawString(100, h - 130, "Fecha:")
+c.drawString(400, h - 130, "{{factura.date}}")
+c.drawString(100, h - 155, "Proveedor:")
+c.drawString(400, h - 155, "{{factura.user}}")
+c.drawString(100, h - 175, "Celular:")
+c.drawString(400, h - 175, "{{factura.user.phone}}")
+c.drawString(100, h - 195, "Correo:")
+c.drawString(400, h - 195, "{{factura.user.email}}")
+c.showPage()
+c.save()
 
 
 
