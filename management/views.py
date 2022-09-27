@@ -409,7 +409,8 @@ def product(request):
         'location':location,
         'fields':fields,
         'atributes':atributes,
-        'form2':UnitForm()
+        'form2':UnitForm(),
+        'unit':Unit.objects.all()
     }
     return render(request, 'admin/product.html', context)
 
