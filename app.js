@@ -21,31 +21,31 @@ nodeCron.schedule('25 */1 * * * *', ()=>{
     timezone: "America/Bogota"
  });
 
-     nodeCron.schedule('*/1 * * * *', ()=>{
-        let ruta = './nopal/static/backup'
-        let array = []
-        if(fs.existsSync(ruta)){
-            fs.readdirSync(ruta).forEach((file)=>{
-                const curPath = Path.join(ruta, file )
-                array.push(curPath)
-            }) 
-            console.log(array);
-            if(array.length >0){
-                if(fs.existsSync(array[0])){
-                    fs.unlinkSync(array[0])
-                    array.shift(array[0],' eliminado');
-                    console.log(array , ' recientes' )
-                }else{
-                    console.log('error no existe');
-                }
-            }
-        }
-        console.log('si funciona');
-     } ,
-     {
-     scheduled: true,
-     timezone: "America/Bogota"
-    })
+    //  nodeCron.schedule('*/1 * * * *', ()=>{
+    //     let ruta = './nopal/static/backup'
+    //     let array = []
+    //     if(fs.existsSync(ruta)){
+    //         fs.readdirSync(ruta).forEach((file)=>{
+    //             const curPath = Path.join(ruta, file )
+    //             array.push(curPath)
+    //         }) 
+    //         console.log(array);
+    //         if(array.length >0){
+    //             if(fs.existsSync(array[0])){
+    //                 fs.unlinkSync(array[0])
+    //                 array.shift(array[0],' eliminado');
+    //                 console.log(array , ' recientes' )
+    //             }else{
+    //                 console.log('error no existe');
+    //             }
+    //         }
+    //     }
+    //     console.log('si funciona');
+    //  } ,
+    //  {
+    //  scheduled: true,
+    //  timezone: "America/Bogota"
+    // })
 
 // let spawn = require('child_process').spawn;
 // let wstream = fs.createWriteStream('dumpfilename.sql');
