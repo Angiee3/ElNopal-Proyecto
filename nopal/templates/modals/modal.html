@@ -12,10 +12,10 @@
             </div>
             <div class="modal-body">
                 <p>¿Está seguro de {{modal_txt}} "{{factura.id}}{{register_id}}"?</p>
-                {% if modal == 'editar' %}
+                {% if modal == 'editar' or modal == 'marcar'%}
                 <form action="" method="POST" enctype="multipart/form-data">
                     {{form|crispy}}{% csrf_token %}
-                {% elif modal == 'eliminar' or modal == 'cerrar'%}
+                {% elif modal == 'eliminar' or modal == 'cerrar' or modal == 'desmarcar' %}
                 <form action="" method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
                 {% endif %}
