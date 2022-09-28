@@ -195,7 +195,7 @@ def categoryCreatePopup(request):
         instance = form.save()
         name = form.cleaned_data.get('name')
         messages.success(request,f'La categoría {name} se agregó correctamente!')
-        return HttpResponse('<script>opener.closePopup(window, "%s", "%s", "#id_subcategory");</script>' % (instance.pk, instance))
+        return HttpResponse('<script>opener.closePopup(window, "%s", "%s", "#id_category");</script>' % (instance.pk, instance))
     context={
         'form':form,
         'title_pag':title_pag,
@@ -311,7 +311,7 @@ def brandCreatePopup(request):
         instance = form.save()
         name = form.cleaned_data.get('name')
         messages.success(request,f'La marca {name} se agregó correctamente!')
-        return HttpResponse('<script>opener.closePopup(window, "%s", "%s", "#id_subcategory");</script>' % (instance.pk, instance))
+        return HttpResponse('<script>opener.closePopup(window, "%s", "%s", "#id_brand");</script>' % (instance.pk, instance))
     context={
         'form':form,
         'title_pag':title_pag,
@@ -415,7 +415,7 @@ def productCreatePopup(request):
         instance = form.save()
         name = form.cleaned_data.get('name')
         messages.success(request,f'El producto {name} se agregó correctamente!')
-        return HttpResponse('<script>opener.closePopup(window, "%s", "%s", "#id_subcategory");</script>' % (instance.pk, instance))
+        return HttpResponse('<script>opener.closePopup(window, "%s", "%s", "#id_product");</script>' % (instance.pk, instance))
     context={
         'form':form,
         'title_pag':title_pag,
@@ -520,7 +520,7 @@ def providerCreatePopup(request):
         instance = form.save()
         name = form.cleaned_data.get('name')
         messages.success(request,f'El proveedor {name} se agregó correctamente!')
-        return HttpResponse('<script>opener.closePopup(window, "%s", "%s", "#id_subcategory");</script>' % (instance.pk, instance))
+        return HttpResponse('<script>opener.closePopup(window, "%s", "%s", "#id_provider");</script>' % (instance.pk, instance))
     context={
         'form':form,
         'title_pag':title_pag,
@@ -763,6 +763,7 @@ def register(request):
 		form = UserRegisterForm(request.POST)
 		if form.is_valid() :
 			form.save()
+            
 			return redirect('register')
 	else:
 		form = UserRegisterForm()
@@ -780,7 +781,7 @@ def registerCreatePopup(request):
 
     if form.is_valid():
         instance = form.save()
-        return HttpResponse('<script>opener.closePopup(window, "%s", "%s", "#id_subcategory");</script>' % (instance.pk, instance))
+        return HttpResponse('<script>opener.closePopup(window, "%s", "%s", "#id_register");</script>' % (instance.pk, instance))
     context={
         'form':form,
         'title_pag':title_pag,

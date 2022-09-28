@@ -12,8 +12,7 @@
                 <h3 class="text-start">Nuevo Registro </h3>
                 <form method='POST' action='' enctype="multipart/form-data" novalidate id="subcategory-form">
                     {% csrf_token %}
-
-                    <label for="subcategory-name" class="control-label">Nombre</label>
+                    <label for="subcategory-name" class="control-label" required>Nombre</label>
                     <span class="asteriskField">*</span>
                     {{form.name }}
 
@@ -34,6 +33,8 @@
                     <input type="submit" class="btn_agregar d-block m-auto text-center text-decoration-none py-1 rounded border border-none" 
                     style="width: 120px;" data-bs-toggle="tooltip" data-bs-placement="right" title="Agregar producto" value="Agregar" />
                 </form>
+
+
             </div>
         </div>
     </section>
