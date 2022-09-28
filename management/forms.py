@@ -70,7 +70,7 @@ class UnitForm(forms.ModelForm):
         fields = ['name','type']
         widgets = {
             'name':forms.TextInput(attrs={'class':'form-control'}),
-            'type':forms.Select(attrs={'class':'form-control select2'}),
+            'type':forms.Select(attrs={'class':'form-control select2 select_padre'}),
         }
 
 class UserRegisterForm(UserCreationForm):
@@ -82,30 +82,3 @@ class UserRegisterForm(UserCreationForm):
 		model = User
 		fields = ['username', 'email', 'password1', 'password2']
 		help_texts = {k:"" for k in fields }
-
-
-
-# class  enlace(forms.Form):
-    # unit = forms.ModelChoiceField(
-    #     queryset=Unit.objects.all(),
-    #     label=u"Unit",
-    #     widget=ModelSelect2Widget(
-    #         model=Unit,
-    #         search_fields=['name__icontains'],
-    #     )
-    # )
-
-#     product = forms.ModelChoiceField(
-#         queryset=Product.objects.all(),
-#         label=u"Product",
-#         widget=ModelSelect2Widget(
-#             model=Product,
-#             search_fields=['name__icontains'],
-#             dependent_fields={'unit': 'unit'},
-#             max_results=500,
-#         )
-#     )
-
-
-class  textform(forms.Form):
-    unit = forms.ModelChoiceField(queryset=Unit.objects.none(), widget= forms.Select(attrs={'class':'form-control select2'}) )
