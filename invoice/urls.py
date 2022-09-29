@@ -12,4 +12,8 @@ urlpatterns = [
     path('venta/', sale, name="sale"),
     path('venta/detalle/<int:pk>', detail_sale, name="sale-detail"),
 
+    path('registrar/', registerU, name='registerU'),
+    path('registrar/crear/', registerCreatePopup, name = "m_register"),
+
+
 ]

@@ -1,12 +1,13 @@
 from django import forms
 from .models import *
+
         
 class BuyForm(forms.ModelForm):
     class Meta:
         model = Buy
         fields =['provider','payment']
         widgets = {
-            'user':forms.Select(attrs={'class':'form-control'}),
+            'provider':forms.Select(attrs={'class':'form-control'}),
             'payment':forms.Select(attrs={'class':'form-control'})
         }
         
@@ -22,9 +23,9 @@ class DetailBuyForm(forms.ModelForm):
 class SaleForm(forms.ModelForm):
     class Meta:
         model = Sale
-        fields=['user','typeSale','payment','client','nDocument','address']
+        fields=['username','typeSale','payment','client','nDocument','address']
         widgets = {
-            'user':forms.Select(attrs={'class':'form-control'}),
+            'username':forms.Select(attrs={'class':'form-control'}),
             'typeSale':forms.Select(attrs={'class':'form-control'}),
             'payment':forms.Select(attrs={'class':'form-control'}),
             'client':forms.TextInput(attrs={'class':'form-control'}),
@@ -40,4 +41,3 @@ class DetailSaleForm(forms.ModelForm):
             'product':forms.Select(attrs={'class':'form-control'}),
             'amount':forms.NumberInput(attrs={'class':'form-control'})
         }
-     

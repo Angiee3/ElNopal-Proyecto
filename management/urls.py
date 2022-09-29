@@ -29,8 +29,8 @@ urlpatterns = [
     # path('usuario/<int:pk>', user, name="user"),
     path('usuario/<str:modal>/<int:pk>', user_modal, name="user-modal"),
 
-    path('registrar/', register, name='register'),
-    path('registrar/crear/', registerCreatePopup, name = "m_register"),
+    # path('registrar/', register, name='register'),
+    # path('registrar/crear/', registerCreatePopup, name = "m_register"),
 
     
 ]

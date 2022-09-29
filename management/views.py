@@ -25,20 +25,10 @@ def index_admin(request):
     registros_stats=registros.values('product').annotate(total_registros=Sum(('amount'), output_field=models.PositiveIntegerField())).order_by('total_registros')
     total_registros=DetailSale.objects.aggregate(Sum('amount'))['amount__sum']
 
-    for i in registros_stats:
-        i['product']=Product.objects.get(id=i['product'])
-    registros_grupos=registros_stats.all()
-    registros_grupos_final={}
-    
-    for j in registros_grupos:
-        j['product']=Product.objects.get(id=j['product']).subcategory
-        if registros_grupos_final.get(j['product']) != None:
-           registros_grupos_final[j['product']]+= j['total_registros']
-        else:
-           registros_grupos_final[j['product']]= j['total_registros']
+    date_aux = datetime.now().strftime("%m")
+    mes_registros=DetailSale.objects.aggregate(Sum('amount'))['amount__sum']
 
-    # fecha_stats=registroci.values('date')
-    
+            
     fecha_stats=registroci.values('date')
     registros.annotate(total_registros=Sum(('amount'), output_field=models.PositiveIntegerField()))
 
@@ -49,7 +39,8 @@ def index_admin(request):
         'registros_stats':registros_stats,
         'fecha_stats':fecha_stats,
         'total_registros':total_registros,
-        'registros_grupos':registros_grupos_final
+        'date_aux':date_aux,
+        'mes_registros':mes_registros
     }
     return render(request, "admin/index-admin.html", context)
 
@@ -754,39 +745,39 @@ def backup(request, tipo):
     }
     return render(request, 'admin/backup.html',context) 
 
-# /////////////////////////RegistroUser////////////////////
+# # /////////////////////////RegistroUser////////////////////
 
 
-def register(request):
-	registers= User.objects.all()
-	if request.method == 'POST':
-		form = UserRegisterForm(request.POST)
-		if form.is_valid() :
-			form.save()
+# def register(request):
+# 	registers= User.objects.all()
+# 	if request.method == 'POST':
+# 		form = UserRegisterForm(request.POST)
+# 		if form.is_valid() :
+# 			form.save()
             
-			return redirect('register')
-	else:
-		form = UserRegisterForm()
-	context = { 'form' : form,
-            	'registers':registers
-	}
-	return render(request, 'admin/register.html', context)
+# 			return redirect('register')
+# 	else:
+# 		form = UserRegisterForm()
+# 	context = { 'form' : form,
+#             	'registers':registers
+# 	}
+# 	return render(request, 'admin/register.html', context)
 
-def registerCreatePopup(request):
-    location = True
-    admin = True
-    title_pag = "Registro"
-    registers = User.objects.all()    
-    form = UserRegisterForm(request.POST, request.FILES) 
+# def registerCreatePopup(request):
+#     location = True
+#     admin = True
+#     title_pag = "Registro"
+#     registers = User.objects.all()    
+#     form = UserRegisterForm(request.POST, request.FILES) 
 
-    if form.is_valid():
-        instance = form.save()
-        return HttpResponse('<script>opener.closePopup(window, "%s", "%s", "#id_register");</script>' % (instance.pk, instance))
-    context={
-        'form':form,
-        'title_pag':title_pag,
-        'admin':admin,
-        'registers': registers,
-        'location':location,
-    }
-    return render(request, "m-forms/m_register.html", context)
+#     if form.is_valid():
+#         instance = form.save()
+#         return HttpResponse('<script>opener.closePopup(window, "%s", "%s", "#id_register");</script>' % (instance.pk, instance))
+#     context={
+#         'form':form,
+#         'title_pag':title_pag,
+#         'admin':admin,
+#         'registers': registers,
+#         'location':location,
+#     }
+#     return render(request, "m-forms/m_register.html", context)

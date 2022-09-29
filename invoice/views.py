@@ -1,11 +1,17 @@
 import datetime
 from multiprocessing import context
+from turtle import position
 from urllib import request
 from django.shortcuts import render, redirect
 from .models import *
 from .forms import *
+from management.forms import UserRegisterForm
 from django.contrib import messages
 from datetime import datetime
+from django.http import HttpResponse, HttpResponseRedirect
+from django.contrib.auth.models import User
+
+
 
 
 def buy(request):
@@ -154,6 +160,10 @@ def sale(request):
     buy_template = False
     title_pag = "Venta"
     registers = Sale.objects.all()
+    
+    usuarios= User.objects.values_list('username')
+    res = [value for value, in usuarios]
+
     if request.method == 'POST':
         print('VENTA-------------------------------->')
         form = SaleForm(request.POST)
@@ -162,7 +172,7 @@ def sale(request):
             date_aux = datetime.now().strftime("%Y-%m-%d")
             sale = Sale.objects.create(
                 date = date_aux,
-                user = form.cleaned_data['user'],
+                username = form.cleaned_data['username'],
                 payment = request.POST['payment'],
             )
             if request.POST['client'] or request.POST['address'] or request.POST['nDocument']:
@@ -183,7 +193,9 @@ def sale(request):
         'registers': registers,
         'location':location,
         'buy_template':buy_template,
+        'res': res
     }
+    print("-------------------------------",request.POST)
     return render(request, 'admin/sale.html', context)
 def detail_sale(request, pk):
     location = True
@@ -300,3 +312,40 @@ def detail_sale(request, pk):
         'modal':modal
     }
     return render(request, 'admin/detail.html', context)
+
+# /////////////////////////RegistroUser////////////////////
+
+
+def registerU(request):
+	registers= User.objects.all()
+	if request.method == 'POST':
+		form = UserRegisterForm(request.POST)
+		if form.is_valid() :
+			form.save()
+            
+			return redirect('registerU')
+	else:
+		form = UserRegisterForm()
+	context = { 'form' : form,
+            	'registers':registers
+	}
+	return render(request, 'admin/register.html', context)
+
+def registerCreatePopup(request):
+    location = True
+    admin = True
+    title_pag = "Registro"
+    registers = User.objects.all()    
+    form = UserRegisterForm(request.POST, request.FILES) 
+
+    if form.is_valid():
+        instance = form.save()
+        return HttpResponse('<script>opener.closePopup(window, "%s", "%s", "#id_register");</script>' % (instance.pk, instance))
+    context={
+        'form':form,
+        'title_pag':title_pag,
+        'admin':admin,
+        'registers': registers,
+        'location':location,
+    }
+    return render(request, "m-forms/m_register.html", context)
