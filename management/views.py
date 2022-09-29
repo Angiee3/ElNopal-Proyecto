@@ -826,19 +826,46 @@ def unit_modal(request, modal, pk):
     }
     return render(request, 'admin/modal-unit.html', context)
 
+# /////////////////////////RegistroUser////////////////////
 
-def register(request):
-	register= User.objects.all(
-	)
-	if request.method == 'POST':
-		form = UserRegisterForm(request.POST)
-		if form.is_valid() :
-			form.save()
-			return redirect('admin-login')
-	else:
-		form = UserRegisterForm()
-	context = { 'form' : form,
-            	'register':register
+
+def registerU(request):
+    location = True
+    admin = True
+    title_pag = "Registro"
+    registers= User.objects.all()
+    if request.method == 'POST':
+        form = UserRegisterForm(request.POST)
+        if form.is_valid() :
+           form.save()
+            
+           return redirect('registerU')
+    else:
+        form = UserRegisterForm()
+    context = { 'form' : form,
+            	'registers':registers,
+                'location':location,
+                'admin':admin,
+                'title_pag':title_pag
 	}
-	return render(request, 'admin/register.html', context)
+    return render(request, 'admin/register.html', context)
+
+def registerCreatePopup(request):
+    location = True
+    admin = True
+    title_pag = "Registro"
+    registers = User.objects.all()    
+    form = UserRegisterForm(request.POST, request.FILES) 
+
+    if form.is_valid():
+        instance = form.save()
+        return HttpResponse('<script>opener.closePopup(window, "%s", "%s", "#id_register");</script>' % (instance.pk, instance))
+    context={
+        'form':form,
+        'title_pag':title_pag,
+        'admin':admin,
+        'registers': registers,
+        'location':location,
+    }
+    return render(request, "m-forms/m_register.html", context)
 

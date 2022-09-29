@@ -74,11 +74,17 @@ class UnitForm(forms.ModelForm):
         }
 
 class UserRegisterForm(UserCreationForm):
-	email = forms.EmailField()
-	password1 = forms.CharField(label='Contraseña', widget=forms.PasswordInput)
-	password2 = forms.CharField(label='Confirmar contraseña', widget=forms.PasswordInput)
+    name = forms.CharField(label='Nombre')
+    lastname = forms.CharField(label='Apellido')
+    document = forms.CharField(label='Tipo de documento')
+    nDocument = forms.IntegerField(label='Número de documento')
+    phone = forms.CharField(label='Número de celular')
+    email = models.EmailField(max_length=254, verbose_name=u"Correo Electrónico")
+    username = forms.CharField(label='Contraseña')
+    password1 = forms.CharField(label='Contraseña', widget=forms.PasswordInput)
+    password2 = forms.CharField(label='Confirmar contraseña', widget=forms.PasswordInput)
 
-	class Meta:
-		model = User
-		fields = ['username', 'email', 'password1', 'password2']
-		help_texts = {k:"" for k in fields }
+    class Meta:
+        model = User
+        fields = ['name','lastname','document','nDocument','phone','email','username', 'password1', 'password2']
+        help_texts = {k:"" for k in fields }
