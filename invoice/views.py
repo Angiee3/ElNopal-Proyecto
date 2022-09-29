@@ -317,19 +317,25 @@ def detail_sale(request, pk):
 
 
 def registerU(request):
-	registers= User.objects.all()
-	if request.method == 'POST':
-		form = UserRegisterForm(request.POST)
-		if form.is_valid() :
-			form.save()
+    location = True
+    admin = True
+    title_pag = "Registro"
+    registers= User.objects.all()
+    if request.method == 'POST':
+        form = UserRegisterForm(request.POST)
+        if form.is_valid() :
+           form.save()
             
-			return redirect('registerU')
-	else:
-		form = UserRegisterForm()
-	context = { 'form' : form,
-            	'registers':registers
+           return redirect('registerU')
+    else:
+        form = UserRegisterForm()
+    context = { 'form' : form,
+            	'registers':registers,
+                'location':location,
+                'admin':admin,
+                'title_pag':title_pag
 	}
-	return render(request, 'admin/register.html', context)
+    return render(request, 'admin/register.html', context)
 
 def registerCreatePopup(request):
     location = True

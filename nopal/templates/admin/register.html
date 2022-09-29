@@ -13,38 +13,93 @@
                     <h3 class="text-start">Nuevo Registro </h3>
                     <form action="" method="POST">
                         {% csrf_token %}
-                {{ form|crispy }}
-    
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-    
+                        <div id="div_id_name" class="mb-3">
+                            <label for="id_name" class="form-label requiredField">Nombre</label>
+                            <span class="asteriskField">*</span>
+                            <input type="text" name="name" autofocus class="textinput textInput form-control" required id="id_name">
+                        </div>
+                        <div id="div_id_lastname" class="mb-3">
+                            <label for="id_lastname" class="form-label requiredField">Apellido</label>
+                            <span class="asteriskField">*</span>
+                            <input type="text" name="lastname" autofocus class="textinput textInput form-control" required id="id_lastname">
+                        </div> 
+                        <div id="div_id_document" class="mb-3">
+                            <label for="id_document" class="form-label requiredField">Tipo de documento</label>
+                            <span class="asteriskField">*</span>
+                            <select class="form-select select2 select_hijo" id="id_document" aria-label="Default select example" name="docmument" >
+                                <option value="1">Cédula de ciudadanía</option>
+                                <option value="2">Cédula de extranjería</option>
+                            </select>
+                            </div>  
+                        <div id="div_id_nDocument" class="mb-3">
+                            <label for="id_nDocument" class="control-label">Número de Documento</label>
+                            <span class="asteriskField">*</span>
+                            <input type="number" name="nDocument" autofocus class="numberinput numberInput form-control" required id="id_nDocument">
+                        </div>  
+                        <div id="div_id_phone" class="mb-3">
+                            <label for="id_phone" class="control-label">Número de celular</label>
+                            <input type="number" name="nDocument" autofocus class="numberinput numberInput form-control" required id="id_phone">
+                        </div>                   
+                        <div id="div_id_username" class="mb-3">
+                            <label for="id_username" class="form-label requiredField">Nombre de usuario</label>
+                            <span class="asteriskField">*</span>
+                            <input type="text" name="username" autofocus class="textinput textInput form-control" required id="id_username">
+                        </div>
+                        <div id="div_id_email" class="mb-3">
+                            <label for="id_email" class="form-label requiredField">Email</label>
+                            <span class="asteriskField">*</span>
+                            <input type="email" name="email" autofocus class="textinput textInput form-control" required id="id_email">
+                        </div>
+                        <div id="div_id_password1" class="mb-3">
+                            <label for="id_password1" class="form-label requiredField">Contraseña</label>
+                            <span class="asteriskField">*</span>
+                            <input type="password" name="password1" class="textinput textInput form-control" required id="id_password1">
+                        </div>
+                        <div id="div_id_password2" class="mb-3">
+                            <label for="id_password2" class="form-label requiredField">Confirmar contraseña</label>
+                            <span class="asteriskField">*</span>
+                            <input type="password" name="password2" autofocus class="textinput textInput form-control" required id="id_password2">
+                        </div>
+                </div>    
                 
-                    <button  id="modal-status" class="btn_agregar d-block m-auto text-center text-decoration-none py-1 rounded border border-none"
+                    <button  id="modal-status" class="btn_agregar d-block m-auto text-center text-decoration-none py-1 my-3 rounded border border-none"
                     style="width: 120px;" >Registrar</button>
                     </form>
-                </div>
             </div>
-            <div class="col-md-8">
-                <table id="tabla" class="display table table-striped table-hover text-nowrap mt-3" style="width:100%">
-                    <thead style="background-color: var(--verde); color: var(--verdeoscuro);">
-                        <tr>
-                            <th scope="col">Nombre Usuario</th>
+            <div class="row p-3">
+                <div class="col-md-8">
+                    <table id="tabla" class="display table table-striped table-hover text-nowrap mt-3" style="width:100%">
+                        <thead style="background-color: var(--verde); color: var(--verdeoscuro);">
+                            <tr>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Apellido</th>
+                                <th scope="col">Tipo de documento</th>
+                                <th scope="col">Número de documento</th>
+                                <th scope="col">Número de celular</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Nombre Usuario</th>
+                                <th scope="col">Acciones</th>
 
-                        </tr>
-                    </thead>
+                            </tr>
+                        </thead>
 
-                    <tbody>
-                    {% for register in registers %}
-                                <tr>
-                                    <td id="texto">{{register.username}}</td>
-                                
-  
-                                </tr>
-                    {% endfor %}
-                    </tbody> 
+                        <tbody>
+                        {% for register in registers %}
+                                    <tr>
+                                        <td id="texto">{{register.name}}</td>
+                                        <td id="texto">{{register.lastname}}</td>
+                                        <td id="texto">{{register.document}}</td>
+                                        <td id="texto">{{register.nDocument}}</td>
+                                        <td id="texto">{{register.phone}}</td>
+                                        <td id="texto">{{register.email}}</td>
+                                        <td id="texto">{{register.username}}</td>
+    
+                                    </tr>
+                        {% endfor %}
+                        </tbody> 
 
-                </table>
+                    </table>
+            </div>
         </div>
     </section>
 </div>
