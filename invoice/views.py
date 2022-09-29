@@ -315,24 +315,59 @@ def detail_sale(request, pk):
 
 # /////////////////////////RegistroUser////////////////////
 
-
 def registerU(request):
     location = True
     admin = True
     title_pag = "Registro"
     registers= User.objects.all()
+
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
         if form.is_valid() :
            form.save()
-            
-           return redirect('registerU')
+
+        name = form.cleaned_data.get('username')
+        messages.success(request,f'El usuario {name} se agregó correctamente!')
+                    
+        return redirect('registerU')
+        
     else:
         form = UserRegisterForm()
     context = { 'form' : form,
             	'registers':registers,
                 'location':location,
                 'admin':admin,
+                'title_pag':title_pag
+	}
+    return render(request, 'admin/register.html', context)
+
+
+def registerP(request,pk):
+    location = True
+    admin = True
+    title_pag = "Registro"
+    registers= User.objects.all()
+    registers_obj = User.objects.get(id=pk)
+
+    if request.method == 'POST':
+        form = UserRegisterForm(request.POST)
+        if form.is_valid() :
+           form.save()
+           User.objects.filter(id=pk).update(
+               email=form.cleaned_data.get('email')
+            )   
+        name = form.cleaned_data.get('username')
+        messages.success(request,f'El usuario {name} se agregó correctamente!')
+                    
+        return redirect('registerU')
+        
+    else:
+        form = UserRegisterForm()
+    context = { 'form' : form,
+            	'registers':registers,
+                'location':location,
+                'admin':admin,
+                'registers_obj':registers_obj,
                 'title_pag':title_pag
 	}
     return render(request, 'admin/register.html', context)
@@ -355,3 +390,57 @@ def registerCreatePopup(request):
         'location':location,
     }
     return render(request, "m-forms/m_register.html", context)
+
+def user_modal(request, modal, pk):
+    title_pag = "Usuario"
+    modal_title = ''
+    modal_txt = ''
+    location = True
+    admin = True
+    modal_submit = ''
+    url_back="/administracion/usuario/"
+    registers = User.objects.all()
+    register_id = User.objects.get(id=pk)
+    if modal == 'eliminar':
+        modal_title = 'Eliminar usuario'
+        modal_txt = 'eliminar el usuario'
+        modal_submit = 'eliminar'
+        form = UserRegisterForm(request.POST, request.FILES)
+        if request.method == 'POST':
+            print('----------------------------------------ELIMINANDO')
+            User.objects.filter(id=pk).update(
+                status = False
+            )
+            userName = register_id.username.title()
+            messages.success(request, f'El usuario {userName} se eliminó correctamente!')
+            return redirect ('user')
+        else:
+            form=UserRegisterForm()
+    elif modal == 'editar':
+        modal_title = 'Editar usuario'
+        modal_txt = 'editar el usuario'
+        modal_submit = 'guardar'
+        form = UserRegisterForm(request.POST, request.FILES, instance=register_id)
+        if request.method == 'POST':
+            print('----------------------------------------EDITANDO')                
+            if form.is_valid():
+                form.save()
+                userName = form.cleaned_data.get('username')
+                messages.success(request, f'El usuario {userName} se editó correctamente!')
+                return redirect ('registerU')
+        else:
+            form=UserRegisterForm(instance=register_id)
+    context ={
+        'form':form,
+        'modal_title':modal_title,
+        'modal_txt':modal_txt,
+        'modal_submit':modal_submit,
+        'url_back':url_back,
+        'modal':modal,
+        'register_id':register_id,
+        'title_pag':title_pag,
+        'admin':admin,
+        'registers':registers,
+        'location':location,
+    }
+    return render(request, 'admin/modal-user.html', context)
