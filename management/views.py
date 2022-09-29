@@ -595,93 +595,93 @@ def provider_modal(request, modal, pk):
     return render(request, 'admin/modal-provider.html', context)
     
 ################################ USER ##############################
-def user(request, pk):
-    location = True
-    admin = True
-    title_pag = "Usuario"
-    registers = User.objects.all()
-    registers_obj = User.objects.get(id=pk)
-    fields = ['username','email','name','lastName','tDocument','nDocument','phone','dateBirth','user_admin']
-    atributes = ['Username','Correo Electrónico','Nombre','Apellido','Tipo de Documento','Número de Documento','Celular','Fecha de Nacimiento','¿Es administrador?']
-    if request.method == 'POST':
-        form = UserForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            User.objects.filter(id=pk).update(
-                email=form.cleaned_data.get('email')
-            )
-            name = form.cleaned_data.get('username')
-            messages.success(request,f'El usuario {name} se agregó correctamente!')
-            return redirect('user')
-    else:
-        form = UserForm()
-    context = {
-        'form':form,
-        'title_pag':title_pag,
-        'admin':admin,
-        'registers': registers,
-        'registers_obj':registers_obj,
-        'location':location,
-        'fields':fields,
-        'atributes':atributes
-    }
-    return render(request, 'admin/user.html', context)
+# def user(request, pk):
+#     location = True
+#     admin = True
+#     title_pag = "Usuario"
+#     registers = User.objects.all()
+#     registers_obj = User.objects.get(id=pk)
+#     fields = ['username','email','name','lastName','tDocument','nDocument','phone','dateBirth','user_admin']
+#     atributes = ['Username','Correo Electrónico','Nombre','Apellido','Tipo de Documento','Número de Documento','Celular','Fecha de Nacimiento','¿Es administrador?']
+#     if request.method == 'POST':
+#         form = UserForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             form.save()
+#             User.objects.filter(id=pk).update(
+#                 email=form.cleaned_data.get('email')
+#             )
+#             name = form.cleaned_data.get('username')
+#             messages.success(request,f'El usuario {name} se agregó correctamente!')
+#             return redirect('user')
+#     else:
+#         form = UserForm()
+#     context = {
+#         'form':form,
+#         'title_pag':title_pag,
+#         'admin':admin,
+#         'registers': registers,
+#         'registers_obj':registers_obj,
+#         'location':location,
+#         'fields':fields,
+#         'atributes':atributes
+#     }
+#     return render(request, 'admin/user.html', context)
         
     
 
-def user_modal(request, modal, pk):
-    title_pag = "Usuario"
-    modal_title = ''
-    modal_txt = ''
-    location = True
-    admin = True
-    modal_submit = ''
-    url_back="/administracion/usuario/"
-    registers = User.objects.all()
-    register_id = User.objects.get(id=pk)
-    if modal == 'eliminar':
-        modal_title = 'Eliminar usuario'
-        modal_txt = 'eliminar el usuario'
-        modal_submit = 'eliminar'
-        form = UserForm(request.POST, request.FILES)
-        if request.method == 'POST':
-            print('----------------------------------------ELIMINANDO')
-            User.objects.filter(id=pk).update(
-                status = False
-            )
-            userName = register_id.username.title()
-            messages.success(request, f'El usuario {userName} se eliminó correctamente!')
-            return redirect ('user')
-        else:
-            form=UserForm()
-    elif modal == 'editar':
-        modal_title = 'Editar usuario'
-        modal_txt = 'editar el usuario'
-        modal_submit = 'guardar'
-        form = UserForm(request.POST, request.FILES, instance=register_id)
-        if request.method == 'POST':
-            print('----------------------------------------EDITANDO')                
-            if form.is_valid():
-                form.save()
-                userName = form.cleaned_data.get('username')
-                messages.success(request, f'El proveedor {userName} se editó correctamente!')
-                return redirect ('user')
-        else:
-            form=UserForm(instance=register_id)
-    context ={
-        'form':form,
-        'modal_title':modal_title,
-        'modal_txt':modal_txt,
-        'modal_submit':modal_submit,
-        'url_back':url_back,
-        'modal':modal,
-        'register_id':register_id,
-        'title_pag':title_pag,
-        'admin':admin,
-        'registers':registers,
-        'location':location,
-    }
-    return render(request, 'admin/modal-user.html', context)
+# def user_modal(request, modal, pk):
+#     title_pag = "Usuario"
+#     modal_title = ''
+#     modal_txt = ''
+#     location = True
+#     admin = True
+#     modal_submit = ''
+#     url_back="/administracion/usuario/"
+#     registers = User.objects.all()
+#     register_id = User.objects.get(id=pk)
+#     if modal == 'eliminar':
+#         modal_title = 'Eliminar usuario'
+#         modal_txt = 'eliminar el usuario'
+#         modal_submit = 'eliminar'
+#         form = UserForm(request.POST, request.FILES)
+#         if request.method == 'POST':
+#             print('----------------------------------------ELIMINANDO')
+#             User.objects.filter(id=pk).update(
+#                 status = False
+#             )
+#             userName = register_id.username.title()
+#             messages.success(request, f'El usuario {userName} se eliminó correctamente!')
+#             return redirect ('user')
+#         else:
+#             form=UserForm()
+#     elif modal == 'editar':
+#         modal_title = 'Editar usuario'
+#         modal_txt = 'editar el usuario'
+#         modal_submit = 'guardar'
+#         form = UserForm(request.POST, request.FILES, instance=register_id)
+#         if request.method == 'POST':
+#             print('----------------------------------------EDITANDO')                
+#             if form.is_valid():
+#                 form.save()
+#                 userName = form.cleaned_data.get('username')
+#                 messages.success(request, f'El proveedor {userName} se editó correctamente!')
+#                 return redirect ('user')
+#         else:
+#             form=UserForm(instance=register_id)
+#     context ={
+#         'form':form,
+#         'modal_title':modal_title,
+#         'modal_txt':modal_txt,
+#         'modal_submit':modal_submit,
+#         'url_back':url_back,
+#         'modal':modal,
+#         'register_id':register_id,
+#         'title_pag':title_pag,
+#         'admin':admin,
+#         'registers':registers,
+#         'location':location,
+#     }
+#     return render(request, 'admin/modal-user.html', context)
 ############################# BACKUP ###############################
 def export_data(request):
     date_now = date.today()

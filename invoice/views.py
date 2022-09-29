@@ -740,13 +740,3 @@ def user_modal(request, modal, pk):
         'location':location,
     }
     return render(request, 'admin/modal-user.html', context)
-
-
-
-
-
-
-
-
-
-

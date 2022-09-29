@@ -22,5 +22,4 @@ urlpatterns = [
     path('registrar<int:pk>/', registerP, name='registerP'),
     path('usuario/<str:modal>/<int:pk>', user_modal, name="user-modal"),
     path('registrar/crear/', registerCreatePopup, name = "m_register"),
-
 ]

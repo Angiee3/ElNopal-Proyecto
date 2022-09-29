@@ -1,9 +1,12 @@
 from select import select
 from django import forms
 from management.models import *
+
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django_select2.forms import ModelSelect2Widget
+
+
 class CategoryForm(forms.ModelForm):
     class Meta:
         model = Category
@@ -72,6 +75,7 @@ class UnitForm(forms.ModelForm):
             'name':forms.TextInput(attrs={'class':'form-control'}),
             'type':forms.Select(attrs={'class':'form-control select2 select_padre'}),
         }
+
 
 class UserRegisterForm(UserCreationForm):
     # name = forms.CharField(label='Nombre')
