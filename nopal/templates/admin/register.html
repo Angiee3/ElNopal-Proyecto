@@ -13,7 +13,8 @@
                     <h3 class="text-start">Nuevo Registro </h3>
                     <form action="" method="POST">
                         {% csrf_token %}
-                        <div id="div_id_name" class="mb-3">
+
+                        {% comment %} <div id="div_id_name" class="mb-3">
                             <label for="id_name" class="form-label requiredField">Nombre</label>
                             <span class="asteriskField">*</span>
                             <input type="text" name="name" autofocus class="textinput textInput form-control" required id="id_name">
@@ -23,14 +24,7 @@
                             <span class="asteriskField">*</span>
                             <input type="text" name="lastname" autofocus class="textinput textInput form-control" required id="id_lastname">
                         </div> 
-                        <div id="div_id_document" class="mb-3">
-                            <label for="id_document" class="form-label requiredField">Tipo de documento</label>
-                            <span class="asteriskField">*</span>
-                            <select class="form-select select2 select_hijo" id="id_document" aria-label="Default select example" name="docmument" >
-                                <option value="1">Cédula de ciudadanía</option>
-                                <option value="2">Cédula de extranjería</option>
-                            </select>
-                            </div>  
+
                         <div id="div_id_nDocument" class="mb-3">
                             <label for="id_nDocument" class="control-label">Número de Documento</label>
                             <span class="asteriskField">*</span>
@@ -38,21 +32,22 @@
                         </div>  
                         <div id="div_id_phone" class="mb-3">
                             <label for="id_phone" class="control-label">Número de celular</label>
-                            <input type="number" name="nDocument" autofocus class="numberinput numberInput form-control" required id="id_phone">
-                        </div>                   
-                        <div id="div_id_username" class="mb-3">
-                            <label for="id_username" class="form-label requiredField">Nombre de usuario</label>
-                            <span class="asteriskField">*</span>
-                            <input type="text" name="username" autofocus class="textinput textInput form-control" required id="id_username">
-                        </div>
+                            <input type="number" name="phone" autofocus class="numberinput numberInput form-control" required id="id_phone">
+                        </div>      {% endcomment %}
                         <div id="div_id_email" class="mb-3">
                             <label for="id_email" class="form-label requiredField">Email</label>
                             <span class="asteriskField">*</span>
                             <input type="email" name="email" autofocus class="textinput textInput form-control" required id="id_email">
                         </div>
+                        <div id="div_id_username" class="mb-3">
+                            <label for="id_username" class="form-label requiredField">Nombre de usuario</label>
+                            <span class="asteriskField">*</span>
+                            <input type="text" name="username" autofocus class="textinput textInput form-control" required id="id_username">
+                        </div>
                         <div id="div_id_password1" class="mb-3">
                             <label for="id_password1" class="form-label requiredField">Contraseña</label>
                             <span class="asteriskField">*</span>
+                            <ul class="errorlist"><li>Debe contener al menos 8 caracteres.</li></ul>
                             <input type="password" name="password1" class="textinput textInput form-control" required id="id_password1">
                         </div>
                         <div id="div_id_password2" class="mb-3">
@@ -66,16 +61,14 @@
                     style="width: 120px;" >Registrar</button>
                     </form>
             </div>
-            <div class="row p-3">
                 <div class="col-md-8">
                     <table id="tabla" class="display table table-striped table-hover text-nowrap mt-3" style="width:100%">
                         <thead style="background-color: var(--verde); color: var(--verdeoscuro);">
                             <tr>
-                                <th scope="col">Nombre</th>
-                                <th scope="col">Apellido</th>
-                                <th scope="col">Tipo de documento</th>
+                                {% comment %}<th scope="col">Nombre</th>
+                                 <th scope="col">Apellido</th>
                                 <th scope="col">Número de documento</th>
-                                <th scope="col">Número de celular</th>
+                                <th scope="col">Número de celular</th> {% endcomment %}
                                 <th scope="col">Email</th>
                                 <th scope="col">Nombre Usuario</th>
                                 <th scope="col">Acciones</th>
@@ -86,22 +79,20 @@
                         <tbody>
                         {% for register in registers %}
                                     <tr>
-                                        <td id="texto">{{register.name}}</td>
+                                        {% comment %}<td id="texto">{{register.name}}</td>
                                         <td id="texto">{{register.lastname}}</td>
-                                        <td id="texto">{{register.document}}</td>
                                         <td id="texto">{{register.nDocument}}</td>
-                                        <td id="texto">{{register.phone}}</td>
+                                        <td id="texto">{{register.phone}}</td> {% endcomment %}
                                         <td id="texto">{{register.email}}</td>
                                         <td id="texto">{{register.username}}</td>
                                         <td><a href="{%url 'user-modal' modal='editar' pk=register.id %}" class="btn btn-md border"><img class="img-fluid" src="{% static 'img/icons/update.svg' %}" id="edit" alt=""></a>
-                                            <a href="{%url 'user-modal' modal='eliminar' pk=register.id%}" class="btn btn-md border"><img class="img-fluid" src="{% static 'img/icons/delete.svg' %}" id="eliminar" alt=""></a> 
-                                        </td>   
+                                        <a href="" class="btn btn-md border"><img class="img-fluid" src="{% static 'img/icons/delete.svg' %}" id="eliminar" alt=""></a> 
+                                    </td>  
                                     </tr>
                         {% endfor %}
                         </tbody> 
 
                     </table>
-            </div>
         </div>
     </section>
 </div>

@@ -7,21 +7,21 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">{{modal_title}}</h5>
-                <a href="{{url_back}}"><button class="btn-close"
-                    data-bs-dismiss="modal" href="{{url_back}}" aria-label="Close"></button></a>
+                <a href="{% url 'registerU' %}"><button class="btn-close"
+                    data-bs-dismiss="modal" href="{% url 'registerU' %}" aria-label="Close"></button></a>
             </div>
             <div class="modal-body">
-                <p>¿Está seguro de {{modal_txt}} "{{factura.id}}{{register_id}}"?</p>
-                {% if modal == 'editar' or modal == 'marcar'%}
+                <p>¿Está seguro de {{modal_txt}} "{{register_id}}"?</p>
+                {% if modal == 'editar' %}
                 <form action="" method="POST" enctype="multipart/form-data">
                     {{form|crispy}}{% csrf_token %}
-                {% elif modal == 'eliminar' or modal == 'cerrar' or modal == 'desmarcar' %}
+                {% elif modal == 'eliminar' %}
                 <form action="" method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
                 {% endif %}
             </div>
             <div class="modal-footer">
-                <a href="{{url_back}}" class="btn btn-secondary">Cancelar</a>
+                <a href="{% url 'registerU' %}" class="btn btn-secondary">Cancelar</a>
                 <button type="submit" class="btn btn-success">{{modal_submit.title}}</button>
             </div>
             </form>
