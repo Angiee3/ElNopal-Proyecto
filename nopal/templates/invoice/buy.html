@@ -5,7 +5,7 @@
 {% block contenido %}
 
 <div>
-    <section class="container  p-5 h-auto" id="mode-cards" data-admin id="cuerpo" style="width: 95%">
+    <section class="container p-5 h-auto" id="mode-cards" data-admin id="cuerpo" style="width: 95%">
         <h1>Gestionar {{title_pag}}</h1>
         <div class="row my-4">
             <div class="col-md-4">
@@ -62,7 +62,7 @@
                         <tr>
                             <td id="texto">{{register.id}}</td>
                             <td id="texto">{{register.date|date:"M d, Y - " }}{{register.date|time:"h:i a" }}</td>
-                            <td id="texto">{{register.provider}}</td>
+                            <td id="texto">{{register.user}}</td>
                             <td id="texto">{{register.payment}}</td>
                             <td id="texto">${{register.finalPrice}}</td>
                             <td id="texto">{{register.status}}</td>
@@ -74,7 +74,7 @@
                                     {% endif %}
                                     <a href="{% url 'buy-detail' pk=register.id%}" class="btn btn-md border" title="Añadir detalle"><img class="img-fluid" src="{% static 'img/icons/plus.svg' %}"></a> 
                                 {% elif register.status == "Cerrada" %}
-                                    <a href="{% url 'buy-view' pk=register.id factura=factura.id %}" class="btn btn-md border" title="Ver detalle"><img class="img-fluid" src="{% static 'img/icons/eye.svg' %}"></a> 
+                                    <a href="{% url 'buy-view' pk=register.id %}" class="btn btn-md border" title="Ver detalle"><img class="img-fluid" src="{% static 'img/icons/eye.svg' %}"></a> 
                                     <a href="{% url 'buy-actions' modal='marcar' pk=register.id %}" class="btn btn-md border" title="Marcar"><img class="img-fluid" src="{% static 'img/icons/unmark.svg' %}"></a> 
                                     
                                 {% endif %}
