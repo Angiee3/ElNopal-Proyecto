@@ -170,12 +170,51 @@ def detailbuy_modal(request, pkf, modal, pkd):
         modal_submit = 'eliminar'
         form = DetailBuyForm(request.POST, request.FILES)
         if request.method == 'POST':
+            product = Product.objects.get(
+                id = register_id.product.id
+            )
             print('----------------------------------------ELIMINANDO')
+            
+            detail_a = DetailBuy.objects.filter(
+                buy = pkf,
+                product = product, 
+            )
+            print(detail_a)
+            print('------------------------> Detalle en donde está el producto')
+            
+            amount = register_id.amount
+            print(amount)
+            
+            Product.objects.filter(id = product.id).update(
+                stock = int(product.stock) - amount
+            )
+            print(product.id)
+            print('------------------------> Stock actualizado')
+
+            total = amount * int(product.price)
+            print('------------------------> Total de la actualización')
+            print('------------------------> ',total)
+            
+            detail_a.update(
+                total =  detail_a[0].total - total
+            )
+            print('------------------------> Total ')
+            
+            DetailBuy.objects.filter(buy=pkf, product=product).update(
+                status = False
+            )
+            
+            Buy.objects.filter(id=pkf).update(
+                finalPrice = buy_a[0].finalPrice - total
+            )
+            
             Product.objects.filter(id=pkd).update(
                 status = False
             )
             messages.success(request, f'El detalle se eliminó correctamente!')
-            return redirect ('product')
+            return redirect ('buy-detail', pkf)
+                
+            
         else:
             form=DetailBuyForm()
             
