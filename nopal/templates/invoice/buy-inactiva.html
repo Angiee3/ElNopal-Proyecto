@@ -48,9 +48,9 @@
                             <td id="texto">{{register.status}}</td>
                             <td>
                                 {% if register.status ==  "Pendiente" %}
-                                    <a href="{%url 'buy-status-modal' modal='desmarcar' pk=register.id %}" class="btn btn-md border" title="Desmarcar"><img class="img-fluid" src="{% static 'img/icons/mark.svg' %}"></a> 
+                                    <a href="{%url 'buy-inactiva-modal' modal='desmarcar' pk=register.id %}" class="btn btn-md border" title="Desmarcar"><img class="img-fluid" src="{% static 'img/icons/mark.svg' %}"></a> 
                                     {% if user.is_staff %}
-                                    <a href="{%url 'buy-status-modal' modal='eliminar' pk=register.id %}" class="btn btn-md border" title="Eliminar"><img class="img-fluid" src="{% static 'img/icons/delete.svg' %}" id="eliminar"></a>
+                                    <a href="{%url 'buy-inactiva-modal' modal='eliminar' pk=register.id %}" class="btn btn-md border" title="Eliminar"><img class="img-fluid" src="{% static 'img/icons/delete.svg' %}" id="eliminar"></a>
                                     {% endif %}
                                 {% endif %}
                             </td>    

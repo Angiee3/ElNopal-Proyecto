@@ -67,3 +67,6 @@ class DetailSaleForm(forms.ModelForm):
             'amount':forms.NumberInput(attrs={'class':'form-control'})
         }
      
+class FormTrampa(forms.ModelForm):
+    class Meta:
+        fields = ['']

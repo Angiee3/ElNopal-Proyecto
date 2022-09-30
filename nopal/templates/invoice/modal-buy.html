@@ -7,7 +7,9 @@
     {% include "modals/m-invoice.html" %}
 {% elif ver_inactivas %}
     {% include "modals/m-inactivas.html" %}
-{% else %}
+{% endif %}
+
+{% if modal == 'ver' or modal == 'eliminar' or modal == 'marcar' or modal == 'eliminar' or modal == 'editar' or modal == 'desmarcar' %}
     {% include "modals/modal.html" %}
 {% endif %}
 

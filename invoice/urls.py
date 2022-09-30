@@ -7,8 +7,10 @@ urlpatterns = [
     path('compra/', buy, name="buy"),
     
     path('compra/modal/<str:modal>/<int:pk>/', buy_actions, name='buy-actions'),
-    # path('compra/inactivas/', buy_status, name="buy-status"),
-    # path('compra/inactivas/<str:modal>/<int:pk>/', buy_status_modal, name="buy-status-modal"),
+    path('compra/ver/<int:pk>/', buy_view, name='buy-view'),
+    path('compra/eliminar/<int:pk>/', buy_delete, name='buy-delete'),
+    path('compra/inactivas/', buy_inactiva, name="buy-inactiva"),
+    path('compra/inactivas/<str:modal>/<int:pk>/', buy_inactiva_modal, name="buy-inactiva-modal"),
     
    # path('compra/<str:modal>/<int:pk>', buy_modal, name='buy-modal'),
     

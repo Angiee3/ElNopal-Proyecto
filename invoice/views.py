@@ -407,44 +407,7 @@ def buy_actions(request, modal, pk):
                 messages.success(request, f'La compra {pk} se editó correctamente!')
                 return redirect ('buy')
         else:
-            form=  BuyForm(instance=register_id)
-            
-    
-    elif modal == 'eliminar':
-        detail = DetailBuy.objects.filter(buy=pk)
-        print(detail)    
-        if detail.exists():
-            if User.is_staff:
-                print('Ya borro eso xd')
-                return redirect('buy')
-            else:
-                messages.warning(request, f'La compra No.{pk} no se puede eliminar, tiene detalles de compra.')
-                return redirect ('buy')
-        else: 
-            modal_title = 'Eliminar compra'
-            modal_txt = 'eliminar la compra'
-            modal_submit = 'eliminar'
-            form = BuyForm(request.POST, request.FILES)
-                
-            if request.method == 'POST':
-                print('----------------------------------------ELIMINANDO')
-                Buy.objects.filter(id=pk).update(
-                    status = "Inactiva"
-                )
-                print('Eliminado')
-                messages.success(request, f'La compra No.{pk} se eliminó correctamente!')
-                return redirect ('buy')
-            else:
-                form = BuyForm()
-        
-    # elif modal == 'ver':
-    #     print('----------------------------------------------> Ver factura')
-    #     # modal_title = 'Ver factura'
-    #     # registers = DetailBuy.objects.filter(buy=pk)
-    #     # ver_compra = True
-    #     # factura = Buy.objects.filter(id=pk)
-    #     # print(factura)
-    #     print(registers)    
+            form=  BuyForm(instance=register_id) 
     
     elif modal == 'marcar':
         print('---------------------------------------marcar')
@@ -481,10 +444,187 @@ def buy_actions(request, modal, pk):
     }
     return render(request, 'invoice/modal-buy.html', context)
 
+def buy_view(request, pk):
+    title_pag = "Compra"
+    modal_title = ''
+    modal_txt = ''
+    location = True
+    admin = True
+    modal_submit = ''
+    url_back="/facturacion/compra/"
+    registers = Buy.objects.all()
+    register_id = Buy.objects.get(id=pk)
+    print(request)
+    ver_compra = False
+    
+    print('----------------------------------------------> Ver factura')
+    modal_title = 'Ver factura'
+    registers = DetailBuy.objects.filter(buy=pk)
+    ver_compra = True
+    factura = Buy.objects.filter(id=pk)
+    print(factura)
+    print(registers)    
 
+    context ={
+        'modal_title':modal_title,
+        'modal_txt':modal_txt,
+        'modal_submit':modal_submit,
+        'url_back':url_back,
+        'register_id':register_id,
+        'title_pag':title_pag,
+        'admin':admin,
+        'registers':registers,
+        'location':location,
+        'ver_compra':ver_compra,
+    }
+    return render(request, 'invoice/modal-buy.html', context)
 
+def buy_delete(request, pk):
+    title_pag = "Compra"
+    modal_title = ''
+    modal_txt = ''
+    location = True
+    admin = True
+    modal_submit = ''
+    url_back="/facturacion/compra/"
+    registers = Buy.objects.all()
+    register_id = Buy.objects.get(id=pk)
+    print(request)
+    modal = 'eliminar'
+    detail = DetailBuy.objects.filter(buy=pk)
+    print(detail)    
+    if detail.exists():
+        if not User.is_staff:
+            messages.warning(request, f'La compra No.{pk} no se puede eliminar, tiene detalles de compra.')
+            return redirect ('buy')
+    else: 
+        modal_title = 'Eliminar compra'
+        modal_txt = 'eliminar la compra'
+        modal_submit = 'eliminar'
+            
+        if request.method == 'POST':
+            print('----------------------------------------ELIMINANDO')
+            Buy.objects.filter(id=pk).update(
+                status = "Inactiva"
+            )
+            print('Eliminado')
+            messages.success(request, f'La compra No.{pk} se eliminó correctamente!')
+            return redirect ('buy')  
 
+    context ={
+        'modal_title':modal_title,
+        'modal_txt':modal_txt,
+        'modal_submit':modal_submit,
+        'url_back':url_back,
+        'register_id':register_id,
+        'title_pag':title_pag,
+        'admin':admin,
+        'registers':registers,
+        'location':location,
+        'modal':modal,
+    }
+    return render(request, 'invoice/modal-buy.html', context)
+    
+def buy_inactiva(request):
+    location = True
+    admin = True
+    buy_template = True
+    title_pag = "Compras Inactivas/Pendientes"
+    registers = Buy.objects.all()
+    inactivas = True
+    
+    if request.method == 'POST':
+        print('COMPRA-------------------------------->')
+        form = BuyForm(request.POST)
+        if form.is_valid():
+            print(request.POST)
+            date_aux = datetime.now().strftime("%Y-%m-%d")
+            buy = Buy.objects.create(
+                date = date_aux,
+                user = form.cleaned_data['user'],
+                payment = request.POST['payment']
+            )
+            messages.success(
+                request, f'La compra #{buy.id} está lista para añadir productos')
+            return redirect('buy-detail', pk=buy.id)
+    else:
+        form = BuyForm()
+    context = {
+        'form':form,
+        'title_pag':title_pag,
+        'admin':admin,
+        'registers': registers,
+        'location':location,
+        'buy_template':buy_template,
+        'inactivas':inactivas,
+    }
+    return render(request, 'invoice/buy-inactiva.html', context)
 
+def buy_inactiva_modal(request, modal, pk):
+    title_pag = "Compra"
+    location = True
+    admin = True
+    modal_title = ''
+    modal_txt = ''
+    modal_submit = ''
+    url_back = "/facturacion/compra/inactivas/"
+    registers = Buy.objects.all()
+    register = Buy.objects.get(id=pk)
+    register_id = register.id
+    form = ""
+    
+    if modal == 'eliminar': 
+        modal_title = 'Eliminar compra'
+        modal_txt = 'eliminar la compra'
+        modal_submit = 'eliminar'
+        form = BuyForm(request.POST, request.FILES)
+            
+        if request.method == 'POST':
+            print('----------------------------------------ELIMINANDO')
+            Buy.objects.filter(id=pk).update(
+                status = "Inactiva"
+            )
+            # Product.objects.filter(id = product.id).update(
+            #             stock = product.stock + form.cleaned_data.get('amount')
+            #         )
+            print('------------------------> Stock actualizado')
+            print('Eliminado')
+            messages.success(request, f'La compra No.{pk} se eliminó correctamente!')
+            return redirect ('buy-inactiva')
+        else:
+            form = BuyForm()
+            
+    elif modal == 'desmarcar':  
+        print('----------------------------------------> Editar Modal')
+        modal_title = 'Desmarcar compra'
+        modal_txt = 'desmarcar la compra'
+        modal_submit = 'Desmarcar'
+        form = BuyForm(request.POST, instance=register)
+        if request.method == 'POST':
+            print('----------------------------------------ELIMINANDO')
+            Buy.objects.filter(id=pk).update(
+                status = "Cerrada"
+            )
+            print('Eliminado')
+            messages.success(request, f'La compra No.{pk} se desmarcó correctamente!')
+            return redirect ('buy-inactiva')
+        else:
+            form = BuyForm()    
+            
+    context ={
+        'form':form,
+        'modal_title':modal_title,
+        'modal_txt':modal_txt,
+        'modal_submit':modal_submit,
+        'url_back':url_back,
+        'modal':modal,
+        'title_pag':title_pag,
+        'admin':admin,
+        'register_id':register_id,
+        'registers':registers,
+        'location':location,
+    }
+    return render(request, 'invoice/modal-buy.html', context)
 
 
 
