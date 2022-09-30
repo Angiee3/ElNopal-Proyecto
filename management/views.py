@@ -686,7 +686,7 @@ def provider_modal(request, modal, pk):
 def export_data(request):
     date_now = date.today()
     tabla = request.POST['opcion']
-    os.system(f"mysqldump --add-drop-table --column-statistics=0 --password=%Brayan2021-2021-2021%# -u root db_elnopal --tables {tabla}> nopal/static/tablas/BKP_{tabla}_{date_now}.sql")
+    os.system(f"mysqldump --add-drop-table --column-statistics=0 --password='Angie1053442155'-u root db_elnopal --tables {tabla}> nopal/static/tablas/BKP_{tabla}_{date_now}.sql")
     print('imprimio la tabla ', tabla )
     print('-------------------------------------------------------Hecho')
 def import_data(file, request):
@@ -694,8 +694,7 @@ def import_data(file, request):
     try:
         print('------------------------IMPORTAR')
         url = f'media/{file[1:]}'
-        os.system(f"mysql --password=%Brayan2021-2021-2021%# -u root db_elnopal < {url} ")
-        print('28288282',url)
+        os.system(f"mysql --password='Angie1053442155' -u root db_elnopal < {url} ")
         messages.success(request,'su backup fue realizado correctamente')
         print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><Salio')
     except Exception as err:
