@@ -18,7 +18,6 @@ def menu_admin(request):
         lambda x: x._meta,
         apps.get_models()[6:-5]
         ))
-    print(models)
     return {"models":models}
     
 def total_carrito(request):

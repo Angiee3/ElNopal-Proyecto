@@ -91,19 +91,21 @@
                                     <td>${{detail.total}}</td>
                                                             
                                 <td>
-                                    <a href="" class="btn btn-md border" ><img class="img-fluid " src=" {% static 'img/icons/update.svg' %} " alt=""></a>
-                                    <a href="" class="btn btn-md border" ><img class="img-fluid " src=" {% static 'img/icons/delete.svg' %}" alt=""></a> 
+                                    <a href="{% url 'detailbuy-modal' pkf=detail.buy.id modal='editar' pkd=detail.id %}" class="btn btn-md border" title="Editar"><img class="img-fluid " src=" {% static 'img/icons/update.svg' %} " alt=""></a>
+                                    <a href="{% url 'detailbuy-modal' pkf=detail.buy.id modal='eliminar' pkd=detail.id %}" class="btn btn-md border" title="Eliminar"><img class="img-fluid " src=" {% static 'img/icons/delete.svg' %}" alt=""></a> 
                                 </td>
                             </tr>
                             {% endif %}
                         {% endfor %}
                    </tbody>
                 </table>
-                <a href="{% 'buy-detail' pk=detail.id %}" class="btn_agregar d-block m-auto text-center text-decoration-none py-1 rounded border border-none" style="width: 120px;">Cerrar Factura</a>
+
+                
+                <a href="{{url_factura}}" class="btn_agregar d-block m-auto text-center text-decoration-none py-1 rounded border border-none" style="width: 120px;">Cerrar Factura</a>
 
             </div>
         </div>
     </section>
 </div>
 {% include 'partials/accesibilidad.html' %}
- {% endblock %}
+{% endblock %}

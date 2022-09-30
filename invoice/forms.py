@@ -6,7 +6,7 @@ class BuyForm(forms.ModelForm):
         model = Buy
         fields =['user','payment']
         widgets = {
-            'user':forms.Select(attrs={'class':'form-control js-example-basic-simple'}),
+            'user':forms.Select(attrs={'class':'form-control select2'}),
             'payment':forms.Select(attrs={'class':'form-control'}),
             'observations':forms.Select(attrs={'class':'form-control'})
         }
@@ -24,7 +24,15 @@ class DetailBuyForm(forms.ModelForm):
         model = DetailBuy
         fields = ['product','amount']
         widgets = {
-            'product':forms.Select(attrs={'class':'form-control '}),
+            'product':forms.Select(attrs={'class':'form-control select2'}),
+            'amount':forms.NumberInput(attrs={'class':'form-control'})
+        }
+        
+class DetailBuyEditForm(forms.ModelForm):
+    class Meta:
+        model = DetailBuy
+        fields = ['amount']
+        widgets = {
             'amount':forms.NumberInput(attrs={'class':'form-control'})
         }
     
@@ -33,7 +41,7 @@ class SaleForm(forms.ModelForm):
         model = Sale
         fields=['user','typeSale','payment','client','nDocument','address']
         widgets = {
-            'user':forms.Select(attrs={'class':'form-control '}),
+            'user':forms.Select(attrs={'class':'form-control select2'}),
             'typeSale':forms.Select(attrs={'class':'form-control'}),
             'payment':forms.Select(attrs={'class':'form-control'}),
             'client':forms.TextInput(attrs={'class':'form-control'}),
@@ -55,7 +63,7 @@ class DetailSaleForm(forms.ModelForm):
         model = DetailSale
         fields =['product','amount']
         widgets = {
-            'product':forms.Select(attrs={'class':'form-control '}),
+            'product':forms.Select(attrs={'class':'form-control select2'}),
             'amount':forms.NumberInput(attrs={'class':'form-control'})
         }
      

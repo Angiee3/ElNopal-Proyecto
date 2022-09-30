@@ -1,5 +1,7 @@
 import datetime
 from django.shortcuts import render, redirect
+
+from management.views import product
 from .models import *
 from .forms import *
 from django.contrib import messages
@@ -149,92 +151,130 @@ def detail_buy(request, pk):
     }
     return render(request, 'invoice/detail.html', context)
 
-def buy_modal(request, modal, pk):
+def detailbuy_modal(request, pkf, modal, pkd):
+    print(request)
     title_pag = "Compra"
-    location = True
-    admin = True
     modal_title = ''
     modal_txt = ''
+    location = True
+    admin = True
     modal_submit = ''
-    url_back = "/facturacion/compra/"
-    registers = Buy.objects.all()
-    register = Buy.objects.get(id=pk)
-    register_id = register.id
-    form = ""
-    inactivas = False
-    ver_compra = False
-    factura = ""
-    print('--------------------------------------------------------------------------------------------------')
-    
+    url_back="/facturacion/compra/detalle/"+str(pkf)+"/"
+    registers = DetailBuy.objects.all()
+    register_id = DetailBuy.objects.get(id=pkd)
+    buy_a = Buy.objects.filter(id=pkf)
     
     if modal == 'eliminar':
-        detail = DetailBuy.objects.filter(buy=pk)
-        print(detail)    
-        if detail.exists():
-            messages.warning(request, f'La compra No.{pk} no se puede eliminar, tiene detalles de compra.')
-            return redirect ('buy')
-        else: 
-            modal_title = 'Eliminar compra'
-            modal_txt = 'eliminar la compra'
-            modal_submit = 'eliminar'
-            form = BuyForm(request.POST, request.FILES)
-                
-            if request.method == 'POST':
-                print('----------------------------------------ELIMINANDO')
-                Buy.objects.filter(id=pk).update(
-                    status = "Inactiva"
-                )
-                print('Eliminado')
-                messages.success(request, f'La compra No.{pk} se eliminó correctamente!')
-                return redirect ('buy')
-            else:
-                form = BuyForm()
-            
-    elif modal == 'editar':  
-        print('----------------------------------------> Editar Modal')
-        modal_title = 'Editar compra'
-        modal_txt = 'editar la compra'
-        modal_submit = 'guardar'
-        form = BuyForm(request.POST, instance=register)
-        print(form)
+        modal_title = 'Eliminar detalle'
+        modal_txt = 'eliminar el detalle'
+        modal_submit = 'eliminar'
+        form = DetailBuyForm(request.POST, request.FILES)
         if request.method == 'POST':
-            print('----------------------------------------> Editar compra')                
-            if form.is_valid():
-                form.save()
-                messages.success(request, f'La compra No.{pk} se editó correctamente!')
-                return redirect ('buy')
-        else:
-            form = BuyForm(instance=register)        
-            
-    elif modal == 'ver':
-        print('----------------------------------------------> Ver factura')
-        modal_title = 'Ver factura'
-        registers = DetailBuy.objects.filter(buy=pk)
-        ver_compra = True
-        factura = Buy.objects.filter(id=pk)
-        print(factura)
-        print(registers)    
-    
-    elif modal == 'marcar':
-        print('---------------------------------------marcar')
-        modal_title = 'Marcar compra'
-        modal_txt = 'marcar la compra'
-        modal_submit = 'marcar'
-        form = BuyFormStatus(request.POST, request.FILES)
-            
-        if request.method == 'POST':
-            print('----------------------------------------MARCANDO')
-            Buy.objects.filter(id=pk).update(
-                status = "Pendiente",
-                observation = request.POST['observation']
+            print('----------------------------------------ELIMINANDO')
+            Product.objects.filter(id=pkd).update(
+                status = False
             )
-            print('Marcada')
-            messages.success(request, f'La compra No.{pk} se marcó correctamente!')
-            return redirect ('buy')
+            messages.success(request, f'El detalle se eliminó correctamente!')
+            return redirect ('product')
         else:
-            form = BuyFormStatus()
-        inactivas = True
+            form=DetailBuyForm()
             
+    elif modal == 'editar':
+        modal_title = 'Editar detalle'
+        modal_txt = 'editar el detalle'
+        modal_submit = 'guardar'
+        form = DetailBuyEditForm(request.POST, request.FILES, instance=register_id)
+        cantidad = register_id.amount
+        if request.method == 'POST':
+            print('----------------------------------------EDITANDO')                
+            if form.is_valid():
+                product = Product.objects.get(
+                    id = register_id.product.id
+                )
+                print(request.POST['amount'])
+                print(cantidad)
+                
+                if int(request.POST['amount'])>cantidad:
+                    print('------------------------> Si la cantidad ingresada es mayor a la que teniamos')
+                    amount = int(request.POST['amount']) - cantidad
+                    print('------------------------> Se saca la diferencia')
+                    print(amount)
+                    
+                    detail_a = DetailBuy.objects.filter(
+                        buy = pkf,
+                        product = product, 
+                    )
+                    print(detail_a)
+                    print('------------------------> Detalle en donde está el producto')
+                    
+                    Product.objects.filter(id = product.id).update(
+                        stock = int(product.stock) + amount
+                    )
+                    print(product.id)
+                    print('------------------------> Stock actualizado')
+
+                    total = amount * int(product.price)
+                    print('------------------------> Total de la actualización')
+                    print('------------------------> ',total)
+                    
+                    detail_a.update(
+                        total = detail_a[0].total + total
+                    )
+                    print('------------------------> Total ')
+                    
+                    DetailBuy.objects.filter(buy=pkf, product=product).update(
+                        amount = request.POST['amount']
+                    )
+                    
+                    Buy.objects.filter(id=pkf).update(
+                        finalPrice = buy_a[0].finalPrice + total
+                    )
+                    
+                    messages.success(request, f'El detalle se editó correctamente!')
+                    return redirect ('buy-detail', pkf)
+                
+                
+                else:
+                    print('------------------------> Si la cantidad ingresada es menor a la que teniamos')
+                    amount = cantidad - int(request.POST['amount'])
+                    print('------------------------> Se saca la diferencia')
+                    print(amount)
+                    
+                    detail_a = DetailBuy.objects.filter(
+                        buy = pkf,
+                        product = product, 
+                    )
+                    print(detail_a)
+                    print('------------------------> Detalle en donde está el producto')
+                    
+                    Product.objects.filter(id = product.id).update(
+                        stock = int(product.stock) - amount
+                    )
+                    print(product.id)
+                    print('------------------------> Stock actualizado')
+
+                    total = amount * int(product.price)
+                    print('------------------------> Total de la actualización')
+                    print('------------------------> ',total)
+                    
+                    detail_a.update(
+                        total =  detail_a[0].total - total
+                    )
+                    print('------------------------> Total ')
+                    
+                    DetailBuy.objects.filter(buy=pkf, product=product).update(
+                        amount = request.POST['amount']
+                    )
+                    
+                    Buy.objects.filter(id=pkf).update(
+                        finalPrice = buy_a[0].finalPrice - total
+                    )
+                    
+                    messages.success(request, f'El detalle se editó correctamente!')
+                    return redirect ('buy-detail', pkf)
+        else:
+            form=DetailBuyEditForm(instance=register_id)
+        
     context ={
         'form':form,
         'modal_title':modal_title,
@@ -242,214 +282,67 @@ def buy_modal(request, modal, pk):
         'modal_submit':modal_submit,
         'url_back':url_back,
         'modal':modal,
+        'register_id':register_id,
         'title_pag':title_pag,
         'admin':admin,
-        'register_id':register_id,
         'registers':registers,
         'location':location,
-        'inactivas':inactivas,
-        'ver_compra':ver_compra,
-        'factura':factura,
     }
-    return render(request, 'invoice/modal-buy.html', context)
-def buy_status(request):
-    location = True
-    admin = True
-    buy_template = True
-    title_pag = "Compras Inactivas/Pendientes"
-    registers = Buy.objects.all()
-    inactivas = True
-    
-    if request.method == 'POST':
-        print('COMPRA-------------------------------->')
-        form = BuyForm(request.POST)
-        if form.is_valid():
-            print(request.POST)
-            date_aux = datetime.now().strftime("%Y-%m-%d")
-            buy = Buy.objects.create(
-                date = date_aux,
-                user = form.cleaned_data['user'],
-                payment = request.POST['payment']
-            )
-            messages.success(
-                request, f'La compra #{buy.id} está lista para añadir productos')
-            return redirect('buy-detail', pk=buy.id)
-    else:
-        form = BuyForm()
-    context = {
-        'form':form,
-        'title_pag':title_pag,
-        'admin':admin,
-        'registers': registers,
-        'location':location,
-        'buy_template':buy_template,
-        'inactivas':inactivas,
-    }
-    return render(request, 'invoice/buy-inactiva.html', context)
-def buy_status_modal(request, modal, pk):
+    return render(request, 'invoice/modal-detail.html', context)
+
+def detailbuy_cerrar(request, pk):
+    print(request)
     title_pag = "Compra"
-    location = True
-    admin = True
     modal_title = ''
     modal_txt = ''
+    location = True
+    admin = True
     modal_submit = ''
-    url_back = "/facturacion/compra/inactivas/"
-    registers = Buy.objects.all()
-    register = Buy.objects.get(id=pk)
-    register_id = register.id
-    form = ""
+    modal = 'cerrar'
+    url_back="/facturacion/compra/detalle/"+str(pk)+"/"
+    url_factura="/facturacion/compra/detalle/"+str(pk)+"/cerrar/"
+    registers = DetailBuy.objects.filter(buy=pk)
+    factura = Buy.objects.all(id=pk)
     
-    if modal == 'eliminar': 
-        modal_title = 'Eliminar compra'
-        modal_txt = 'eliminar la compra'
-        modal_submit = 'eliminar'
+    detail = DetailBuy.objects.filter(buy = pk)
+    print('------------------------> Filtra si hay detalle')
+            
+    print('------------------------> Cerrando facturaxd')
+    if detail.exists():
+        modal_title = 'Cerrar compra'
+        modal_txt = 'cerrar la compra No.'
+        modal_submit = 'cerrar'
         form = BuyForm(request.POST, request.FILES)
-            
+        print('xdd')
         if request.method == 'POST':
-            print('----------------------------------------ELIMINANDO')
-            Buy.objects.filter(id=pk).update(
-                status = "Inactiva"
-            )
-            # Product.objects.filter(id = product.id).update(
-            #             stock = product.stock + form.cleaned_data.get('amount')
-            #         )
-            print('------------------------> Stock actualizado')
-            print('Eliminado')
-            messages.success(request, f'La compra No.{pk} se eliminó correctamente!')
-            return redirect ('buy-status')
-        else:
-            form = BuyForm()
-            
-    elif modal == 'desmarcar':  
-        print('----------------------------------------> Editar Modal')
-        modal_title = 'Desmarcar compra'
-        modal_txt = 'desmarcar la compra'
-        modal_submit = 'Desmarcar'
-        form = BuyForm(request.POST, instance=register)
-        if request.method == 'POST':
-            print('----------------------------------------ELIMINANDO')
+            print('----------------------------------------CERRANDO')
             Buy.objects.filter(id=pk).update(
                 status = "Cerrada"
             )
-            print('Eliminado')
-            messages.success(request, f'La compra No.{pk} se desmarcó correctamente!')
-            return redirect ('buy-status')
-        else:
-            form = BuyForm()    
-            
-    context ={
-        'form':form,
-        'modal_title':modal_title,
-        'modal_txt':modal_txt,
-        'modal_submit':modal_submit,
-        'url_back':url_back,
-        'modal':modal,
-        'title_pag':title_pag,
-        'admin':admin,
-        'register_id':register_id,
-        'registers':registers,
-        'location':location,
-    }
-    return render(request, 'invoice/modal-buy.html', context)
-
-def buy_detail_modal(request, modal, pkf, pkd):
-    title_pag = "Compra"
-    location = True
-    admin = True
-    modal_title = ''
-    modal_txt = ''
-    modal_submit = ''
-    url_back = "/facturacion/compra/detalle/"+str(pkf)+"/"
-    registers = Buy.objects.all()
-    register = Buy.objects.get(id=pkf)
-    register_id = register.id
-    form = ""
-    inactivas = False
-    ver_compra = False
-    factura = ""
-    
-    if modal == 'eliminar':
-        detail = DetailBuy.objects.filter(buy=pkd)
-        print(detail)    
-        if detail.exists():
-            messages.warning(request, f'La compra No.{pk} no se puede eliminar, tiene detalles de compra.')
+            print('Cerrado')
+            messages.success(request, f'La compra No.{pk} se cerró correctamente!')
             return redirect ('buy')
-        else: 
-            modal_title = 'Eliminar compra'
-            modal_txt = 'eliminar la compra'
-            modal_submit = 'eliminar'
-            form = BuyForm(request.POST, request.FILES)
-                
-            if request.method == 'POST':
-                print('----------------------------------------ELIMINANDO')
-                Buy.objects.filter(id=pk).update(
-                    status = "Inactiva"
-                )
-                print('Eliminado')
-                messages.success(request, f'La compra No.{pk} se eliminó correctamente!')
-                return redirect ('buy')
-            else:
-                form = BuyForm()
-            
-    elif modal == 'editar':  
-        print('----------------------------------------> Editar Modal')
-        modal_title = 'Editar compra'
-        modal_txt = 'editar la compra'
-        modal_submit = 'guardar'
-        form = BuyForm(request.POST, instance=register)
-        print(form)
-        if request.method == 'POST':
-            print('----------------------------------------> Editar compra')                
-            if form.is_valid():
-                form.save()
-                messages.success(request, f'La compra No.{pk} se editó correctamente!')
-                return redirect ('buy')
-        else:
-            form = BuyForm(instance=register)   
-            
-    detail = DetailBuy.objects.filter(buy = pkf)
-    print('------------------------> Filtra si hay detalle')
-            
-    if modal == 'cerrar':
-        print('------------------------> Cerrando facturaxd')
-        # if detail.exists():
-        #     modal_title = 'Cerrar compra'
-        #     modal_txt = 'cerrar la compra No.'
-        #     modal_submit = 'cerrar'
-        #     form = BuyForm(request.POST, request.FILES)
-        #     url_back= "/facturacion/compra/detalle/"+str(pkf)+"/"
-        #     print('xdd')
-        #     if request.method == 'POST':
-        #         print('----------------------------------------CERRANDO')
-        #         Buy.objects.filter(id=pkf).update(
-        #             status = "Cerrada"
-        #         )
-        #         print('Cerrado')
-        #         messages.success(request, f'La compra No.{pkf} se cerró correctamente!')
-        #         return redirect ('buy')
-        # else:
-        #     messages.warning(request, f'No hay detalles en esta compra, agrega productos para poder cerrarla!')
-        #     return redirect ('buy-detail', pkf)     
     else:
-        form = BuyForm()
-            
+        messages.warning(request, f'No hay detalles en esta compra, agrega productos para poder cerrarla!')
+        return redirect ('buy-detail', pk)
+        
     context ={
         'form':form,
         'modal_title':modal_title,
         'modal_txt':modal_txt,
         'modal_submit':modal_submit,
         'url_back':url_back,
+        'url_factura':url_factura,
         'modal':modal,
         'title_pag':title_pag,
         'admin':admin,
-        'register_id':register_id,
         'registers':registers,
         'location':location,
-        'inactivas':inactivas,
-        'ver_compra':ver_compra,
-        'factura':factura,
+        'factuta':factura,
     }
     return render(request, 'invoice/modal-detail.html', context)
+
+
 
 
 

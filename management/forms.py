@@ -3,7 +3,7 @@ from django import forms
 from management.models import *
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from django_select2.forms import ModelSelect2Widget
+
 class CategoryForm(forms.ModelForm):
     class Meta:
         model = Category

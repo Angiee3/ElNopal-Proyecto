@@ -1,4 +1,4 @@
 $('.select2').select2({
-    theme:'bootstrap5',
+    theme:'bootstrap-5',
     language:'es'
   });
