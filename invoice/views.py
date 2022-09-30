@@ -640,6 +640,9 @@ def sale(request):
     buy_template = False
     title_pag = "Venta"
     registers = Sale.objects.all()
+    
+    usuarios= User.objects.values_list('username')
+    res = [value for value, in usuarios]
     if request.method == 'POST':
         print('VENTA-------------------------------->')
         form = SaleForm(request.POST)
@@ -669,6 +672,7 @@ def sale(request):
         'registers': registers,
         'location':location,
         'buy_template':buy_template,
+        'res':res
     }
     return render(request, 'invoice/sale.html', context)
 
