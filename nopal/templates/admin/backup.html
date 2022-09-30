@@ -1,9 +1,10 @@
 {% extends 'partials/body.html' %} 
 {% load crispy_forms_tags %}
+{% block title %}{{title_pag}} - El Nopal Supermercado{% endblock title %}
 {% load static %}
 {% block contenido %}
 <div >
-    <div class="container bg-white p-5 h-auto">
+    <div class="container p-5 h-auto" id="mode-cards">
         <div class="row">
             <div class="col">
                 <h2>Exportar Base de datos</h2>
@@ -78,9 +79,9 @@
                     <tbody>
                         {% for backup in backups %}
                         <tr>
-                            <td class="text">{{backup.name}} </td>
-                            <td class="text">{{backup.file.url}} </td>
-                            <td class="text">{{backup.date}} </td>
+                            <td id="texto">{{backup.name}} </td>
+                            <td id="texto">{{backup.file.url}} </td>
+                            <td id="texto">{{backup.date}} </td>
                         </tr>
                         {% endfor%}
                     </tbody>

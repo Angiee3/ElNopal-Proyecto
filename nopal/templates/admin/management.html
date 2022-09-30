@@ -38,8 +38,8 @@
                             <td data-color>{{register.name}}</td>
                             <td class="row">
                                 <td>
-                                    <a href="{% url 'editar' register.id %}" class="btn btn-md border"><img class="img-fluid " src=" {% static 'img/icons/update.svg' %} " alt=""></a>
-                                    <a href="{% url 'eliminar' register.id%}" class="btn btn-md border"><img class="img-fluid " src=" {% static 'img/icons/delete.svg' %}" alt=""></a> 
+                                    <a href="{% url 'editar' register.id %}" class="btn btn-md border"><img class="img-fluid " src=" {% static 'img/icons/update.svg' %} " id="edit" alt=""></a>
+                                    <a href="{% url 'eliminar' register.id%}" class="btn btn-md border"><img class="img-fluid " src=" {% static 'img/icons/delete.svg' %}" id="eliminar"alt=""></a> 
                                 </td>
                                 {% comment %} <form action="" method="POST" class="col"> {% csrf_token %}
                                     <input type="hidden" name="pk" value="{{register.id}}">
