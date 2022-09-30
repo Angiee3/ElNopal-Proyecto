@@ -5,11 +5,11 @@
 {% block contenido %}
 
 <div >
-    <section class="container bg-white p-5 h-auto" data-admin id="cuerpo" style="width: 95%">
-        <h1>Gestionar {{title_pag}}</h1>
+    <section class="container p-5 h-auto" data-admin id="cuerpo" style="width: 95%">
+        <h1 class="d-print-none">Gestionar {{title_pag}}</h1>
         <div class="row my-4">
-            <div class="col-md-4">
-                <div class="border bg-white p-3 rounded shadow mt-3" id="mode-cards">
+            <div class="col-md-4 d-print-none">
+                <div class="border p-3 rounded shadow mt-3" id="mode-cards">
                     <h3 class="text-start">Nuevo Registro </h3>
                     <form method = 'POST' action= '' enctype = "multipart/form-data" novalidate id = "detail-form">
                         {% csrf_token %}
@@ -46,31 +46,31 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td style="font-weight: 600" colspan="2">Fecha:</td>
-                            <td colspan="3">{{factura.date}}</td>
+                            <td style="font-weight: 600" id="texto" colspan="2">Fecha:</td>
+                            <td id="texto" colspan="3">{{factura.date}}</td>
                         </tr>
                         <tr>
-                            <td style="font-weight: 600" colspan="2">Proveedor:</td>
-                            <td colspan="3">{{factura.user}}</td>
+                            <td style="font-weight: 600" id="texto" colspan="2">Proveedor:</td>
+                            <td id="texto" colspan="3">{{factura.user}}</td>
                         </tr>
                         <tr>
-                            <td style="font-weight: 600" colspan="1">Celular:</td>
-                            <td colspan="1">{{factura.user.phone}}</td>
-                            <td style="font-weight: 600" colspan="1">Correo:</td>
-                            <td colspan="2">{{factura.user.email}}</td>
+                            <td style="font-weight: 600" id="texto" colspan="1">Celular:</td>
+                            <td id="texto" colspan="1">{{factura.user.phone}}</td>
+                            <td style="font-weight: 600" id="texto" colspan="1">Correo:</td>
+                            <td id="texto" colspan="2">{{factura.user.email}}</td>
                         </tr>
                         <tr>
                             <td colspan="1"></td>
                             <td colspan="1"></td>
-                            <td style="font-weight: 600; font-size:20px" colspan="1">Total a pagar:</td>
-                            <td style="font-size:25px" colspan="2">${{factura.finalPrice}}</td>
+                            <td style="font-weight: 600; font-size:20px" id="texto" colspan="1">Total a pagar:</td>
+                            <td style="font-size:25px" id="texto" colspan="2">${{factura.finalPrice}}</td>
                         </tr>
                     </tbody>
                 </table>
 
 
 
-                <table id="tabla" class="display table table-striped table-hover text-nowrap mt-3" style="width:100%">
+                <table class="display table table-striped table-hover text-nowrap mt-3" style="width:100%">
                     
                     <thead style="background-color: var(--verde); color: var(--verdeocuro);" >
                         <tr>
@@ -85,14 +85,14 @@
                         {% for detail in registers %}
                             {% if detail.status %}
                             <tr>
-                                    <td>{{detail.product}}</td>
-                                    <td>{{detail.amount}}</td>
-                                    <td>${{detail.product.price}}</td>
-                                    <td>${{detail.total}}</td>
+                                    <td id="texto">{{detail.product}}</td>
+                                    <td id="texto">{{detail.amount}}</td>
+                                    <td id="texto">${{detail.product.price}}</td>
+                                    <td id="texto">${{detail.total}}</td>
                                                             
                                 <td>
-                                    <a href="{% url 'detailbuy-modal' pkf=detail.buy.id modal='editar' pkd=detail.id %}" class="btn btn-md border" title="Editar"><img class="img-fluid " src=" {% static 'img/icons/update.svg' %} " alt=""></a>
-                                    <a href="{% url 'detailbuy-modal' pkf=detail.buy.id modal='eliminar' pkd=detail.id %}" class="btn btn-md border" title="Eliminar"><img class="img-fluid " src=" {% static 'img/icons/delete.svg' %}" alt=""></a> 
+                                    <a href="{% url 'detailbuy-modal' pkf=detail.buy.id modal='editar' pkd=detail.id %}" class="btn btn-md border d-print-none" title="Editar"><img class="img-fluid " src=" {% static 'img/icons/update.svg' %} " alt=""></a>
+                                    <a href="{% url 'detailbuy-modal' pkf=detail.buy.id modal='eliminar' pkd=detail.id %}" class="btn btn-md border d-print-none" title="Eliminar"><img class="img-fluid " src=" {% static 'img/icons/delete.svg' %}" alt=""></a> 
                                 </td>
                             </tr>
                             {% endif %}
@@ -101,7 +101,7 @@
                 </table>
 
                 
-                <a href="{{url_factura}}" class="btn_agregar d-block m-auto text-center text-decoration-none py-1 rounded border border-none" style="width: 120px;">Cerrar Factura</a>
+                <a href="{{url_factura}}" class="btn_agregar d-block m-auto text-center text-decoration-none py-1 rounded border border-none d-print-none" style="width: 120px;">Cerrar Factura</a>
                 <button type="button" id="botonReporte" class="btn_agregar rounded border border-none p-1 d-print-none" onclick="window.print()">Reportes</button>
 
             </div>
