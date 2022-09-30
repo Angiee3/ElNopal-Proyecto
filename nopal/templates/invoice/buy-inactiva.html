@@ -3,7 +3,6 @@
 {% block title %}{{title_pag}} - El Nopal Supermercado{% endblock title %}
 {% load static %}
 {% block contenido %}
-
 <div>
     <section class="container  p-5 h-auto" id="mode-cards" data-admin id="cuerpo" style="width: 95%">
         <h1>Gestionar {{title_pag}}</h1>
@@ -19,7 +18,6 @@
                 </div>
                 {% endfor %}
             {% endif %}
-
             <div class="">
                 <table id="tabla" class="display table table-striped table-hover text-nowrap mt-3" style="width:100%">
                     <thead style="background-color: var(--verde); color: var(--verdeoscuro);">
@@ -37,7 +35,7 @@
 
                     <tbody>
                     {% for register in registers %}
-                        {% if register.status == 'Inactiva' or register.status == False or register.status == 'Pendiente'%}
+                        {% if register.status == 'Anulada' or register.status == False or register.status == 'Pendiente'%}
                         <tr>
                             <td id="texto">{{register.id}}</td>
                             <td id="texto">{{register.date|date:"M d, Y - " }}{{register.date|time:"h:i a" }}</td>
@@ -48,9 +46,9 @@
                             <td id="texto">{{register.status}}</td>
                             <td>
                                 {% if register.status ==  "Pendiente" %}
-                                    <a href="{%url 'buy-status-modal' modal='desmarcar' pk=register.id %}" class="btn btn-md border" title="Desmarcar"><img class="img-fluid" src="{% static 'img/icons/mark.svg' %}"></a> 
+                                    <a href="{%url 'buy-inactiva-modal' modal='desmarcar' pk=register.id %}" class="btn btn-md border" title="Desmarcar"><img class="img-fluid" src="{% static 'img/icons/mark.svg' %}"></a> 
                                     {% if user.is_staff %}
-                                    <a href="{%url 'buy-status-modal' modal='eliminar' pk=register.id %}" class="btn btn-md border" title="Eliminar"><img class="img-fluid" src="{% static 'img/icons/delete.svg' %}" id="eliminar"></a>
+                                    <a href="{%url 'buy-inactiva-modal' modal='eliminar' pk=register.id %}" class="btn btn-md border" title="Eliminar"><img class="img-fluid" src="{% static 'img/icons/delete.svg' %}" id="eliminar"></a>
                                     {% endif %}
                                 {% endif %}
                             </td>    
@@ -58,15 +56,10 @@
                         {% endif %}
                     {% endfor %}
                     </tbody> 
-
                 </table>
-
-
             </div>
         </div>
     </section>
 </div>
-
-
 {% include 'partials/accesibilidad.html' %}
  {% endblock %}

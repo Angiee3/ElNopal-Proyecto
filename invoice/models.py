@@ -32,7 +32,7 @@ class Buy(models.Model):
 class DetailBuy(models.Model):
     buy = models.ForeignKey(Buy, on_delete=models.SET_NULL, null=True, verbose_name=u"Id Compra")
     product = models.ForeignKey(Product, on_delete=models.SET_NULL,null=True,verbose_name=u"Producto")
-    amount = models.PositiveIntegerField(validators=[MinValueValidator(1)],default=1, verbose_name=u"Cantidad")
+    amount = models.PositiveIntegerField(validators=[MinValueValidator(0)],default=1, verbose_name=u"Cantidad")
     total = models.IntegerField(default=0, null=False, blank=True)
     status = models.BooleanField(default=True, verbose_name="Estado")
     class Meta:
@@ -64,7 +64,7 @@ class Sale(models.Model):
 class DetailSale(models.Model):
     sale = models.ForeignKey(Sale, on_delete=models.SET_NULL, null=True, verbose_name=u"Id Venta")
     product = models.ForeignKey(Product, on_delete=models.SET_NULL,null=True,verbose_name=u"Producto")
-    amount = models.PositiveIntegerField(validators=[MinValueValidator(1)],default=1, verbose_name=u"Cantidad")
+    amount = models.PositiveIntegerField(validators=[MinValueValidator(0)],default=1, verbose_name=u"Cantidad")
     total = models.IntegerField(default=0, null=False, blank=True)
     status = models.CharField(max_length=10, choices=Status.choices, verbose_name="Estado", default=Status.ABIERTA)
     class Meta:
