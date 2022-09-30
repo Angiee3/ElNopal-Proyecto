@@ -415,6 +415,7 @@ def buy_actions(request, modal, pk):
         modal_txt = 'marcar la compra'
         modal_submit = 'marcar'
         form = BuyFormStatus(request.POST, request.FILES)
+        url_back = '/facturacion/compra/'
             
         if request.method == 'POST':
             print('----------------------------------------MARCANDO')
@@ -427,6 +428,8 @@ def buy_actions(request, modal, pk):
             return redirect ('buy')
         else:
             form = BuyFormStatus()
+            
+        
     
     context ={
         'form':form,
@@ -445,39 +448,65 @@ def buy_actions(request, modal, pk):
     return render(request, 'invoice/modal-buy.html', context)
 
 def buy_view(request, pk):
-    title_pag = "Compra"
-    modal_title = ''
-    modal_txt = ''
     location = True
     admin = True
-    modal_submit = ''
-    url_back="/facturacion/compra/"
-    registers = Buy.objects.all()
-    register_id = Buy.objects.get(id=pk)
-    print(request)
-    ver_compra = False
+    buy_template = True
+    title_pag = "Compra"
+    modal = True
+    url_factura="/facturacion/compra/detalle/"+str(pk)+"/cerrar/"
     
-    print('----------------------------------------------> Ver factura')
-    modal_title = 'Ver factura'
     registers = DetailBuy.objects.filter(buy=pk)
-    ver_compra = True
-    factura = Buy.objects.filter(id=pk)
-    print(factura)
-    print(registers)    
+    buy_a = Buy.objects.filter(id=pk)
+    buy_id = Buy.objects.get(id=pk)
+    total = 0
+    url_back = "/facturacion/compra/"
+    
+    factura = Buy.objects.get(id=pk)
+    # title_pag = "Compra"
+    # modal_title = ''
+    # modal_txt = ''
+    # location = True
+    # admin = True
+    # modal_submit = ''
+    # url_back="/facturacion/compra/"
+    # registers = Buy.objects.all()
+    # todos=Buy.objects.all()
+    # register_id = Buy.objects.get(id=pk)
+    # print(request)
+    # ver_compra = False
+    
+    # print('----------------------------------------------> Ver factura')
+    # modal_title = 'Ver factura'
+    # registers = DetailBuy.objects.filter(buy=pk)
+    # ver_compra = True
+    # factura = Buy.objects.filter(id=pk)
+    # print(factura)
+    # print(registers)    
 
-    context ={
-        'modal_title':modal_title,
-        'modal_txt':modal_txt,
-        'modal_submit':modal_submit,
-        'url_back':url_back,
-        'register_id':register_id,
+    # context ={
+    #     'modal_title':modal_title,
+    #     'modal_txt':modal_txt,
+    #     'modal_submit':modal_submit,
+    #     'url_back':url_back,
+    #     'register_id':register_id,
+    #     'title_pag':title_pag,
+    #     'admin':admin,
+    #     'registers':registers,
+    #     'location':location,
+    #     'ver_compra':ver_compra,
+    # }
+    context = {
         'title_pag':title_pag,
         'admin':admin,
-        'registers':registers,
+        'registers': registers,
         'location':location,
-        'ver_compra':ver_compra,
+        'buy_template':buy_template,
+        'factura':factura,
+        'modal':modal,
+        'url_factura':url_factura,
+        'url_back':url_back,
     }
-    return render(request, 'invoice/modal-buy.html', context)
+    return render(request, 'invoice/detail-view.html', context)
 
 def buy_delete(request, pk):
     title_pag = "Compra"
@@ -1160,7 +1189,7 @@ def sale_delete(request, pk):
     }
     return render(request, 'invoice/modal-sale.html', context)
     
-def buy_inactiva(request):
+def sale_inactiva(request):
     location = True
     admin = True
     buy_template = True

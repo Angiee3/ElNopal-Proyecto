@@ -35,6 +35,7 @@ urlpatterns = [
     
     path('registrar/', registerU, name='registerU'),
     path('registrar<int:pk>/', registerP, name='registerP'),
+    path('usuario/', user_modal, name="user-modal"),
     path('usuario/<str:modal>/<int:pk>', user_modal, name="user-modal"),
     path('registrar/crear/', registerCreatePopup, name = "m_register"),
 ]
