@@ -12,6 +12,7 @@
     <div class="glider-contain col-xl-15 " id="glider-{{subcategory.id}}">
       <div class="glider-cat-1 glider">
         {% for sub in categories %}
+        {% if sus.status %}
         <div class="card w-25 border ms-3 ">
           <img class="w-75 mx-auto" src="{{sub.image.url}}"  style="height:200px;"  alt="...">
           <div class="card-description">
@@ -23,6 +24,7 @@
         </div>
          
 	</div>
+  {% endif %}
         {% endfor %}
       </div>
       <button class="glider-prev"><i class="fas fa-chevron-circle-left"></i></button>

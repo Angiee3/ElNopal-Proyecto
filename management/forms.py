@@ -36,7 +36,7 @@ class BrandForm(forms.ModelForm):
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
-        fields = ['name','price','subcategory','brand','unitMeasurement','image','description']
+        fields = ['name','price','subcategory','brand','image','description']
         widgets = {
             'name':forms.TextInput(attrs={'class':'form-control'}),
             'price':forms.NumberInput(attrs={'class':'form-control'}),
@@ -67,14 +67,14 @@ class BackupForm(forms.ModelForm):
             'file':forms.FileInput(attrs={'class':'form-control'})
         }
         
-class UnitForm(forms.ModelForm):
-    class Meta:
-        model = Unit
-        fields = ['name','type']
-        widgets = {
-            'name':forms.TextInput(attrs={'class':'form-control'}),
-            'type':forms.Select(attrs={'class':'form-control select2 select_padre'}),
-        }
+# class UnitForm(forms.ModelForm):
+#     class Meta:
+#         model = Unit
+#         fields = ['name','type']
+#         widgets = {
+#             'name':forms.TextInput(attrs={'class':'form-control'}),
+#             'type':forms.Select(attrs={'class':'form-control select2 select_padre'}),
+#         }
 
 
 class UserRegisterForm(UserCreationForm):
