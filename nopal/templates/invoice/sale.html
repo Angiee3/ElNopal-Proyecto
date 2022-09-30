@@ -15,7 +15,7 @@
                         {% csrf_token %}
                         {{form|crispy}}
 
-                        {% comment %} <form method = 'POST' action= '' enctype = "multipart/form-data" novalidate id = "sale-form">
+                        <form method = 'POST' action= '' enctype = "multipart/form-data" novalidate id = "sale-form">
                             {% csrf_token %}
                   
                             <label for="sale-payment" ></label>
@@ -50,7 +50,6 @@
                             <div id="div_id_address" class="mb-3"> <label for="id_address" class="form-label">
                                 Dirección
                             </label> <input type="text" name="address" value="Local" class="form-control textinput textInput" maxlength="254" id="id_address"> </div>
-    {% endcomment %}
                         <input type="hidden" id="modal-status" value="Agregar">
                         <button class="btn_agregar d-block m-auto text-center text-decoration-none py-1 rounded border border-none"
                         style="width: 120px;" data-bs-toggle="tooltip" data-bs-placement="right" title="Agregar a la venta">Agregar</button>

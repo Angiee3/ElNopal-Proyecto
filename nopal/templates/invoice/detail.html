@@ -6,9 +6,9 @@
 
 <div >
     <section class="container bg-white p-5 h-auto" data-admin id="cuerpo" style="width: 95%">
-        <h1>Gestionar {{title_pag}}</h1>
+        <h1 class="d-print-none">Gestionar {{title_pag}}</h1>
         <div class="row my-4">
-            <div class="col-md-4">
+            <div class="col-md-4 d-print-none">
                 <div class="border bg-white p-3 rounded shadow mt-3" id="mode-cards">
                     <h3 class="text-start">Nuevo Registro </h3>
                     <form method = 'POST' action= '' enctype = "multipart/form-data" novalidate id = "detail-form">
@@ -70,7 +70,7 @@
 
 
 
-                <table id="tabla" class="display table table-striped table-hover text-nowrap mt-3" style="width:100%">
+                <table class="display table table-striped table-hover text-nowrap mt-3" style="width:100%">
                     
                     <thead style="background-color: var(--verde); color: var(--verdeocuro);" >
                         <tr>
@@ -78,7 +78,7 @@
                             <th scope="col">Cantidad</th>
                             <th scope="col">Vr. Unitario</th>
                             <th scope="col">Vr. Total</th>
-                            <th scope="col">Acciones</th>
+                            <th class="d-print-none" scope="col">Acciones</th>
                         </tr>
                     </thead>
                    <tbody>
@@ -90,7 +90,7 @@
                                     <td>${{detail.product.price}}</td>
                                     <td>${{detail.total}}</td>
                                                             
-                                <td>
+                                <td class="d-print-none">
                                     <a href="" class="btn btn-md border" ><img class="img-fluid " src=" {% static 'img/icons/update.svg' %} " alt=""></a>
                                     <a href="" class="btn btn-md border" ><img class="img-fluid " src=" {% static 'img/icons/delete.svg' %}" alt=""></a> 
                                 </td>
@@ -100,12 +100,11 @@
                    </tbody>
                 </table>
                 
-                <a class="btn_agregar d-block m-auto text-center text-decoration-none py-1 rounded border border-none" style="width: 120px;">Cerrar Factura</a>
-                <button type="button" id="botonReporte" class="btn btn-success">Reportes</button>
+                <a class="btn_agregar d-block m-auto text-center text-decoration-none py-1 rounded border border-none d-print-none" style="width: 120px;">Cerrar Factura</a>
+                <button type="button" id="botonReporte" class="btn_agregar text-center text-decoration-none rounded border border-none p-1 d-block d-print-none" onclick="window.print()">Reportes</button>
             </div>
         </div>
     </section>
 </div>
-<table id="my-table"></table>
 {% include 'partials/accesibilidad.html' %}
  {% endblock %}
