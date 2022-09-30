@@ -109,19 +109,20 @@
                                 <ul class="menu__nesting">
 
                                 {% endif %}
-                        {% for sub in MENU_USER_SUBCATEGORIA %}
-                        {% if sub.status %}
-                            {% if sub.category_id == category.id %}
-                                <form action="" method="POST">
-                                    {% csrf_token %}
-                                    <input type="hidden" name="{{sub.id}}">                                       
-                                    <li class="menu__inside"><button class="menu__link menu__link--inside"  type="submit" style="border: none !important; outline: none;">{{sub.name}}</button></li>
-                                </form>
-                            {% endif %}
-                            {% endif %}
-                        {% endfor %}
-                        </ul>
-                    {% endfor %}
+                                {% for sub in MENU_USER_SUBCATEGORIA %}
+                                {% if sub.status %}
+                                    {% if sub.category_id == category.id %}
+                                        <form action="" method="POST">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="{{sub.id}}">                                       
+                                            <li class="menu__inside"><button class="menu__link menu__link--inside"  type="submit" style="border: none !important; outline: none;">{{sub.name}}</button></li>
+                                        </form>
+                                    {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                                </ul>
+                            {% endfor %}
+        
 
                     <li class="menu__item" >
                         <a href="{% url 'usuario-contacto' %}" class="menu__link" >Contacto</a>
