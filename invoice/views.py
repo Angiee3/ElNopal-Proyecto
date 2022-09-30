@@ -19,7 +19,7 @@ def buy(request):
             date_aux = datetime.now().strftime("%Y-%m-%d")
             buy = Buy.objects.create(
                 date = date_aux,
-                user = form.cleaned_data['user'],
+                # provider = form.cleaned_data['provider'],
                 payment = request.POST['payment']
             )
             messages.success(

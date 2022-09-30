@@ -7,7 +7,7 @@
             <div class="col d-flex">
                 <img src="{% static 'img/Logo.png' %}" id="nopal" width="250px" alt="Logo - nopal Supermercado">
             </div>
-            <div class="col container-fluid d-flex justify-content-center align-items-center px-0 d-print-none">
+            <div class="col container-fluid d-flex justify-content-center align-items-center px-0">
                 <a class="text-decoration-none p-0" style="color: var(--verdeoscuro);" href="{% url 'admin-login' %}"><figure class="d-flex flex-column px-4">
                     <img src="{% static 'img/icons/user.svg'%}" id="user" class="mx-auto d-block" width="45" alt="Administrador">
                     <a class="text-decoration-none" href="{% url 'admin-login' %}" id="texto">{{user.get_username}}</a>
@@ -28,7 +28,7 @@
     </div>
 
     <section id="contenedor" style="top: 10px !important;" >
-        <nav class="menu d-print-none" style="height:60px;" >
+        <nav class="menu" style="height:60px;" >
             <section class="menu__container d-flex justify-content-center" >
         
                 <ul class="menu__links" id="menuCentro" >
