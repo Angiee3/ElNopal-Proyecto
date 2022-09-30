@@ -37,7 +37,7 @@
 
                     <tbody>
                     {% for register in registers %}
-                        {% if register.status == 'Inactiva' or register.status == False or register.status == 'Pendiente'%}
+                        {% if register.status == 'Anulada' or register.status == False or register.status == 'Pendiente'%}
                         <tr>
                             <td id="texto">{{register.id}}</td>
                             <td id="texto">{{register.date|date:"M d, Y - " }}{{register.date|time:"h:i a" }}</td>
