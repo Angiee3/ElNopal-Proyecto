@@ -15,7 +15,7 @@
                 {% if modal == 'editar' %}
                 <form action="" method="POST" enctype="multipart/form-data">
                     {{form|crispy}}{% csrf_token %}
-                {% elif modal == 'eliminar' %}
+                {% elif modal == 'eliminar' or modal == "cerrar" %}
                 <form action="" method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
                 {% endif %}

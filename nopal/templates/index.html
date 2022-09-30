@@ -12,8 +12,8 @@
     <div class="glider-contain col-xl-15 " id="glider-{{subcategory.id}}">
       <div class="glider-cat-1 glider">
         {% for sub in categories %}
-        <div class="card w-25 border ms-3 ">
-          <img class="w-75 mx-auto" src="{{sub.image.url}}"  style="height:200px;"  alt="...">
+        <div class="card border ms-3 " style="width:400px">
+          <img class="mx-auto" src="{{sub.image.url}}"  style="height:200px; width:400px"  alt="...">
           <div class="card-description">
             <form action="" method="POST">
               {% csrf_token %}

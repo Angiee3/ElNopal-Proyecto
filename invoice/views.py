@@ -1116,7 +1116,7 @@ def buy_view(request, pk):
         'location':location,
         'ver_compra':ver_compra,
     }
-    return render(request, 'invoice/modal-buy.html', context)
+    return render(request, 'invoice/detail-view.html', context)
 
 def buy_delete(request, pk):
     title_pag = "Compra"

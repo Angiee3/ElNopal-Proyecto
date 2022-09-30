@@ -74,7 +74,7 @@
                                     {% endif %}
                                     <a href="{% url 'buy-detail' pk=register.id%}" class="btn btn-md border" title="Añadir detalle"><img class="img-fluid" src="{% static 'img/icons/plus.svg' %}"></a> 
                                 {% elif register.status == "Cerrada" %}
-                                    <a href="{% url 'buy-view' pk=register.id %}" class="btn btn-md border" title="Ver detalle"><img class="img-fluid" src="{% static 'img/icons/eye.svg' %}"></a> 
+                                    <a href="{% url 'buy-view' pk=register.id factura=factura.id %}" class="btn btn-md border" title="Ver detalle"><img class="img-fluid" src="{% static 'img/icons/eye.svg' %}"></a> 
                                     <a href="{% url 'buy-actions' modal='marcar' pk=register.id %}" class="btn btn-md border" title="Marcar"><img class="img-fluid" src="{% static 'img/icons/unmark.svg' %}"></a> 
                                     
                                 {% endif %}
