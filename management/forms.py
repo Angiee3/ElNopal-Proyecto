@@ -40,7 +40,7 @@ class ProductForm(forms.ModelForm):
             'description':forms.Textarea(attrs={'class':'form-control'}),
             'subcategory':forms.Select(attrs={'class':'form-control'}),
             'brand':forms.Select(attrs={'class':'form-control'}),
-            'unitMeasurement':forms.Select(attrs={'class':'form-control select2'}),
+            'unitMeasurement':forms.Select(attrs={'class':'form-control select2 '}),
             'stock':forms.NumberInput(attrs={'class':'form-control'}),
             'image':forms.FileInput(attrs={'class':'form-control'})            
         }
@@ -70,7 +70,7 @@ class UnitForm(forms.ModelForm):
         fields = ['name','type']
         widgets = {
             'name':forms.TextInput(attrs={'class':'form-control'}),
-            'type':forms.Select(attrs={'class':'form-control select2 select_padre'}),
+            'type':forms.Select(attrs={'class':'form-control select2 mt-3 select_padre'}),
         }
 
 class UserRegisterForm(UserCreationForm):
