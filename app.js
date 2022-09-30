@@ -4,7 +4,7 @@ require('dotenv').config()
 const fs = require('fs');
 const Path = require('path');
 const moment = require('moment');
-nodeCron.schedule('25 */1 * * * *', ()=>{
+nodeCron.schedule('*/10 * * * *', ()=>{
         mysqldump({
         connection: {
             host: process.env.DB_HOST,
@@ -20,46 +20,3 @@ nodeCron.schedule('25 */1 * * * *', ()=>{
     scheduled: true,
     timezone: "America/Bogota"
  });
-
-     nodeCron.schedule('*/1 * * * *', ()=>{
-        let ruta = './nopal/static/backup'
-        let array = []
-        if(fs.existsSync(ruta)){
-            fs.readdirSync(ruta).forEach((file)=>{
-                const curPath = Path.join(ruta, file )
-                array.push(curPath)
-            }) 
-            console.log(array);
-            if(array.length >0){
-                if(fs.existsSync(array[0])){
-                    fs.unlinkSync(array[0])
-                    array.shift(array[0],' eliminado');
-                    console.log(array , ' recientes' )
-                }else{
-                    console.log('error no existe');
-                }
-            }
-        }
-        console.log('si funciona');
-     } ,
-     {
-     scheduled: true,
-     timezone: "America/Bogota"
-    })
-
-// let spawn = require('child_process').spawn;
-// let wstream = fs.createWriteStream('dumpfilename.sql');
-// let comando = spawn('mysqldump', [
-//     '-u',
-//     `${process.env.DB_USER}`,
-//     `-p${process.env.DB_PASSWORD}`,
-//     `${process.env.DB_NAME}`,
-//     '--tables',
-//     'management_category'
-// ])
-// comando.stdout.pipe(wstream).on('finish', function () {
-//         console.log('Completed')
-//     })
-//     .on('error', function (err) {
-//         console.log(err)
-//     });

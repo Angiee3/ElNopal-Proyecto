@@ -50,11 +50,17 @@
               <strong style="display: none;" class="id" > {{product.id}} </strong>
               <strong style="display: none;" class="stock" > {{product.stock}} </strong>
               <strong style="display: none;" class="descripcion" > {{product.description}} </strong>
-              <button type="button" class="btn botonAgregar d-block"  >Agregar</button>
+              {% if product.stock > 0 %}
+              <button type="button" class="btn botonAgregar d-block w-100 py-1"  >Agregar</button>
+              {% else %}
+              <div class="alert alert-warning d-flex align-items-center  mx-auto" role="alert">
+                <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+                <div>
+                 Producto Agotado
+                </div>
+              </div>
+              {% endif %}
           </div>
-      </div>
-      <div class="alert alert-danger my-3 w-75 text-center" id="alerta_busqueda"  style="display: none !important;" role="alert">
-        <strong>Tu búsqueda no se encuentra</strong> 
       </div>
       {% endif %}
     {% endfor %}
