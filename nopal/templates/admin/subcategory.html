@@ -10,9 +10,31 @@
             <div class="col-md-4">
                 <div class="border p-3 rounded shadow mt-3" id="mode-cards">
                     <h3 class="text-start">Nuevo Registro </h3>
-                    <form action="" method="POST" enctype="multipart/form-data">
+                    {% comment %}<form action="" method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
-                        {{form|crispy}}
+                         {{form|crispy}} {% endcomment %}
+                        <form method='POST' action='' enctype="multipart/form-data" novalidate id="subcategory-form">
+                            {% csrf_token %}
+        
+                            <label for="subcategory-name" class="control-label">Nombre</label>
+                            <span class="asteriskField">*</span>
+                            {{form.name }}
+        
+                            <label for="subcategory-category" class="control-label">Categoría</label>
+                            <span class="asteriskField">*</span>
+                            {{form.category }}
+                            <a href="{% url 'm_category' %}" id="add_category" onclick="return showAddPopup(this);"><img
+                                    src="{% static 'img/icons/plus.svg' %}" data-bs-toggle="tooltip" data-bs-placement="right" title="Agregar categoría"></a>
+        
+                            <div id="div_id_image" class="mb-3">
+                                <label for="subcategory-image" class="form-label requiredField">Imagen
+                                </label>
+                                <input type="file" name="image" class="form-control " accept="image/png,jpg" id="id_image">
+        
+                            </div>
+        
+                           
+                        </form>
                         <input type="hidden" id="modal-status" value="Agregar">
                         <button class="btn_agregar d-block m-auto text-center text-decoration-none py-1 rounded border border-none"
                         style="width: 120px;" >Agregar</button>
