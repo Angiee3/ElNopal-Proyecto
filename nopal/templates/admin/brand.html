@@ -34,8 +34,8 @@
                             {% if register.status %}
                                 <tr>
                                     <td id="texto">{{register.name}}</td>
-                                    <td><a href="{%url 'brand-modal' modal='editar' pk=register.id %}" class="btn btn-md border"><img class="img-fluid" src="{% static 'img/icons/update.svg' %}" id="edit" alt=""></a>
-                                        <a href="{%url 'brand-modal' modal='eliminar' pk=register.id%}" class="btn btn-md border"><img class="img-fluid" src="{% static 'img/icons/delete.svg' %}" id="eliminar" alt=""></a> 
+                                    <td><a href="{%url 'brand-modal' modal='editar' pk=register.id %}" class="btn btn-md border "><img class="img-fluid" src="{% static 'img/icons/update.svg' %}" id="edit" alt=""></a>
+                                        <a href="{%url 'brand-modal' modal='eliminar' pk=register.id%}" class="btn btn-md border "><img class="img-fluid" src="{% static 'img/icons/delete.svg' %}" id="eliminar" alt=""></a> 
                                     </td>    
                                 </tr>
                             {% endif %}
