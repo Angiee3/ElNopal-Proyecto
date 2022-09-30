@@ -6,11 +6,12 @@ from django.utils.translation import gettext_lazy as _
 class Payment(models.TextChoices):
         DATAFONO = 'Datáfono', _('Datáfono')
         EFECTIVO = 'Efectivo', _('Efectivo')
-        TRANSACCION = 'Transacción', _('Transaccion')
+        TRANSACCION = 'Transacción', _('Transacción')
 class Status(models.TextChoices):
         ABIERTA='Abierta', _('Abierta')
         CERRADA='Cerrada', _('Cerrada')
         ANULADA='Anulada', _('Anulada')
+        PENDIENTE='Pendiente',_('Pendiente')
 class Observation(models.TextChoices):
         DEVOLUCION = 'Devolución',_('Devolución')
         CAMBIO = 'Cambio',_('Cambio')        
@@ -24,7 +25,7 @@ class Buy(models.Model):
     observation = models.CharField(max_length=15, choices=Observation.choices, verbose_name=u"Observaciones", null=True, blank=True, default=" ")
     status = models.CharField(max_length=10, choices=Status.choices, verbose_name="Estado", default=Status.ABIERTA)
     def __str__(self) -> str:
-        return ' %s' %(self.date)
+        return ' %s' %(self.id)
     class Meta:
         verbose_name="Compra"
         verbose_name_plural = "Compras"
@@ -32,9 +33,11 @@ class Buy(models.Model):
 class DetailBuy(models.Model):
     buy = models.ForeignKey(Buy, on_delete=models.SET_NULL, null=True, verbose_name=u"Id Compra")
     product = models.ForeignKey(Product, on_delete=models.SET_NULL,null=True,verbose_name=u"Producto")
-    amount = models.PositiveIntegerField(validators=[MinValueValidator(1)],default=1, verbose_name=u"Cantidad")
+    amount = models.PositiveIntegerField(validators=[MinValueValidator(0)],default=1, verbose_name=u"Cantidad")
     total = models.IntegerField(default=0, null=False, blank=True)
     status = models.BooleanField(default=True, verbose_name="Estado")
+    def __str__(self) -> str:
+        return ' %s' %(self.id)
     class Meta:
         verbose_name="Detalle de compra"
         verbose_name_plural = "Detalle de compras"
@@ -54,7 +57,7 @@ class Sale(models.Model):
     observation = models.CharField(max_length=15, choices=Observation.choices, verbose_name=u"Observaciones", null=True, blank=True, default=" ")
     status = models.CharField(max_length=10, choices=Status.choices, verbose_name="Estado", default=Status.ABIERTA)
     def __str__(self) -> str:
-        return ' %s' %(self.date)
+        return ' %s' %(self.id)
     def clean(self):
         self.client = self.client.title()
     class Meta:
@@ -64,9 +67,11 @@ class Sale(models.Model):
 class DetailSale(models.Model):
     sale = models.ForeignKey(Sale, on_delete=models.SET_NULL, null=True, verbose_name=u"Id Venta")
     product = models.ForeignKey(Product, on_delete=models.SET_NULL,null=True,verbose_name=u"Producto")
-    amount = models.PositiveIntegerField(validators=[MinValueValidator(1)],default=1, verbose_name=u"Cantidad")
+    amount = models.PositiveIntegerField(validators=[MinValueValidator(0)],default=1, verbose_name=u"Cantidad")
     total = models.IntegerField(default=0, null=False, blank=True)
     status = models.CharField(max_length=10, choices=Status.choices, verbose_name="Estado", default=Status.ABIERTA)
+    def __str__(self) -> str:
+        return ' %s' %(self.id)
     class Meta:
         verbose_name="Detalle de venta"
         verbose_name_plural = "Detalle de ventas"

@@ -29,7 +29,7 @@
 
                     </form>
                 </div>
-                <a class="btn_agregar d-block m-auto text-center text-decoration-none py-1 my-3 rounded border border-none" href="{%url 'buy-status' %}"
+                <a href="{% url 'buy-inactiva' %}" class="btn_agregar d-block m-auto text-center text-decoration-none py-1 my-3 rounded border border-none"
                         style="width: 200px;">Ver Inactivas/Pendientes</a>
             
             {% if messages %}
@@ -68,14 +68,14 @@
                             <td id="texto">{{register.status}}</td>
                             <td>
                                 {% if register.status == "Abierta" %}
-                                    <a href="{%url 'buy-modal' modal='editar' pk=register.id %}" class="btn btn-md border" title="Editar"><img class="img-fluid" src="{% static 'img/icons/update.svg' %}" id="edit"></a>
+                                    <a href="{% url 'buy-actions' modal='editar' pk=register.id %}" class="btn btn-md border" title="Editar"><img class="img-fluid" src="{% static 'img/icons/update.svg' %}" id="edit"></a>
                                     {% if user.is_staff %}
-                                    <a href="{%url 'buy-modal' modal='eliminar' pk=register.id %}" class="btn btn-md border" title="Eliminar"><img class="img-fluid" src="{% static 'img/icons/delete.svg' %}" id="eliminar"></a>
+                                        <a href="{% url 'buy-delete' pk=register.id %}" class="btn btn-md border" title="Eliminar"><img class="img-fluid" src="{% static 'img/icons/delete.svg' %}" id="eliminar"></a>
                                     {% endif %}
-                                    <a href="" class="btn btn-md border" title="Añadir detalle"><img class="img-fluid" src="{% static 'img/icons/plus.svg' %}"></a> 
+                                    <a href="{% url 'buy-detail' pk=register.id%}" class="btn btn-md border" title="Añadir detalle"><img class="img-fluid" src="{% static 'img/icons/plus.svg' %}"></a> 
                                 {% elif register.status == "Cerrada" %}
-                                    <a href="{% url 'buy-modal' modal='ver' pk=register.id %}" class="btn btn-md border" title="Ver detalle"><img class="img-fluid" src="{% static 'img/icons/eye.svg' %}"></a> 
-                                    <a href="{%url 'buy-modal' modal='marcar' pk=register.id %}" class="btn btn-md border" title="Marcar"><img class="img-fluid" src="{% static 'img/icons/unmark.svg' %}"></a> 
+                                    <a href="{% url 'buy-view' pk=register.id %}" class="btn btn-md border" title="Ver detalle"><img class="img-fluid" src="{% static 'img/icons/eye.svg' %}"></a> 
+                                    <a href="{% url 'buy-actions' modal='marcar' pk=register.id %}" class="btn btn-md border" title="Marcar"><img class="img-fluid" src="{% static 'img/icons/unmark.svg' %}"></a> 
                                     
                                 {% endif %}
                             </td>    
