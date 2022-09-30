@@ -68,14 +68,14 @@
                             <td id="texto">{{register.status}}</td>
                             <td>
                                 {% if register.status == "Abierta" %}
-                                    <a href="" class="btn btn-md border" title="Editar"><img class="img-fluid" src="{% static 'img/icons/update.svg' %}" id="edit"></a>
+                                    <a href="{% url 'buy-actions' modal='editar' pk=register.id %}" class="btn btn-md border" title="Editar"><img class="img-fluid" src="{% static 'img/icons/update.svg' %}" id="edit"></a>
                                     {% if user.is_staff %}
-                                    <a href="" class="btn btn-md border" title="Eliminar"><img class="img-fluid" src="{% static 'img/icons/delete.svg' %}" id="eliminar"></a>
+                                    <a href="{% url 'buy-actions' modal='eliminar' pk=register.id %}" class="btn btn-md border" title="Eliminar"><img class="img-fluid" src="{% static 'img/icons/delete.svg' %}" id="eliminar"></a>
                                     {% endif %}
                                     <a href="{% url 'buy-detail' pk=register.id%}" class="btn btn-md border" title="Añadir detalle"><img class="img-fluid" src="{% static 'img/icons/plus.svg' %}"></a> 
                                 {% elif register.status == "Cerrada" %}
-                                    <a href="" class="btn btn-md border" title="Ver detalle"><img class="img-fluid" src="{% static 'img/icons/eye.svg' %}"></a> 
-                                    <a href="" class="btn btn-md border" title="Marcar"><img class="img-fluid" src="{% static 'img/icons/unmark.svg' %}"></a> 
+                                    <a href="{% url 'buy-actions' modal='ver' pk=register.id %}" class="btn btn-md border" title="Ver detalle"><img class="img-fluid" src="{% static 'img/icons/eye.svg' %}"></a> 
+                                    <a href="{% url 'buy-actions' modal='marcar' pk=register.id %}" class="btn btn-md border" title="Marcar"><img class="img-fluid" src="{% static 'img/icons/unmark.svg' %}"></a> 
                                     
                                 {% endif %}
                             </td>    

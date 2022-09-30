@@ -5,6 +5,8 @@ from store.views import *
 
 urlpatterns = [
     path('compra/', buy, name="buy"),
+    
+    path('compra/modal/<str:modal>/<int:pk>/', buy_actions, name='buy-actions'),
     # path('compra/inactivas/', buy_status, name="buy-status"),
     # path('compra/inactivas/<str:modal>/<int:pk>/', buy_status_modal, name="buy-status-modal"),
     

@@ -5,10 +5,8 @@
 
 {% if ver_compra %}
     {% include "modals/m-invoice.html" %}
-{% elif ver_inactivas%}
+{% elif ver_inactivas %}
     {% include "modals/m-inactivas.html" %}
-{% elif modal == 'cerrar' %}
-    {% include "invoice/detail.html" %}
 {% else %}
     {% include "modals/modal.html" %}
 {% endif %}

@@ -1,7 +1,5 @@
 import datetime
 from django.shortcuts import render, redirect
-
-from management.views import product
 from .models import *
 from .forms import *
 from django.contrib import messages
@@ -31,6 +29,8 @@ def buy(request):
         else:
             form = BuyForm()
             
+    print(request.POST)
+            
     context = {
         'form':form,
         'title_pag':title_pag,
@@ -47,6 +47,7 @@ def detail_buy(request, pk):
     buy_template = True
     title_pag = "Compra"
     modal = True
+    url_factura="/facturacion/compra/detalle/"+str(pk)+"/cerrar/"
     
     registers = DetailBuy.objects.filter(buy=pk)
     buy_a = Buy.objects.filter(id=pk)
@@ -147,7 +148,8 @@ def detail_buy(request, pk):
         'location':location,
         'buy_template':buy_template,
         'factura':factura,
-        'modal':modal
+        'modal':modal,
+        'url_factura':url_factura,
     }
     return render(request, 'invoice/detail.html', context)
 
@@ -341,7 +343,6 @@ def detailbuy_cerrar(request, pk):
     url_back="/facturacion/compra/detalle/"+str(pk)+"/"
     url_factura="/facturacion/compra/detalle/"+str(pk)+"/cerrar/"
     registers = DetailBuy.objects.filter(buy=pk)
-    factura = Buy.objects.all(id=pk)
     
     detail = DetailBuy.objects.filter(buy = pk)
     print('------------------------> Filtra si hay detalle')
@@ -377,13 +378,108 @@ def detailbuy_cerrar(request, pk):
         'admin':admin,
         'registers':registers,
         'location':location,
-        'factuta':factura,
     }
     return render(request, 'invoice/modal-detail.html', context)
 
-
-
-
+def buy_actions(request, modal, pk):
+    title_pag = "Compra"
+    modal_title = ''
+    modal_txt = ''
+    location = True
+    admin = True
+    modal_submit = ''
+    url_back="/facturacion/compra/"
+    registers = Buy.objects.all()
+    register_id = Buy.objects.get(id=pk)
+    print(request)
+    ver_compra = False
+    form = " "
+    
+    if modal == 'editar':
+        modal_title = 'Editar la compra'
+        modal_txt = 'editar la compra'
+        modal_submit = 'guardar'
+        form =  BuyForm(request.POST, request.FILES, instance=register_id)
+        if request.method == 'POST':
+            print('----------------------------------------EDITANDO')                
+            if form.is_valid():
+                form.save()
+                messages.success(request, f'La compra {pk} se editó correctamente!')
+                return redirect ('buy')
+        else:
+            form=  BuyForm(instance=register_id)
+            
+    
+    elif modal == 'eliminar':
+        detail = DetailBuy.objects.filter(buy=pk)
+        print(detail)    
+        if detail.exists():
+            if User.is_staff:
+                print('Ya borro eso xd')
+                return redirect('buy')
+            else:
+                messages.warning(request, f'La compra No.{pk} no se puede eliminar, tiene detalles de compra.')
+                return redirect ('buy')
+        else: 
+            modal_title = 'Eliminar compra'
+            modal_txt = 'eliminar la compra'
+            modal_submit = 'eliminar'
+            form = BuyForm(request.POST, request.FILES)
+                
+            if request.method == 'POST':
+                print('----------------------------------------ELIMINANDO')
+                Buy.objects.filter(id=pk).update(
+                    status = "Inactiva"
+                )
+                print('Eliminado')
+                messages.success(request, f'La compra No.{pk} se eliminó correctamente!')
+                return redirect ('buy')
+            else:
+                form = BuyForm()
+        
+    # elif modal == 'ver':
+    #     print('----------------------------------------------> Ver factura')
+    #     # modal_title = 'Ver factura'
+    #     # registers = DetailBuy.objects.filter(buy=pk)
+    #     # ver_compra = True
+    #     # factura = Buy.objects.filter(id=pk)
+    #     # print(factura)
+    #     print(registers)    
+    
+    elif modal == 'marcar':
+        print('---------------------------------------marcar')
+        modal_title = 'Marcar compra'
+        modal_txt = 'marcar la compra'
+        modal_submit = 'marcar'
+        form = BuyFormStatus(request.POST, request.FILES)
+            
+        if request.method == 'POST':
+            print('----------------------------------------MARCANDO')
+            Buy.objects.filter(id=pk).update(
+                status = "Pendiente",
+                observation = request.POST['observation']
+            )
+            print('Marcada')
+            messages.success(request, f'La compra No.{pk} se marcó correctamente!')
+            return redirect ('buy')
+        else:
+            form = BuyFormStatus()
+    
+    context ={
+        'form':form,
+        'modal_title':modal_title,
+        'modal_txt':modal_txt,
+        'modal_submit':modal_submit,
+        'url_back':url_back,
+        'modal':modal,
+        'register_id':register_id,
+        'title_pag':title_pag,
+        'admin':admin,
+        'registers':registers,
+        'location':location,
+        'ver_compra':ver_compra,
+    }
+    return render(request, 'invoice/modal-buy.html', context)
 
 
 
