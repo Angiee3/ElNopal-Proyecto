@@ -69,6 +69,8 @@ class UserRegisterForm(UserCreationForm):
     # lastname = forms.CharField(label='Apellido')
     # nDocument = forms.CharField(label='Número de documento')
     # phone = forms.CharField(label='Número de celular')
+    first_name = forms.CharField(label='Nombre')
+    last_name = forms.CharField(label='Apellido')
     email = models.EmailField(max_length=254, verbose_name=u"Correo Electrónico")
     username = forms.CharField(label='Nombre de usuario')
     password1 = forms.CharField(label='Contraseña', widget=forms.PasswordInput)
@@ -77,6 +79,6 @@ class UserRegisterForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ['email','username', 'password1', 'password2']
+        fields = ['first_name','last_name','email','username', 'password1', 'password2']
         help_texts = {k:"" for k in fields }
   
