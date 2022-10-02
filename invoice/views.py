@@ -10,7 +10,7 @@ def buy(request):
     print(request.POST) # Datos enviados
     location = True # Header
     buy_template = True # Datos en invoice.html 
-    title_pag = "compra"
+    title_pag = "Compra"
     registers = Buy.objects.all()
     if request.method == 'POST':
         print('--------------------------------> Agregando una compra')
