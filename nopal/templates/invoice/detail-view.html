@@ -10,7 +10,7 @@
 
         <div class="col-md-8">
             <table class="display table table-striped text-center table-hover text-nowrap mt-3" style="width:100% ">
-            {% if buy_template %}
+            {% if template == 'buy' %}
                 <thead style="background-color: var(--verde); color: var(--verdeocuro);">
                     <tr>
                         <th id="factura" colspan="5">Compra No.{{factura.id}}</td>
@@ -42,7 +42,7 @@
 
             </table>
 
-            {% elif sale_template %}
+            {% elif template == 'sale' %}
                 <thead style="background-color: var(--verde); color: var(--verdeocuro);">
                     <tr>
                         <th id="factura" colspan="5">Venta No.{{factura.id}}</td>

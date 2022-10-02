@@ -22,8 +22,8 @@
                         {{form.amount }}
 
                         <input type="hidden" id="modal-status" value="Agregar">
-                        <button class="btn_agregar d-block m-auto text-center text-decoration-none py-1 rounded border border-none"
-                        style="width: 120px;" >Agregar</button>
+                        <button class="btn_agregar d-block m-auto text-center text-decoration-none py-1 rounded border border-none mt-4"
+                        style="width: 120px;">Agregar</button>
                     </form>
                 </div>
 
@@ -32,7 +32,7 @@
 
             <div class="col-md-8">
                 <table class="display table table-striped text-center table-hover text-nowrap mt-3" style="width:100% ">
-                {% if buy_template %}
+                {% if template == 'buy' %}
                     <thead style="background-color: var(--verde); color: var(--verdeocuro);">
                         <tr><th id="factura" colspan="5">Compra No.{{factura.id}}</td></tr>
                     </thead>
@@ -61,7 +61,7 @@
                     </tbody>
                 </table>
 
-                {% elif sale_template %}
+                {% elif template == 'sale' %}
                    <thead style="background-color: var(--verde); color: var(--verdeocuro);">
                     <tr><th id="factura" colspan="5">Venta No.{{factura.id}}</td></tr>
                         </thead>
@@ -111,12 +111,12 @@
                                     <td id="texto">${{detail.product.price}}</td>
                                     <td id="texto">${{detail.total}}</td>
                                                             
-                                {% if buy_template %}
+                                {% if template == 'buy' %}
                                 <td class="d-print-none">
                                     <a href="{% url 'detailbuy-modal' pkf=detail.buy.id modal='editar' pkd=detail.id %}" class="btn btn-md border" ><img class="img-fluid " src=" {% static 'img/icons/update.svg' %} " id="edit" alt=""></a>
                                     <a href="{% url 'detailbuy-modal' pkf=detail.buy.id modal='eliminar' pkd=detail.id %}" class="btn btn-md border" ><img class="img-fluid " src=" {% static 'img/icons/delete.svg' %}" id="eliminar" alt=""></a> 
                                 </td>
-                                {% elif sale_template %}
+                                {% elif template == 'sale' %}
                                 <td class="d-print-none">
                                     <a href="{% url 'detailsale-modal' pkf=detail.sale.id modal='editar' pkd=detail.id %}" class="btn btn-md border" ><img class="img-fluid " src=" {% static 'img/icons/update.svg' %} " id="edit" alt=""></a>
                                     <a href="{% url 'detailsale-modal' pkf=detail.sale.id modal='eliminar' pkd=detail.id %}" class="btn btn-md border" ><img class="img-fluid " src=" {% static 'img/icons/delete.svg' %}" id="eliminar" alt=""></a> 

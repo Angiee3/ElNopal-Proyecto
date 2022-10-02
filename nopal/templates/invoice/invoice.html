@@ -14,7 +14,7 @@
 
                     <form method='POST' action= '' enctype = "multipart/form-data">
                         {% csrf_token %}
-                        {% if buy_template %}
+                        {% if template == 'buy' %}
 
                             <label for="buy-provider" class="control-label">Proveedor</label>
                             {{form.user }}
@@ -24,7 +24,7 @@
                             <label for="buy-payment" class="control-label">Método de pago</label>
                             {{form.payment }}           
                             <input type="hidden" value="Agregar">
-                        {% elif sale_template %}
+                        {% elif template == 'sale' %}
 
                         {{form|crispy}}
 
@@ -43,7 +43,7 @@
             <div class="col-md-8">
                 <table id="tabla" class="display table table-striped table-hover text-nowrap mt-3" style="width:100%">
 
-                    {% if buy_template %}
+                    {% if template == 'buy' %}
                     <thead style="background-color: var(--verde); color: var(--verdeoscuro);">
                         <tr>
                             <th scope="col">ID</th>
@@ -56,7 +56,7 @@
                         </tr>
                     
                     </thead>
-                    {% elif sale_template %}
+                    {% elif template == 'sale' %}
                     <thead style="background-color: var(--verde); color: var(--verdeoscuro);">
                         <tr>
                             <th scope="col">ID</th>
@@ -83,7 +83,7 @@
                                 <td id="texto">${{register.finalPrice}}</td>
                                 <td id="texto">{{register.status}}</td>
 
-                                {% if buy_template %}
+                                {% if template == 'buy' %}
 
                                 <td>
                                     {% if register.status == "Abierta" %}
@@ -99,7 +99,7 @@
                                     {% endif %}
                                 </td>
 
-                                {% elif sale_template %}
+                                {% elif template == 'sale' %}
                                 <td>
                                     {% if register.status == "Abierta" %}
                                         <a href="{% url 'sale-actions' modal='editar' pk=register.id %}" class="btn btn-md border" title="Editar"><img class="img-fluid" src="{% static 'img/icons/update.svg' %}" id="edit"></a>

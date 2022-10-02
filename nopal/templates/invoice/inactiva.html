@@ -11,7 +11,7 @@
             {% include 'partials/messages.html' %}
             <div>
                 <table id="tabla" class="display table table-striped table-hover text-nowrap mt-3" style="width:100%">
-                    {% if buy_template%}
+                    {% if template == 'buy' %}
                     <thead style="background-color: var(--verde); color: var(--verdeoscuro);">
                         <tr>
                             <th scope="col">ID</th>
@@ -48,7 +48,7 @@
                         {% endif %}
                     {% endfor %}
                 </tbody> 
-                {% elif sale_template %}
+                {% elif template == 'sale' %}
                     <thead style="background-color: var(--verde); color: var(--verdeoscuro);">
                         <tr>
                             <th scope="col">ID</th>

@@ -8,9 +8,10 @@ from datetime import datetime
 def buy(request):
     print(request.POST) # Datos enviados
     location = True # Header
-    buy_template = True # Datos en invoice.html 
-    title_pag = "Compra"
+    template = 'buy'   # Datos en invoice.html 
+    title_pag = "compras" 
     registers = Buy.objects.all()
+    
     if request.method == 'POST':
         print('--------------------------------> Agregando una compra')
         form = BuyForm(request.POST)
@@ -28,85 +29,65 @@ def buy(request):
     else:
         form = BuyForm()
             
-    print(request.POST)
-    print(request) # Redirección
-            
     context = {
         'form':form,
         'title_pag':title_pag,
         'registers': registers,
         'location':location,
-        'buy_template':buy_template,
+        'template':template,
     }
     return render(request, 'invoice/invoice.html', context)
 
 def detail_buy(request, pk):
     print(request.POST) # Datos enviados
     location = True # Header
-    buy_template = True # Datos en detail.html 
+    template = 'buy' # Datos en detail.html 
     title_pag = "productos - Compra No."+str(pk)
-    url_factura="/facturacion/compra/detalle/"+str(pk)+"/cerrar/"
     
+    url_factura="/facturacion/compra/detalle/"+str(pk)+"/cerrar/"
     registers = DetailBuy.objects.filter(buy=pk)
     factura = Buy.objects.filter(id=pk)
     buy_id = Buy.objects.get(id=pk)
-    total = 0
-    
-    factura = Buy.objects.get(id=pk)
+    total = 0 
 
     if request.method == 'POST':
         form = DetailBuyForm(request.POST)
         if form.is_valid():
-            print('------------------------> Formato válido')
             product = Product.objects.get(
-                id=request.POST['product']
+                id = request.POST['product']
             )
-            print('------------------------> Producto con id')
-            
+            print('------------------------> Obtiene producto con id '+str(product.id))            
             detail = DetailBuy.objects.filter(
                 buy = buy_id,
                 product = request.POST['product'],
             )
-            print('------------------------> Filtra si hay detalle')
+            print('------------------------> Filtra si hay detalle con ese producto')
             
             if detail.exists(): # ------------------------ Busca detalle, si existe, la filtra
-                print('------------------------> Detalle Existe')
-                detail_a = DetailBuy.objects.filter(
-                    buy = pk,
-                    product = request.POST['product'], 
+                print('------------------------> Sí lo hay')
+                total = form.cleaned_data.get('amount') * int(form.cleaned_data.get('product').price)
+                print('------------------------> Se agrega el total ',total)
+                detail.update(
+                    amount =  detail[0].amount + form.cleaned_data.get('amount'),
+                    total = detail[0].total + total
                 )
-                print('------------------------> Busca si ya está el producto')
-                if detail_a.exists():
-                    print('Producto encontrado ')
-                    total = form.cleaned_data.get('amount') * int(form.cleaned_data.get('product').price)
-                    print('------------------------> ',total)
-                    detail_a.update(
-                        amount =  detail_a[0].amount + form.cleaned_data.get('amount'),
-                        total = detail_a[0].total + total
-                    )
-                    print('------------------------> Actualización de la cantidad de producto en el detalle existente')
-                    
-                    Product.objects.filter(id = product.id).update(
-                        stock = product.stock + form.cleaned_data.get('amount')
-                    )
-                    print('------------------------> Stock actualizado')
+                print('------------------------> Actualización de la cantidad de producto en el detalle existente y el total')
+                
+                Product.objects.filter(id = product.id).update(
+                    stock = product.stock + form.cleaned_data.get('amount')
+                )
+                print('------------------------> Stock actualizado del producto')
 
-                    Buy.objects.filter(
-                        id=pk
-                        ).update(
-                            finalPrice = factura[0].finalPrice + total
-                        )
-                    print('------------------------> Total actualizado')
-                    
-                    messages.success(request,f'{product} se añadió a la compra!')
-                    return redirect('buy-detail', pk) 
-           
-            else:
-                detail_a = DetailBuy.objects.filter(
-                    buy = pk,
-                    product = request.POST['product'], 
+                Buy.objects.filter(id=pk).update(
+                    finalPrice = factura[0].finalPrice + total
                 )
-                print('------------------------> Detalle NO Existe')
+                print('------------------------> Total de la factura actualizado')
+                
+                messages.success(request,f'{product} se añadió a la compra!')
+                return redirect('buy-detail', pk) 
+        
+            else:
+                print('------------------------> No lo hay')
                 
                 DetailBuy.objects.create( # ------------------------ Crea un detalle
                     buy = buy_id,
@@ -118,21 +99,22 @@ def detail_buy(request, pk):
                 Product.objects.filter(id = product.id).update(
                     stock = int(product.stock) + int(request.POST['amount'])
                 )
-                print('------------------------> Stock actualizado')
+                print('------------------------> Stock actualizado del producto')
 
                 total = form.cleaned_data.get('amount') * int(form.cleaned_data.get('product').price)
                 print('------------------------> ',total)
-                detail_a.update(
-                    total = detail_a[0].total + total
+                
+                detail.update(
+                    total = detail[0].total + total
                 )
-                print('------------------------> Total ')
+                print('------------------------> Total del detalle actualizado')
 
-                Buy.objects.filter(
-                        id=pk
+                Buy.objects.filter(id=pk
                         ).update(
                             finalPrice = factura[0].finalPrice + total
                         )
-                print('------------------------> Total Compra actualizado')
+                print('------------------------> Total de la factura actualizado')
+                
                 messages.success(request,f'{product} se añadió a la compra!')
                 return redirect('buy-detail', pk)            
     else:
@@ -143,8 +125,8 @@ def detail_buy(request, pk):
         'title_pag':title_pag,
         'registers': registers,
         'location':location,
-        'buy_template':buy_template,
-        'factura':factura,
+        'template':template,
+        'factura': Buy.objects.get(id=pk),
         'url_factura':url_factura,
     }
     return render(request, 'invoice/detail.html', context)
@@ -153,7 +135,7 @@ def detailbuy_modal(request, pkf, modal, pkd):
     print(request.POST) # Datos enviados
     location = True # Header
     title_pag = "productos - Compra No."+str(pkf)
-    
+    template = 'buy'
     modal_title = ''
     modal_txt = ''    
     modal_submit = ''
@@ -165,7 +147,7 @@ def detailbuy_modal(request, pkf, modal, pkd):
     
     if modal == 'eliminar':
         modal_title = 'Eliminar detalle'
-        modal_txt = 'eliminar el detalle'
+        modal_txt = 'eliminar el producto'
         modal_submit = 'eliminar'
         form = DetailBuyForm(request.POST, request.FILES)
         if request.method == 'POST':
@@ -199,9 +181,7 @@ def detailbuy_modal(request, pkf, modal, pkd):
             )
             print('------------------------> Total ')
             
-            DetailBuy.objects.filter(buy=pkf, product=product).update(
-                status = False
-            )
+            DetailBuy.objects.filter(buy=pkf, product=product).delete()
             
             Buy.objects.filter(id=pkf).update(
                 finalPrice = buy_a[0].finalPrice - total
@@ -219,7 +199,7 @@ def detailbuy_modal(request, pkf, modal, pkd):
             
     elif modal == 'editar':
         modal_title = 'Editar detalle'
-        modal_txt = 'editar el detalle'
+        modal_txt = 'editar el producto'
         modal_submit = 'guardar'
         form = DetailBuyEditForm(request.POST, request.FILES, instance=register_id)
         cantidad = register_id.amount
@@ -324,31 +304,32 @@ def detailbuy_modal(request, pkf, modal, pkd):
         'title_pag':title_pag,
         'registers':registers,
         'location':location,
+        'template':template,
     }
     return render(request, 'invoice/modal-detail.html', context)
 
 def detailbuy_cerrar(request, pk):
     print(request)
     location = True # Header
-    buy_template = True # Datos en invoice.html 
+    template = 'buy' # Datos en invoice.html 
     title_pag = "productos - Compra No."+str(pk)
     modal_title = ''
     modal_txt = ''
     location = True
-    
     modal_submit = ''
     modal = 'cerrar'
     url_back="/facturacion/compra/detalle/"+str(pk)+"/"
     url_factura="/facturacion/compra/detalle/"+str(pk)+"/cerrar/"
+    factura = Buy.objects.get(id=pk)
     registers = DetailBuy.objects.filter(buy=pk)
-    
+    register_id = pk
     detail = DetailBuy.objects.filter(buy = pk)
     print('------------------------> Filtra si hay detalle')
             
     print('------------------------> Cerrando facturaxd')
     if detail.exists():
         modal_title = 'Cerrar compra'
-        modal_txt = 'cerrar la compra No.'
+        modal_txt = 'cerrar la compra'
         modal_submit = 'cerrar'
         form = BuyForm(request.POST, request.FILES)
         print('xdd')
@@ -373,9 +354,11 @@ def detailbuy_cerrar(request, pk):
         'url_factura':url_factura,
         'modal':modal,
         'title_pag':title_pag,
-        'buy_template':buy_template,
+        'template':template,
         'registers':registers,
         'location':location,
+        'register_id':register_id,
+        'factura':factura,
     }
     return render(request, 'invoice/modal-detail.html', context)
 
@@ -384,7 +367,7 @@ def buy_actions(request, modal, pk):
     modal_title = ''
     modal_txt = ''
     location = True
-    buy_template = True
+    template = 'buy'
     modal_submit = ''
     url_back="/facturacion/compra/"
     registers = Buy.objects.all()
@@ -435,7 +418,7 @@ def buy_actions(request, modal, pk):
         'modal':modal,
         'register_id':register_id,
         'title_pag':title_pag,
-        'buy_template':buy_template,
+        'template':template,
         'registers':registers,
         'location':location,
     }
@@ -443,7 +426,7 @@ def buy_actions(request, modal, pk):
 
 def buy_view(request, pk):
     location = True
-    buy_template = True
+    template = 'buy'
     title_pag = "compra No."+str(pk)
     modal = True
     url_factura="/facturacion/compra/detalle/"+str(pk)+"/cerrar/"
@@ -457,7 +440,7 @@ def buy_view(request, pk):
         'title_pag':title_pag,
         'registers': registers,
         'location':location,
-        'buy_template':buy_template,
+        'template':template,
         'factura':factura,
         'modal':modal,
         'url_factura':url_factura,
@@ -470,7 +453,7 @@ def buy_delete(request, pk):
     modal_title = ''
     modal_txt = ''
     location = True
-    buy_template = True
+    template = 'buy'
     modal_submit = ''
     url_back="/facturacion/compra/"
     registers = Buy.objects.all()
@@ -507,7 +490,7 @@ def buy_delete(request, pk):
         'url_back':url_back,
         'register_id':register_id,
         'title_pag':title_pag,
-        'buy_template':buy_template,
+        'template':template,
         'registers':registers,
         'location':location,
         'modal':modal,
@@ -516,7 +499,7 @@ def buy_delete(request, pk):
     
 def buy_inactiva(request):
     location = True
-    buy_template = True
+    template = 'buy'
     title_pag = "Compras Inactivas/Pendientes"
     registers = Buy.objects.all()
     inactivas = True
@@ -542,7 +525,7 @@ def buy_inactiva(request):
         'title_pag':title_pag,
         'registers': registers,
         'location':location,
-        'buy_template':buy_template,
+        'template':template,
         'inactivas':inactivas,
     }
     return render(request, 'invoice/inactiva.html', context)
@@ -550,7 +533,7 @@ def buy_inactiva(request):
 def buy_inactiva_modal(request, modal, pk):
     title_pag = "Compra"
     location = True
-    buy_template = True
+    template = 'buy'
     modal_title = ''
     modal_txt = ''
     modal_submit = ''
@@ -606,7 +589,7 @@ def buy_inactiva_modal(request, modal, pk):
         'url_back':url_back,
         'modal':modal,
         'title_pag':title_pag,
-        'buy_template':buy_template,
+        'template':template,
         'register_id':register_id,
         'registers':registers,
         'location':location,
@@ -617,7 +600,7 @@ def buy_inactiva_modal(request, modal, pk):
 
 def sale(request):
     location = True
-    sale_template = True
+    template = 'sale'
     title_pag = "Venta"
     registers = Sale.objects.all()
     if request.method == 'POST':
@@ -628,7 +611,6 @@ def sale(request):
             date_aux = datetime.now().strftime("%Y-%m-%d")
             sale = Sale.objects.create(
                 date = date_aux,
-                user = form.cleaned_data['user'],
                 payment = request.POST['payment'],
             )
             if request.POST['client'] or request.POST['address'] or request.POST['nDocument']:
@@ -647,13 +629,13 @@ def sale(request):
         'title_pag':title_pag,
         'registers': registers,
         'location':location,
-        'sale_template':sale_template,
+        'template':template,
     }
     return render(request, 'invoice/invoice.html', context)
 
 def detail_sale(request, pk):
     location = True
-    sale_template = True
+    template = 'sale'
     title_pag = "Venta"
     
     registers = DetailSale.objects.filter(sale=pk)
@@ -759,7 +741,7 @@ def detail_sale(request, pk):
         
         'registers': registers,
         'location':location,
-        'buy_template':sale_template,
+        'template':template,
         'factura':factura,
     }
     return render(request, 'invoice/detail.html', context)
@@ -768,7 +750,7 @@ def detailsale_modal(request, pkf, modal, pkd):
     print(request.POST) # Datos enviados
     location = True # Header
     title_pag = "productos - Venta No."+str(pkf)
-    sale_template = True
+    template = 'sale'
     modal_title = ''
     modal_txt = ''    
     modal_submit = ''
@@ -934,7 +916,7 @@ def detailsale_modal(request, pkf, modal, pkd):
         'modal_txt':modal_txt,
         'modal_submit':modal_submit,
         'url_back':url_back,
-        'sale_template':sale_template,  
+        'template':template,  
         'modal':modal,
         'register_id':register_id,
         'title_pag':title_pag,
@@ -946,7 +928,7 @@ def detailsale_modal(request, pkf, modal, pkd):
 def detailsale_cerrar(request, pk):
     print(request)
     location = True # Header
-    sale_template = True # Datos en invoice.html 
+    template = 'sale' # Datos en invoice.html 
     title_pag = "productos - Venta No."+str(pk)
     modal_title = ''
     modal_txt = ''
@@ -989,7 +971,7 @@ def detailsale_cerrar(request, pk):
         'url_factura':url_factura,
         'modal':modal,
         'title_pag':title_pag,
-        'sale_template':sale_template,
+        'template':template,
         'registers':registers,
         'location':location,
     }
@@ -1000,7 +982,7 @@ def sale_actions(request, modal, pk):
     modal_title = ''
     modal_txt = ''
     location = True
-    sale_template = True
+    template = 'sale'
     modal_submit = ''
     url_back="/facturacion/venta/"
     registers = Sale.objects.all()
@@ -1051,7 +1033,7 @@ def sale_actions(request, modal, pk):
         'modal':modal,
         'register_id':register_id,
         'title_pag':title_pag,
-        'sale_template':sale_template,
+        'template':template,
         'registers':registers,
         'location':location,
     }
@@ -1059,7 +1041,7 @@ def sale_actions(request, modal, pk):
 
 def sale_view(request, pk):
     location = True
-    sale_template = True
+    template = 'sale'
     title_pag = "venta No."+str(pk)
     modal = True
     url_factura="/facturacion/venta/detalle/"+str(pk)+"/cerrar/"
@@ -1073,7 +1055,7 @@ def sale_view(request, pk):
         'title_pag':title_pag,
         'registers': registers,
         'location':location,
-        'sale_template':sale_template,
+        'template':template,
         'factura':factura,
         'modal':modal,
         'url_factura':url_factura,
@@ -1086,7 +1068,7 @@ def sale_delete(request, pk):
     modal_title = ''
     modal_txt = ''
     location = True
-    sale_template = True
+    template = 'sale'
     modal_submit = ''
     url_back="/facturacion/venta/"
     registers = Sale.objects.all()
@@ -1123,7 +1105,7 @@ def sale_delete(request, pk):
         'url_back':url_back,
         'register_id':register_id,
         'title_pag':title_pag,
-        'sale_template':sale_template,
+        'template':template,
         'registers':registers,
         'location':location,
         'modal':modal,
@@ -1132,7 +1114,7 @@ def sale_delete(request, pk):
     
 def sale_inactiva(request):
     location = True
-    sale_template = True
+    template = 'sale'
     title_pag = "ventas Inactivas/Pendientes"
     registers = Sale.objects.all()
     inactivas = True
@@ -1158,7 +1140,7 @@ def sale_inactiva(request):
         'title_pag':title_pag,
         'registers': registers,
         'location':location,
-        'sale_template':sale_template,
+        'template':template,
         'inactivas':inactivas,
     }
     return render(request, 'invoice/inactiva.html', context)
@@ -1166,7 +1148,7 @@ def sale_inactiva(request):
 def sale_inactiva_modal(request, modal, pk):
     title_pag = "venta"
     location = True
-    sale_template = True
+    template = 'sale'
     modal_title = ''
     modal_txt = ''
     modal_submit = ''
@@ -1222,7 +1204,7 @@ def sale_inactiva_modal(request, modal, pk):
         'url_back':url_back,
         'modal':modal,
         'title_pag':title_pag,
-        'buy_template':buy_template,
+        'template':template,
         'register_id':register_id,
         'registers':registers,
         'location':location,
