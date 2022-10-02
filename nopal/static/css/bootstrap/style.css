@@ -28,7 +28,7 @@ footer{
 }
 
 .buscador{
-    width: 20% !important;
+    width: 25% !important;
 }
 
 /* ////////////LOGIN/////////// */
@@ -751,7 +751,6 @@ p{
         width: 70%;
     }
     #nopal{
-        width: 140%;
         height: 60%;
         margin: 17px 0;
     }
@@ -776,6 +775,9 @@ p{
      }
     .acce{                                      
         right: 830%; 
+    }
+    .buscador{
+        width: 100% !important;
     }
 } 
 
