@@ -26,8 +26,7 @@
                             <input type="hidden" value="Agregar">
                         {% elif sale_template %}
 
-
-
+                        {{form|crispy}}
 
 
                         {% endif %}
@@ -38,14 +37,7 @@
                 <a href="{% url 'buy-inactiva' %}" class="btn_agregar d-block m-auto text-center text-decoration-none py-1 my-3 rounded border border-none"
                         style="width: 200px;">Ver Inactivas/Pendientes</a>
             
-            {% if messages %}
-                {% for message in messages %}
-                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-                    <strong>{{ message }}</strong>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-                {% endfor %}
-            {% endif %}
+                {% include 'partials/messages.html' %}
             </div>
 
             <div class="col-md-8">
@@ -64,6 +56,21 @@
                         </tr>
                     
                     </thead>
+                    {% elif sale_template %}
+                    <thead style="background-color: var(--verde); color: var(--verdeoscuro);">
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Fecha</th>
+                            <th scope="col">Cliente</th>
+                            <th scope="col">Método de Pago</th>
+                            <th scope="col">Vr. Total</th>
+                            <th scope="col">Estado</th>
+                            <th scope="col">Acciones</th>
+                        </tr>
+                    
+                    </thead>
+            
+                    {% endif %}
 
                     <tbody>
                         {% for register in registers %}
@@ -75,6 +82,9 @@
                                 <td id="texto">{{register.payment}}</td>
                                 <td id="texto">${{register.finalPrice}}</td>
                                 <td id="texto">{{register.status}}</td>
+
+                                {% if buy_template %}
+
                                 <td>
                                     {% if register.status == "Abierta" %}
                                         <a href="{% url 'buy-actions' modal='editar' pk=register.id %}" class="btn btn-md border" title="Editar"><img class="img-fluid" src="{% static 'img/icons/update.svg' %}" id="edit"></a>
@@ -87,22 +97,34 @@
                                         <a href="{% url 'buy-actions' modal='marcar' pk=register.id %}" class="btn btn-md border" title="Marcar"><img class="img-fluid" src="{% static 'img/icons/unmark.svg' %}"></a> 
                                         
                                     {% endif %}
-                                </td>    
+                                </td>
+
+                                {% elif sale_template %}
+                                <td>
+                                    {% if register.status == "Abierta" %}
+                                        <a href="{% url 'sale-actions' modal='editar' pk=register.id %}" class="btn btn-md border" title="Editar"><img class="img-fluid" src="{% static 'img/icons/update.svg' %}" id="edit"></a>
+                                        {% if user.is_staff %}
+                                            <a href="{% url 'sale-delete' pk=register.id %}" class="btn btn-md border" title="Eliminar"><img class="img-fluid" src="{% static 'img/icons/delete.svg' %}" id="eliminar"></a>
+                                        {% endif %}
+                                        <a href="{% url 'sale-detail' pk=register.id%}" class="btn btn-md border" title="Añadir detalle"><img class="img-fluid" src="{% static 'img/icons/plus.svg' %}"></a> 
+                                    {% elif register.status == "Cerrada" %}
+                                        <a href="{% url 'sale-view' pk=register.id %}" class="btn btn-md border" title="Ver detalle"><img class="img-fluid" src="{% static 'img/icons/eye.svg' %}"></a> 
+                                        <a href="{% url 'sale-actions' modal='marcar' pk=register.id %}" class="btn btn-md border" title="Marcar"><img class="img-fluid" src="{% static 'img/icons/unmark.svg' %}"></a> 
+                                        
+                                    {% endif %}
+                                </td>
+                                {% endif %}   
+                                
+                                
                             </tr>
                             {% endif %}
                         {% endfor %} 
                     </tbody> 
-                    {% elif sale_template %}
-
-                    
-                    {% endif %}
-
                 </table>
             </div>
         </div>
     </section>
 </div>
 
-
 {% include 'partials/accesibilidad.html' %}
- {% endblock %}
+{% endblock %}

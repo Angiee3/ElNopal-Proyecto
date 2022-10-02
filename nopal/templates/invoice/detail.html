@@ -1,10 +1,10 @@
 {% extends 'partials/body.html' %}
 {% load crispy_forms_tags %}
-{% block title %}Nuevo Detalle de Compra{% endblock title %}
+{% block title %}Nuevo Detalle de {{title_pag}}{% endblock title %}
 {% load static %}
 {% block contenido %}
 
-<div >
+<div>
     <section class="container p-5 h-auto" data-admin id="cuerpo" style="width: 95%">
         <h1 class="d-print-none">Gestionar {{title_pag}}</h1>
         <div class="row my-4">
@@ -13,7 +13,6 @@
                     <h3 class="text-start">Nuevo Registro </h3>
                     <form method = 'POST' action= '' enctype = "multipart/form-data" novalidate id = "detail-form">
                         {% csrf_token %}
-
                         <label for="detail-product" class="control-label">Producto</label>
                         {{form.product }}
                         <a href="{% url 'm_product' %}" id="add_product" onclick="return showAddPopup(this);"><img src = "{% static 'img/icons/plus.svg' %}"></a>
@@ -28,23 +27,16 @@
                     </form>
                 </div>
 
-                {% if messages %}
-                {% for message in messages %}
-                <div class="alert alert-{{ message.tags }} alert-dismissible fade show my-3" role="alert">
-                    <strong>{{ message }}</strong>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-                {% endfor %}
-                {% endif %}
-
+                {% include 'partials/messages.html' %}
             </div>
-            <div class="col-md-8">
 
+            <div class="col-md-8">
                 <table class="display table table-striped text-center table-hover text-nowrap mt-3" style="width:100% ">
                 {% if buy_template %}
                     <thead style="background-color: var(--verde); color: var(--verdeocuro);">
                         <tr><th id="factura" colspan="5">Compra No.{{factura.id}}</td></tr>
                     </thead>
+
                     <tbody>
                         <tr>
                             <td style="font-weight: 600" id="texto" colspan="2">Fecha:</td>
@@ -64,12 +56,39 @@
                             <td colspan="1"></td>
                             <td colspan="1"></td>
                             <td style="font-weight: 600; font-size:20px" id="texto" colspan="1">Total a pagar:</td>
-                            <td id="texto" style="font-size:25px" colspan="2">${{factura.finalPrice|floatformat:3}}</td>
+                            <td id="texto" style="font-size:25px" colspan="2">${{factura.finalPrice}}</td>
                         </tr>
                     </tbody>
                 </table>
 
-
+                {% elif sale_template %}
+                   <thead style="background-color: var(--verde); color: var(--verdeocuro);">
+                    <tr><th id="factura" colspan="5">Venta No.{{factura.id}}</td></tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="font-weight: 600" id="texto" colspan="2">Fecha:</td>
+                                <td id="texto" colspan="3">{{factura.date}}</td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: 600" id="texto" colspan="2">Cliente:</td>
+                                <td id="texto" colspan="3">{{factura.client}}</td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: 600" id="texto" colspan="1">Documento:</td>
+                                <td id="texto" colspan="1">{{factura.nDocument}}</td>
+                                <td style="font-weight: 600" id="texto" colspan="1">Dirección:</td>
+                                <td id="texto" colspan="2">{{factura.address}}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="1"></td>
+                                <td colspan="1"></td>
+                                <td style="font-weight: 600; font-size:20px" id="texto" colspan="1">Total a pagar:</td>
+                                <td id="texto" style="font-size:25px" colspan="2">${{factura.finalPrice}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                {% endif %}
 
                 <table class="display table table-striped table-hover text-nowrap mt-3" style="width:100%">
                     
@@ -82,7 +101,8 @@
                             <th class="d-print-none" scope="col">Acciones</th>
                         </tr>
                     </thead>
-                   <tbody>
+
+                    <tbody>
                         {% for detail in registers %}
                             {% if detail.status %}
                             <tr>
@@ -91,17 +111,22 @@
                                     <td id="texto">${{detail.product.price}}</td>
                                     <td id="texto">${{detail.total}}</td>
                                                             
+                                {% if buy_template %}
                                 <td class="d-print-none">
                                     <a href="{% url 'detailbuy-modal' pkf=detail.buy.id modal='editar' pkd=detail.id %}" class="btn btn-md border" ><img class="img-fluid " src=" {% static 'img/icons/update.svg' %} " id="edit" alt=""></a>
                                     <a href="{% url 'detailbuy-modal' pkf=detail.buy.id modal='eliminar' pkd=detail.id %}" class="btn btn-md border" ><img class="img-fluid " src=" {% static 'img/icons/delete.svg' %}" id="eliminar" alt=""></a> 
                                 </td>
+                                {% elif sale_template %}
+                                <td class="d-print-none">
+                                    <a href="{% url 'detailsale-modal' pkf=detail.sale.id modal='editar' pkd=detail.id %}" class="btn btn-md border" ><img class="img-fluid " src=" {% static 'img/icons/update.svg' %} " id="edit" alt=""></a>
+                                    <a href="{% url 'detailsale-modal' pkf=detail.sale.id modal='eliminar' pkd=detail.id %}" class="btn btn-md border" ><img class="img-fluid " src=" {% static 'img/icons/delete.svg' %}" id="eliminar" alt=""></a> 
+                                </td>
+                                {% endif %}
+
                             </tr>
                             {% endif %}
                         {% endfor %}
-                   </tbody>
-                   {% elif sale_template %}
-
-                   {% endif %}
+                    </tbody>
                 </table>
                 
                 <a href="{{url_factura}}" class="btn_agregar d-block m-auto text-center text-decoration-none py-1 rounded border border-none d-print-none" type="submit" style="width: 120px;">Cerrar Factura</a>
@@ -111,4 +136,4 @@
     </section>
 </div>
 {% include 'partials/accesibilidad.html' %}
- {% endblock %}
+{% endblock %}

@@ -7,61 +7,85 @@
 <div>
     <section class="container  p-5 h-auto" id="mode-cards" data-admin id="cuerpo" style="width: 95%">
         <h1>Gestionar {{title_pag}}</h1>
-        <div class="">
-            <div class="">
-                
-            
-            {% if messages %}
-                {% for message in messages %}
-                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-                    <strong>{{ message }}</strong>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-                {% endfor %}
-            {% endif %}
-
-            <div class="">
+        <div>
+            {% include 'partials/messages.html' %}
+            <div>
                 <table id="tabla" class="display table table-striped table-hover text-nowrap mt-3" style="width:100%">
                     {% if buy_template%}
-                        <thead style="background-color: var(--verde); color: var(--verdeoscuro);">
-                            <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">Fecha</th>
-                                <th scope="col">Proveedor</th>
-                                <th scope="col">Método de Pago</th>
-                                <th scope="col">Vr. Total</th>
-                                <th scope="col">Observaciones</th>
-                                <th scope="col">Estado</th>
-                                <th scope="col">Acciones</th>
-                            </tr>
-                        </thead>
+                    <thead style="background-color: var(--verde); color: var(--verdeoscuro);">
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Fecha</th>
+                            <th scope="col">Proveedor</th>
+                            <th scope="col">Método de Pago</th>
+                            <th scope="col">Vr. Total</th>
+                            <th scope="col">Observaciones</th>
+                            <th scope="col">Estado</th>
+                            <th scope="col">Acciones</th>
+                        </tr>
+                    </thead>
 
-                        <tbody>
-                        {% for register in registers %}
-                            {% if register.status == 'Anulada' or register.status == False or register.status == 'Pendiente'%}
-                            <tr>
-                                <td id="texto">{{register.id}}</td>
-                                <td id="texto">{{register.date|date:"M d, Y - " }}{{register.date|time:"h:i a" }}</td>
-                                <td id="texto">{{register.user}}</td>
-                                <td id="texto">{{register.payment}}</td>
-                                <td id="texto">${{register.finalPrice}}</td>
-                                <td id="texto">{{register.observation}}</td>
-                                <td id="texto">{{register.status}}</td>
-                                <td>
-                                    {% if register.status ==  "Pendiente" %}
-                                        <a href="{%url 'buy-inactiva-modal' modal='desmarcar' pk=register.id %}" class="btn btn-md border" title="Desmarcar"><img class="img-fluid" src="{% static 'img/icons/mark.svg' %}"></a> 
-                                        {% if user.is_staff %}
-                                        <a href="{%url 'buy-inactiva-modal' modal='eliminar' pk=register.id %}" class="btn btn-md border" title="Eliminar"><img class="img-fluid" src="{% static 'img/icons/delete.svg' %}" id="eliminar"></a>
-                                        {% endif %}
+                    <tbody>
+                    {% for register in registers %}
+                        {% if register.status == 'Anulada' or register.status == False or register.status == 'Pendiente'%}
+                        <tr>
+                            <td id="texto">{{register.id}}</td>
+                            <td id="texto">{{register.date|date:"M d, Y - " }}{{register.date|time:"h:i a" }}</td>
+                            <td id="texto">{{register.user}}</td>
+                            <td id="texto">{{register.payment}}</td>
+                            <td id="texto">${{register.finalPrice}}</td>
+                            <td id="texto">{{register.observation}}</td>
+                            <td id="texto">{{register.status}}</td>
+                            <td>
+                                {% if register.status ==  "Pendiente" %}
+                                    <a href="{%url 'buy-inactiva-modal' modal='desmarcar' pk=register.id %}" class="btn btn-md border" title="Desmarcar"><img class="img-fluid" src="{% static 'img/icons/mark.svg' %}"></a> 
+                                    {% if user.is_staff %}
+                                    <a href="{%url 'buy-inactiva-modal' modal='eliminar' pk=register.id %}" class="btn btn-md border" title="Eliminar"><img class="img-fluid" src="{% static 'img/icons/delete.svg' %}" id="eliminar"></a>
                                     {% endif %}
-                                </td>    
-                            </tr>
-                            {% endif %}
-                        {% endfor %}
-                    </tbody> 
-                    {% elif sale_template %}
+                                {% endif %}
+                            </td>    
+                        </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody> 
+                {% elif sale_template %}
+                    <thead style="background-color: var(--verde); color: var(--verdeoscuro);">
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Fecha</th>
+                            <th scope="col">Cliente</th>
+                            <th scope="col">Método de Pago</th>
+                            <th scope="col">Vr. Total</th>
+                            <th scope="col">Observaciones</th>
+                            <th scope="col">Estado</th>
+                            <th scope="col">Acciones</th>
+                        </tr>
+                    </thead>
 
-                    {%e ndif %}
+                    <tbody>
+                    {% for register in registers %}
+                        {% if register.status == 'Anulada' or register.status == False or register.status == 'Pendiente'%}
+                        <tr>
+                            <td id="texto">{{register.id}}</td>
+                            <td id="texto">{{register.date|date:"M d, Y - " }}{{register.date|time:"h:i a" }}</td>
+                            <td id="texto">{{register.user}}</td>
+                            <td id="texto">{{register.payment}}</td>
+                            <td id="texto">${{register.finalPrice}}</td>
+                            <td id="texto">{{register.observation}}</td>
+                            <td id="texto">{{register.status}}</td>
+                            <td>
+                                {% if register.status ==  "Pendiente" %}
+                                    <a href="{%url 'sale-inactiva-modal' modal='desmarcar' pk=register.id %}" class="btn btn-md border" title="Desmarcar"><img class="img-fluid" src="{% static 'img/icons/mark.svg' %}"></a> 
+                                    {% if user.is_staff %}
+                                    <a href="{%url 'sale-inactiva-modal' modal='eliminar' pk=register.id %}" class="btn btn-md border" title="Eliminar"><img class="img-fluid" src="{% static 'img/icons/delete.svg' %}" id="eliminar"></a>
+                                    {% endif %}
+                                {% endif %}
+                            </td>    
+                        </tr>
+                        {% endif %}
+                    {% endfor %}
+                    </tbody> 
+                {% endif %}
 
                 </table>
                 <a class="btn_agregar d-block m-auto text-center text-decoration-none py-1 rounded border border-none"  href="/facturacion/compra/"
