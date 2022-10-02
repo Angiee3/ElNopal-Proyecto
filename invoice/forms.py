@@ -6,7 +6,7 @@ class BuyForm(forms.ModelForm):
         model = Buy
         fields =['user','payment']
         widgets = {
-            'user':forms.Select(attrs={'class':'form-control select2'}),
+            'user':forms.Select(attrs={'class':'form-select select2'}),
             'payment':forms.Select(attrs={'class':'form-control'}),
             'observations':forms.Select(attrs={'class':'form-control'})
         }
@@ -39,9 +39,8 @@ class DetailBuyEditForm(forms.ModelForm):
 class SaleForm(forms.ModelForm):
     class Meta:
         model = Sale
-        fields=['user','typeSale','payment','client','nDocument','address']
+        fields=['typeSale','payment','client','nDocument','address']
         widgets = {
-            'user':forms.Select(attrs={'class':'form-control select2'}),
             'typeSale':forms.Select(attrs={'class':'form-control'}),
             'payment':forms.Select(attrs={'class':'form-control'}),
             'client':forms.TextInput(attrs={'class':'form-control'}),

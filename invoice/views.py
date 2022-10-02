@@ -1,4 +1,5 @@
 import datetime
+from http.client import TOO_MANY_REQUESTS
 from django.shortcuts import render, redirect
 from .models import *
 from .forms import *
@@ -6,14 +7,13 @@ from django.contrib import messages
 from datetime import datetime
 
 def buy(request):
-    location = True
-    admin = True
-    buy_template = True
-    title_pag = "Compra"
+    print(request.POST) # Datos enviados
+    location = True # Header
+    buy_template = True # Datos en invoice.html 
+    title_pag = "compra"
     registers = Buy.objects.all()
-    form = BuyForm()
     if request.method == 'POST':
-        print('--------------------------------> COMPRA')
+        print('--------------------------------> Agregando una compra')
         form = BuyForm(request.POST)
         if form.is_valid():
             print(request.POST)
@@ -23,34 +23,33 @@ def buy(request):
                 user = form.cleaned_data['user'],
                 payment = request.POST['payment']
             )
-            messages.success(
-                request, f'La compra #{buy.id} está lista para añadir productos')
+            print('--------------------------------> Compra agregada')
+            messages.success(request, f'La compra No.{buy.id} está lista para añadir productos.')
             return redirect('buy-detail', pk=buy.id)
-        else:
-            form = BuyForm()
+    else:
+        form = BuyForm()
             
     print(request.POST)
+    print(request) # Redirección
             
     context = {
         'form':form,
         'title_pag':title_pag,
-        'admin':admin,
         'registers': registers,
         'location':location,
         'buy_template':buy_template,
     }
-    return render(request, 'invoice/buy.html', context)
+    return render(request, 'invoice/invoice.html', context)
 
 def detail_buy(request, pk):
-    location = True
-    admin = True
-    buy_template = True
-    title_pag = "Compra"
-    modal = True
+    print(request.POST) # Datos enviados
+    location = True # Header
+    buy_template = True # Datos en detail.html 
+    title_pag = "productos - Compra No."+str(pk)
     url_factura="/facturacion/compra/detalle/"+str(pk)+"/cerrar/"
     
     registers = DetailBuy.objects.filter(buy=pk)
-    buy_a = Buy.objects.filter(id=pk)
+    factura = Buy.objects.filter(id=pk)
     buy_id = Buy.objects.get(id=pk)
     total = 0
     
@@ -96,7 +95,7 @@ def detail_buy(request, pk):
                     Buy.objects.filter(
                         id=pk
                         ).update(
-                            finalPrice = buy_a[0].finalPrice + total
+                            finalPrice = factura[0].finalPrice + total
                         )
                     print('------------------------> Total actualizado')
                     
@@ -132,7 +131,7 @@ def detail_buy(request, pk):
                 Buy.objects.filter(
                         id=pk
                         ).update(
-                            finalPrice = buy_a[0].finalPrice + total
+                            finalPrice = factura[0].finalPrice + total
                         )
                 print('------------------------> Total Compra actualizado')
                 messages.success(request,f'{product} se añadió a la compra!')
@@ -143,25 +142,24 @@ def detail_buy(request, pk):
     context = {
         'form':form,
         'title_pag':title_pag,
-        'admin':admin,
         'registers': registers,
         'location':location,
         'buy_template':buy_template,
         'factura':factura,
-        'modal':modal,
         'url_factura':url_factura,
     }
     return render(request, 'invoice/detail.html', context)
 
 def detailbuy_modal(request, pkf, modal, pkd):
-    print(request)
-    title_pag = "Compra"
+    print(request.POST) # Datos enviados
+    location = True # Header
+    title_pag = "productos - Compra No."+str(pkf)
+    
     modal_title = ''
-    modal_txt = ''
-    location = True
-    admin = True
+    modal_txt = ''    
     modal_submit = ''
     url_back="/facturacion/compra/detalle/"+str(pkf)+"/"
+    
     registers = DetailBuy.objects.all()
     register_id = DetailBuy.objects.get(id=pkd)
     buy_a = Buy.objects.filter(id=pkf)
@@ -325,7 +323,6 @@ def detailbuy_modal(request, pkf, modal, pkd):
         'modal':modal,
         'register_id':register_id,
         'title_pag':title_pag,
-        'admin':admin,
         'registers':registers,
         'location':location,
     }
@@ -333,11 +330,13 @@ def detailbuy_modal(request, pkf, modal, pkd):
 
 def detailbuy_cerrar(request, pk):
     print(request)
-    title_pag = "Compra"
+    location = True # Header
+    buy_template = True # Datos en invoice.html 
+    title_pag = "productos - Compra No."+str(pk)
     modal_title = ''
     modal_txt = ''
     location = True
-    admin = True
+    
     modal_submit = ''
     modal = 'cerrar'
     url_back="/facturacion/compra/detalle/"+str(pk)+"/"
@@ -375,7 +374,7 @@ def detailbuy_cerrar(request, pk):
         'url_factura':url_factura,
         'modal':modal,
         'title_pag':title_pag,
-        'admin':admin,
+        'buy_template':buy_template,
         'registers':registers,
         'location':location,
     }
@@ -386,7 +385,7 @@ def buy_actions(request, modal, pk):
     modal_title = ''
     modal_txt = ''
     location = True
-    admin = True
+    
     modal_submit = ''
     url_back="/facturacion/compra/"
     registers = Buy.objects.all()
@@ -428,8 +427,6 @@ def buy_actions(request, modal, pk):
             return redirect ('buy')
         else:
             form = BuyFormStatus()
-            
-        
     
     context ={
         'form':form,
@@ -440,64 +437,27 @@ def buy_actions(request, modal, pk):
         'modal':modal,
         'register_id':register_id,
         'title_pag':title_pag,
-        'admin':admin,
+        
         'registers':registers,
         'location':location,
         'ver_compra':ver_compra,
     }
-    return render(request, 'invoice/modal-buy.html', context)
+    return render(request, 'invoice/modal-invoice.html', context)
 
 def buy_view(request, pk):
     location = True
-    admin = True
     buy_template = True
-    title_pag = "Compra"
+    title_pag = "compra No."+str(pk)
     modal = True
     url_factura="/facturacion/compra/detalle/"+str(pk)+"/cerrar/"
     
     registers = DetailBuy.objects.filter(buy=pk)
-    buy_a = Buy.objects.filter(id=pk)
-    buy_id = Buy.objects.get(id=pk)
-    total = 0
+    factura = Buy.objects.filter(id=pk)
     url_back = "/facturacion/compra/"
     
     factura = Buy.objects.get(id=pk)
-    # title_pag = "Compra"
-    # modal_title = ''
-    # modal_txt = ''
-    # location = True
-    # admin = True
-    # modal_submit = ''
-    # url_back="/facturacion/compra/"
-    # registers = Buy.objects.all()
-    # todos=Buy.objects.all()
-    # register_id = Buy.objects.get(id=pk)
-    # print(request)
-    # ver_compra = False
-    
-    # print('----------------------------------------------> Ver factura')
-    # modal_title = 'Ver factura'
-    # registers = DetailBuy.objects.filter(buy=pk)
-    # ver_compra = True
-    # factura = Buy.objects.filter(id=pk)
-    # print(factura)
-    # print(registers)    
-
-    # context ={
-    #     'modal_title':modal_title,
-    #     'modal_txt':modal_txt,
-    #     'modal_submit':modal_submit,
-    #     'url_back':url_back,
-    #     'register_id':register_id,
-    #     'title_pag':title_pag,
-    #     'admin':admin,
-    #     'registers':registers,
-    #     'location':location,
-    #     'ver_compra':ver_compra,
-    # }
     context = {
         'title_pag':title_pag,
-        'admin':admin,
         'registers': registers,
         'location':location,
         'buy_template':buy_template,
@@ -513,7 +473,7 @@ def buy_delete(request, pk):
     modal_title = ''
     modal_txt = ''
     location = True
-    admin = True
+    buy_template = True
     modal_submit = ''
     url_back="/facturacion/compra/"
     registers = Buy.objects.all()
@@ -550,16 +510,15 @@ def buy_delete(request, pk):
         'url_back':url_back,
         'register_id':register_id,
         'title_pag':title_pag,
-        'admin':admin,
+        'buy_template':buy_template,
         'registers':registers,
         'location':location,
         'modal':modal,
     }
-    return render(request, 'invoice/modal-buy.html', context)
+    return render(request, 'invoice/modal-invoice.html', context)
     
 def buy_inactiva(request):
     location = True
-    admin = True
     buy_template = True
     title_pag = "Compras Inactivas/Pendientes"
     registers = Buy.objects.all()
@@ -584,7 +543,6 @@ def buy_inactiva(request):
     context = {
         'form':form,
         'title_pag':title_pag,
-        'admin':admin,
         'registers': registers,
         'location':location,
         'buy_template':buy_template,
@@ -595,7 +553,7 @@ def buy_inactiva(request):
 def buy_inactiva_modal(request, modal, pk):
     title_pag = "Compra"
     location = True
-    admin = True
+    buy_template = True
     modal_title = ''
     modal_txt = ''
     modal_submit = ''
@@ -651,19 +609,18 @@ def buy_inactiva_modal(request, modal, pk):
         'url_back':url_back,
         'modal':modal,
         'title_pag':title_pag,
-        'admin':admin,
+        'buy_template':buy_template,
         'register_id':register_id,
         'registers':registers,
         'location':location,
     }
-    return render(request, 'invoice/modal-buy.html', context)
+    return render(request, 'invoice/modal-invoice.html', context)
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 def sale(request):
     location = True
-    admin = True
-    buy_template = False
+    sale_template = True
     title_pag = "Venta"
     registers = Sale.objects.all()
     if request.method == 'POST':
@@ -691,19 +648,16 @@ def sale(request):
     context = {
         'form':form,
         'title_pag':title_pag,
-        'admin':admin,
         'registers': registers,
         'location':location,
-        'buy_template':buy_template,
+        'sale_template':sale_template,
     }
-    return render(request, 'invoice/sale.html', context)
+    return render(request, 'invoice/invoice.html', context)
 
 def detail_sale(request, pk):
     location = True
-    admin = True
-    buy_template = False
+    sale_template = True
     title_pag = "Venta"
-    modal = False
     
     registers = DetailSale.objects.filter(sale=pk)
     sale_a = Sale.objects.filter(id=pk)
@@ -805,40 +759,40 @@ def detail_sale(request, pk):
     context = {
         'form':form,
         'title_pag':title_pag,
-        'admin':admin,
+        
         'registers': registers,
         'location':location,
-        'buy_template':buy_template,
+        'buy_template':sale_template,
         'factura':factura,
-        'modal':modal
     }
     return render(request, 'invoice/detail.html', context)
 
 def detailsale_modal(request, pkf, modal, pkd):
-    print(request)
-    title_pag = "Venta"
+    print(request.POST) # Datos enviados
+    location = True # Header
+    title_pag = "productos - Compra No."+str(pkf)
+    
     modal_title = ''
-    modal_txt = ''
-    location = True
-    admin = True
+    modal_txt = ''    
     modal_submit = ''
-    url_back="/facturacion/venta/detalle/"+str(pkf)+"/"
-    registers = DetailSale.objects.all()
-    register_id = DetailSale.objects.get(id=pkd)
-    sale_a = Sale.objects.filter(id=pkf)
+    url_back="/facturacion/compra/detalle/"+str(pkf)+"/"
+    
+    registers = DetailBuy.objects.all()
+    register_id = DetailBuy.objects.get(id=pkd)
+    sale_a = Buy.objects.filter(id=pkf)
     
     if modal == 'eliminar':
         modal_title = 'Eliminar detalle'
         modal_txt = 'eliminar el detalle'
         modal_submit = 'eliminar'
-        form = DetailSaleForm(request.POST, request.FILES)
+        form = DetailBuyForm(request.POST, request.FILES)
         if request.method == 'POST':
             product = Product.objects.get(
                 id = register_id.product.id
             )
             print('----------------------------------------ELIMINANDO')
             
-            detail_a = DetailSale.objects.filter(
+            detail_a = DetailBuy.objects.filter(
                 sale = pkf,
                 product = product, 
             )
@@ -863,11 +817,11 @@ def detailsale_modal(request, pkf, modal, pkd):
             )
             print('------------------------> Total ')
             
-            DetailSale.objects.filter(sale=pkf, product=product).update(
+            DetailBuy.objects.filter(sale=pkf, product=product).update(
                 status = False
             )
             
-            Sale.objects.filter(id=pkf).update(
+            Buy.objects.filter(id=pkf).update(
                 finalPrice = sale_a[0].finalPrice - total
             )
             
@@ -879,13 +833,13 @@ def detailsale_modal(request, pkf, modal, pkd):
                 
             
         else:
-            form=DetailSaleForm()
+            form=DetailBuyForm()
             
     elif modal == 'editar':
         modal_title = 'Editar detalle'
         modal_txt = 'editar el detalle'
         modal_submit = 'guardar'
-        form = DetailSaleEditForm(request.POST, request.FILES, instance=register_id)
+        form = DetailBuyEditForm(request.POST, request.FILES, instance=register_id)
         cantidad = register_id.amount
         if request.method == 'POST':
             print('----------------------------------------EDITANDO')                
@@ -902,7 +856,7 @@ def detailsale_modal(request, pkf, modal, pkd):
                     print('------------------------> Se saca la diferencia')
                     print(amount)
                     
-                    detail_a = DetailSale.objects.filter(
+                    detail_a = DetailBuy.objects.filter(
                         sale = pkf,
                         product = product, 
                     )
@@ -924,11 +878,11 @@ def detailsale_modal(request, pkf, modal, pkd):
                     )
                     print('------------------------> Total ')
                     
-                    DetailSale.objects.filter(buy=pkf, product=product).update(
+                    DetailBuy.objects.filter(sale=pkf, product=product).update(
                         amount = request.POST['amount']
                     )
                     
-                    Sale.objects.filter(id=pkf).update(
+                    Buy.objects.filter(id=pkf).update(
                         finalPrice = sale_a[0].finalPrice + total
                     )
                     
@@ -942,7 +896,7 @@ def detailsale_modal(request, pkf, modal, pkd):
                     print('------------------------> Se saca la diferencia')
                     print(amount)
                     
-                    detail_a = DetailSale.objects.filter(
+                    detail_a = DetailBuy.objects.filter(
                         sale = pkf,
                         product = product, 
                     )
@@ -964,18 +918,18 @@ def detailsale_modal(request, pkf, modal, pkd):
                     )
                     print('------------------------> Total ')
                     
-                    DetailBuy.objects.filter(buy=pkf, product=product).update(
+                    DetailBuy.objects.filter(sale=pkf, product=product).update(
                         amount = request.POST['amount']
                     )
                     
-                    Sale.objects.filter(id=pkf).update(
+                    Buy.objects.filter(id=pkf).update(
                         finalPrice = sale_a[0].finalPrice - total
                     )
                     
                     messages.success(request, f'El detalle se editó correctamente!')
                     return redirect ('sale-detail', pkf)
         else:
-            form=DetailSaleEditForm(instance=register_id)
+            form=DetailBuyEditForm(instance=register_id)
         
     context ={
         'form':form,
@@ -986,7 +940,6 @@ def detailsale_modal(request, pkf, modal, pkd):
         'modal':modal,
         'register_id':register_id,
         'title_pag':title_pag,
-        'admin':admin,
         'registers':registers,
         'location':location,
     }
@@ -994,37 +947,39 @@ def detailsale_modal(request, pkf, modal, pkd):
 
 def detailsale_cerrar(request, pk):
     print(request)
-    title_pag = "Venta"
+    location = True # Header
+    sale_template = True # Datos en invoice.html 
+    title_pag = "productos - Compra No."+str(pk)
     modal_title = ''
     modal_txt = ''
     location = True
-    admin = True
+    
     modal_submit = ''
     modal = 'cerrar'
-    url_back="/facturacion/venta/detalle/"+str(pk)+"/"
-    url_factura="/facturacion/venta/detalle/"+str(pk)+"/cerrar/"
-    registers = DetailSale.objects.filter(sale=pk)
+    url_back="/facturacion/compra/detalle/"+str(pk)+"/"
+    url_factura="/facturacion/compra/detalle/"+str(pk)+"/cerrar/"
+    registers = DetailBuy.objects.filter(sale=pk)
     
-    detail = DetailSale.objects.filter(sale = pk)
+    detail = DetailBuy.objects.filter(sale = pk)
     print('------------------------> Filtra si hay detalle')
             
     print('------------------------> Cerrando facturaxd')
     if detail.exists():
-        modal_title = 'Cerrar venta'
-        modal_txt = 'cerrar la venta No.'
+        modal_title = 'Cerrar compra'
+        modal_txt = 'cerrar la compra No.'
         modal_submit = 'cerrar'
-        form = SaleForm(request.POST, request.FILES)
+        form = BuyForm(request.POST, request.FILES)
         print('xdd')
         if request.method == 'POST':
             print('----------------------------------------CERRANDO')
-            Sale.objects.filter(id=pk).update(
+            Buy.objects.filter(id=pk).update(
                 status = "Cerrada"
             )
             print('Cerrado')
-            messages.success(request, f'La venta No.{pk} se cerró correctamente!')
+            messages.success(request, f'La compra No.{pk} se cerró correctamente!')
             return redirect ('sale')
     else:
-        messages.warning(request, f'No hay detalles en esta venta, agrega productos para poder cerrarla!')
+        messages.warning(request, f'No hay detalles en esta compra, agrega productos para poder cerrarla!')
         return redirect ('sale-detail', pk)
         
     context ={
@@ -1036,58 +991,59 @@ def detailsale_cerrar(request, pk):
         'url_factura':url_factura,
         'modal':modal,
         'title_pag':title_pag,
-        'admin':admin,
+        'sale_template':sale_template,
         'registers':registers,
         'location':location,
     }
     return render(request, 'invoice/modal-detail.html', context)
 
 def sale_actions(request, modal, pk):
-    title_pag = "Venta"
+    title_pag = "Compra"
     modal_title = ''
     modal_txt = ''
     location = True
-    admin = True
+    
     modal_submit = ''
-    url_back="/facturacion/venta/"
-    registers = Sale.objects.all()
-    register_id = Sale.objects.get(id=pk)
+    url_back="/facturacion/compra/"
+    registers = Buy.objects.all()
+    register_id = Buy.objects.get(id=pk)
     print(request)
-    ver_venta = False
+    ver_compra = False
     form = " "
     
     if modal == 'editar':
-        modal_title = 'Editar la venta'
-        modal_txt = 'editar la venta'
+        modal_title = 'Editar la compra'
+        modal_txt = 'editar la compra'
         modal_submit = 'guardar'
-        form =  SaleForm(request.POST, request.FILES, instance=register_id)
+        form =  BuyForm(request.POST, request.FILES, instance=register_id)
         if request.method == 'POST':
             print('----------------------------------------EDITANDO')                
             if form.is_valid():
                 form.save()
-                messages.success(request, f'La venta {pk} se editó correctamente!')
+                messages.success(request, f'La compra {pk} se editó correctamente!')
                 return redirect ('sale')
         else:
-            form=  SaleForm(instance=register_id) 
+            form=  BuyForm(instance=register_id) 
     
     elif modal == 'marcar':
         print('---------------------------------------marcar')
-        modal_title = 'Marcar venta'
-        modal_txt = 'marcar la venta'
+        modal_title = 'Marcar compra'
+        modal_txt = 'marcar la compra'
         modal_submit = 'marcar'
-        form = SaleFormStatus(request.POST, request.FILES)
+        form = BuyFormStatus(request.POST, request.FILES)
+        url_back = '/facturacion/compra/'
             
         if request.method == 'POST':
             print('----------------------------------------MARCANDO')
-            Sale.objects.filter(id=pk).update(
+            Buy.objects.filter(id=pk).update(
                 status = "Pendiente",
                 observation = request.POST['observation']
             )
             print('Marcada')
-            messages.success(request, f'La venta No.{pk} se marcó correctamente!')
+            messages.success(request, f'La compra No.{pk} se marcó correctamente!')
             return redirect ('sale')
         else:
-            form = SaleFormStatus()
+            form = BuyFormStatus()
     
     context ={
         'form':form,
@@ -1098,81 +1054,70 @@ def sale_actions(request, modal, pk):
         'modal':modal,
         'register_id':register_id,
         'title_pag':title_pag,
-        'admin':admin,
+        
         'registers':registers,
         'location':location,
-        'ver_venta':ver_venta,
+        'ver_compra':ver_compra,
     }
-    return render(request, 'invoice/modal-sale.html', context)
+    return render(request, 'invoice/modal-invoice.html', context)
 
 def sale_view(request, pk):
-    title_pag = "Venta"
-    modal_title = ''
-    modal_txt = ''
     location = True
-    admin = True
-    modal_submit = ''
-    url_back="/facturacion/venta/"
-    registers = Sale.objects.all()
-    register_id = Sale.objects.get(id=pk)
-    print(request)
-    ver_venta = False
+    sale_template = True
+    title_pag = "compra No."+str(pk)
+    modal = True
+    url_factura="/facturacion/compra/detalle/"+str(pk)+"/cerrar/"
     
-    print('----------------------------------------------> Ver factura')
-    modal_title = 'Ver factura'
-    registers = DetailSale.objects.filter(sale=pk)
-    ver_venta = True
-    factura = Sale.objects.filter(id=pk)
-    print(factura)
-    print(registers)    
-
-    context ={
-        'modal_title':modal_title,
-        'modal_txt':modal_txt,
-        'modal_submit':modal_submit,
-        'url_back':url_back,
-        'register_id':register_id,
+    registers = DetailBuy.objects.filter(sale=pk)
+    factura = Buy.objects.filter(id=pk)
+    url_back = "/facturacion/compra/"
+    
+    factura = Buy.objects.get(id=pk)
+    context = {
         'title_pag':title_pag,
-        'admin':admin,
-        'registers':registers,
+        'registers': registers,
         'location':location,
-        'ver_venta':ver_venta,
+        'sale_template':sale_template,
+        'factura':factura,
+        'modal':modal,
+        'url_factura':url_factura,
+        'url_back':url_back,
     }
-    return render(request, 'invoice/modal-sale.html', context)
+    return render(request, 'invoice/detail-view.html', context)
 
 def sale_delete(request, pk):
-    title_pag = "Venta"
+    title_pag = "Compra"
     modal_title = ''
     modal_txt = ''
     location = True
-    admin = True
+    sale_template = True
     modal_submit = ''
-    url_back="/facturacion/venta/"
-    registers = Sale.objects.all()
-    register_id = Sale.objects.get(id=pk)
+    url_back="/facturacion/compra/"
+    registers = Buy.objects.all()
+    register_id = Buy.objects.get(id=pk)
     print(request)
     modal = 'eliminar'
-    detail = DetailSale.objects.filter(sale=pk)
+    detail = DetailBuy.objects.filter(sale=pk)
     print(detail)    
     if detail.exists():
         if not User.is_staff:
-            messages.warning(request, f'La venta No.{pk} no se puede eliminar, tiene detalles de compra.')
+            messages.warning(request, f'La compra No.{pk} no se puede eliminar, tiene detalles de compra.')
             return redirect ('sale')
         else: 
-            messages.warning(request, f'La venta No.{pk} tiene detalles de compra. Debe ser marcada antes de eliminarse')
+            messages.warning(request, f'La compra No.{pk} tiene detalles de compra. Debe ser marcada antes de eliminarse')
             return redirect ('sale')
     else: 
-        modal_title = 'Eliminar venta'
-        modal_txt = 'eliminar la venta'
+        modal_title = 'Eliminar compra'
+        modal_txt = 'eliminar la compra'
         modal_submit = 'eliminar'
             
         if request.method == 'POST':
             print('----------------------------------------ELIMINANDO')
-            Sale.objects.filter(id=pk).update(
+            Buy.objects.filter(id=pk).update(
                 status = "Anulada"
             )
             print('Eliminado')
-            messages.success(request, f'La venta No.{pk} se eliminó correctamente!')
+            messages.success(request, f'La compra No.{pk} se eliminó correctamente!')
             return redirect ('sale')  
 
     context ={
@@ -1182,98 +1127,96 @@ def sale_delete(request, pk):
         'url_back':url_back,
         'register_id':register_id,
         'title_pag':title_pag,
-        'admin':admin,
+        'sale_template':sale_template,
         'registers':registers,
         'location':location,
         'modal':modal,
     }
-    return render(request, 'invoice/modal-sale.html', context)
+    return render(request, 'invoice/modal-invoice.html', context)
     
 def sale_inactiva(request):
     location = True
-    admin = True
-    buy_template = True
+    sale_template = True
     title_pag = "Compras Inactivas/Pendientes"
-    registers = Sale.objects.all()
+    registers = Buy.objects.all()
     inactivas = True
     
     if request.method == 'POST':
         print('COMPRA-------------------------------->')
-        form = SaleForm(request.POST)
+        form = BuyForm(request.POST)
         if form.is_valid():
             print(request.POST)
             date_aux = datetime.now().strftime("%Y-%m-%d")
-            sale = Sale.objects.create(
+            sale = Buy.objects.create(
                 date = date_aux,
                 user = form.cleaned_data['user'],
                 payment = request.POST['payment']
             )
             messages.success(
-                request, f'La venta #{sale.id} está lista para añadir productos')
+                request, f'La compra #{sale.id} está lista para añadir productos')
             return redirect('sale-detail', pk=sale.id)
     else:
-        form = SaleForm()
+        form = BuyForm()
     context = {
         'form':form,
         'title_pag':title_pag,
-        'admin':admin,
         'registers': registers,
         'location':location,
-        'buy_template':buy_template,
+        'sale_template':sale_template,
         'inactivas':inactivas,
     }
-    return render(request, 'invoice/sale-inactiva.html', context)
+    return render(request, 'invoice/inactiva.html', context)
 
 def sale_inactiva_modal(request, modal, pk):
-    title_pag = "Venta"
+    title_pag = "Compra"
     location = True
-    admin = True
+    sale_template = True
     modal_title = ''
     modal_txt = ''
     modal_submit = ''
-    url_back = "/facturacion/venta/inactivas/"
-    registers = Sale.objects.all()
-    register = Sale.objects.get(id=pk)
+    url_back = "/facturacion/compra/inactivas/"
+    registers = Buy.objects.all()
+    register = Buy.objects.get(id=pk)
     register_id = register.id
     form = ""
     
     if modal == 'eliminar': 
-        detail = DetailSale.objects.filter(sale=pk)
+        detail = DetailBuy.objects.filter(sale=pk)
         print(detail)    
         if detail.exists():
                 
-            messages.warning(request, f'La venta No.{pk} no se puede eliminar, tiene detalles de compra. Debe eliminarlos antes.')
+            messages.warning(request, f'La compra No.{pk} no se puede eliminar, tiene detalles de compra. Debe eliminarlos antes.')
             return redirect ('sale-detail', pk)
         else: 
-            modal_title = 'Eliminar venta'
-            modal_txt = 'eliminar la venta'
+            modal_title = 'Eliminar compra'
+            modal_txt = 'eliminar la compra'
             modal_submit = 'eliminar'
                 
             if request.method == 'POST':
                 print('----------------------------------------ELIMINANDO')
-                Sale.objects.filter(id=pk).update(
+                Buy.objects.filter(id=pk).update(
                     status = "Anulada"
                 )
                 print('Eliminado')
-                messages.success(request, f'La venta No.{pk} se eliminó correctamente!')
+                messages.success(request, f'La compra No.{pk} se eliminó correctamente!')
                 return redirect ('sale') 
             
     elif modal == 'desmarcar':  
         print('----------------------------------------> Editar Modal')
-        modal_title = 'Desmarcar venta'
-        modal_txt = 'desmarcar la venta'
+        modal_title = 'Desmarcar compra'
+        modal_txt = 'desmarcar la compra'
         modal_submit = 'Desmarcar'
-        form = SaleForm(request.POST, instance=register)
+        form = BuyForm(request.POST, instance=register)
         if request.method == 'POST':
             print('----------------------------------------ELIMINANDO')
-            Sale.objects.filter(id=pk).update(
+            Buy.objects.filter(id=pk).update(
                 status = "Cerrada"
             )
             print('Eliminado')
-            messages.success(request, f'La venta No.{pk} se desmarcó correctamente!')
-            return redirect ('sale-inactiva')
+            messages.success(request, f'La compra No.{pk} se desmarcó correctamente!')
+            return redirect ('buy-inactiva')
         else:
-            form = SaleForm()    
+            form = BuyForm()    
             
     context ={
         'form':form,
@@ -1283,10 +1226,9 @@ def sale_inactiva_modal(request, modal, pk):
         'url_back':url_back,
         'modal':modal,
         'title_pag':title_pag,
-        'admin':admin,
+        'buy_template':buy_template,
         'register_id':register_id,
         'registers':registers,
         'location':location,
     }
-    return render(request, 'invoice/modal-sale.html', context)
-
+    return render(request, 'invoice/modal-invoice.html', context)

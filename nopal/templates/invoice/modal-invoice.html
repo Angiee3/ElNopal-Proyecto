@@ -1,11 +1,9 @@
-{% include "invoice/buy.html" %}
+{% include "invoice/invoice.html" %}
 {% load crispy_forms_tags %}
 {% load static %}
 {% block contenido %}
 
-{% if ver_compra %}
-    {% include "modals/m-invoice.html" %}
-{% elif ver_inactivas %}
+{% if ver_inactivas %}
     {% include "modals/m-inactivas.html" %}
 {% endif %}
 

@@ -41,6 +41,7 @@
             <div class="col-md-8">
 
                 <table class="display table table-striped text-center table-hover text-nowrap mt-3" style="width:100% ">
+                {% if buy_template %}
                     <thead style="background-color: var(--verde); color: var(--verdeocuro);">
                         <tr><th id="factura" colspan="5">Compra No.{{factura.id}}</td></tr>
                     </thead>
@@ -91,16 +92,19 @@
                                     <td id="texto">${{detail.total}}</td>
                                                             
                                 <td class="d-print-none">
-                                    <a href="" class="btn btn-md border" ><img class="img-fluid " src=" {% static 'img/icons/update.svg' %} " id="edit" alt=""></a>
-                                    <a href="" class="btn btn-md border" ><img class="img-fluid " src=" {% static 'img/icons/delete.svg' %}" id="eliminar" alt=""></a> 
+                                    <a href="{% url 'detailbuy-modal' pkf=detail.buy.id modal='editar' pkd=detail.id %}" class="btn btn-md border" ><img class="img-fluid " src=" {% static 'img/icons/update.svg' %} " id="edit" alt=""></a>
+                                    <a href="{% url 'detailbuy-modal' pkf=detail.buy.id modal='eliminar' pkd=detail.id %}" class="btn btn-md border" ><img class="img-fluid " src=" {% static 'img/icons/delete.svg' %}" id="eliminar" alt=""></a> 
                                 </td>
                             </tr>
                             {% endif %}
                         {% endfor %}
                    </tbody>
+                   {% elif sale_template %}
+
+                   {% endif %}
                 </table>
                 
-                <a class="btn_agregar d-block m-auto text-center text-decoration-none py-1 rounded border border-none d-print-none" type="submit" style="width: 120px;">Cerrar Factura</a>
+                <a href="{{url_factura}}" class="btn_agregar d-block m-auto text-center text-decoration-none py-1 rounded border border-none d-print-none" type="submit" style="width: 120px;">Cerrar Factura</a>
                 <button type="button" id="botonReporte" class="btn_agregar text-center text-decoration-none rounded border border-none p-1 d-block d-print-none" onclick="window.print()">Reportes</button>
             </div>
         </div>

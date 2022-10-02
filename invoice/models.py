@@ -6,11 +6,12 @@ from django.utils.translation import gettext_lazy as _
 class Payment(models.TextChoices):
         DATAFONO = 'Datáfono', _('Datáfono')
         EFECTIVO = 'Efectivo', _('Efectivo')
-        TRANSACCION = 'Transacción', _('Transaccion')
+        TRANSACCION = 'Transacción', _('Transacción')
 class Status(models.TextChoices):
-        ABIERTA='Abierta', _('Abierta')
-        CERRADA='Cerrada', _('Cerrada')
-        ANULADA='Anulada', _('Anulada')
+        ABIERTA = 'Abierta', _('Abierta')
+        CERRADA = 'Cerrada', _('Cerrada')
+        PENDIENTE = 'Pendiente',_('Pendiente')
+        ANULADA = 'Anulada', _('Anulada')
 class Observation(models.TextChoices):
         DEVOLUCION = 'Devolución',_('Devolución')
         CAMBIO = 'Cambio',_('Cambio')        
@@ -41,7 +42,7 @@ class DetailBuy(models.Model):
         
 class Sale(models.Model):
     date = models.DateField(auto_now=True, verbose_name="Fecha de Venta")
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, verbose_name=u"Empleado")
+    # user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, verbose_name=u"Empleado")
     client = models.CharField(blank=True, null=False, max_length=50, verbose_name=u"Cliente", default=u"Cliente local")
     nDocument = models.CharField(blank=True, null=False, max_length=20, verbose_name=u"Número de Documento / NIT", default=1234567890)
     address = models.CharField(blank=True, null=False, verbose_name=u"Dirección", max_length=254, default=u"Local")

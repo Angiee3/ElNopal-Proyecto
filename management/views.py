@@ -17,7 +17,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 
 def index_admin(request):
     location = True
-    admin = True
+    
     title_pag = "Menú de Administracion"
     registros=DetailSale.objects.all()
     registrosci=Sale.objects.all()
@@ -50,7 +50,7 @@ def index_admin(request):
 
     context = {
         'title_pag':title_pag,
-        'admin':admin,
+        
         'location':location,
         'registros_stats':registros_stats,
         'fecha_stats':fecha_stats,
@@ -64,7 +64,7 @@ def index_admin(request):
 ########################### SUBCATEGORY ############################
 def subcategory(request):
     location = True
-    admin = True
+    
     title_pag = "Subcategoría"
     registers = Subcategory.objects.all()
     if request.method == 'POST':
@@ -79,7 +79,7 @@ def subcategory(request):
     context = {
         'form':form,
         'title_pag':title_pag,
-        'admin':admin,
+        
         'registers': registers,
         'location':location,
     }
@@ -87,7 +87,7 @@ def subcategory(request):
 
 def subcategoryCreatePopup(request):
     location = True
-    admin = True
+    
     title_pag = "Subcategoría"
     registers = Subcategory.objects.all()    
     form = SubcategoryForm(request.POST, request.FILES ) 
@@ -100,7 +100,7 @@ def subcategoryCreatePopup(request):
     context={
         'form':form,
         'title_pag':title_pag,
-        'admin':admin,
+        
         'registers': registers,
         'location':location,
     }
@@ -108,7 +108,7 @@ def subcategoryCreatePopup(request):
 
 def subcategory_modal(request, modal, pk):
     location = True
-    admin = True
+    
     title_pag = "Subcategoría"
     modal_title = ''
     modal_txt = ''
@@ -162,7 +162,7 @@ def subcategory_modal(request, modal, pk):
         'modal':modal,
         'register_id':register_id,
         'title_pag':title_pag,
-        'admin':admin,
+        
         'registers':registers,
         'location':location
     }
@@ -172,7 +172,7 @@ def subcategory_modal(request, modal, pk):
 ############################# CATEGORY #############################
 def category(request):
     location = True
-    admin = True
+    
     title_pag = "Categoría"
     registers = Category.objects.all()
     if request.method == 'POST':
@@ -187,14 +187,14 @@ def category(request):
     context = {
         'form':form,
         'title_pag':title_pag,
-        'admin':admin,
+        
         'registers': registers,
         'location':location,
     }
     return render(request, 'admin/category.html', context)
 def categoryCreatePopup(request):
     location = True
-    admin = True
+    
     title_pag = "Categoría"
     registers = Category.objects.all()    
     form = CategoryForm(request.POST, request.FILES) 
@@ -207,7 +207,7 @@ def categoryCreatePopup(request):
     context={
         'form':form,
         'title_pag':title_pag,
-        'admin':admin,
+        
         'registers': registers,
         'location':location,
     }
@@ -216,7 +216,7 @@ def categoryCreatePopup(request):
 def category_modal(request, modal, pk):
     title_pag = "Categoría"
     location = True
-    admin = True
+    
     modal_title = ''
     modal_txt = ''
     modal_submit = ''
@@ -272,7 +272,7 @@ def category_modal(request, modal, pk):
         'modal':modal,
         'register_id':register_id,
         'title_pag':title_pag,
-        'admin':admin,
+        
         'registers':registers,
         'location':location,
     }
@@ -281,7 +281,7 @@ def category_modal(request, modal, pk):
 ############################## BRAND ###############################
 def brand(request):
     location = True
-    admin = True
+    
     title_pag = "Marca"
     registers = Brand.objects.all()
     # fields = [f.name for f in Subcategory()._meta.get_fields()][2:-1]
@@ -300,7 +300,7 @@ def brand(request):
     context = {
         'form':form,
         'title_pag':title_pag,
-        'admin':admin,
+        
         'registers': registers,
         'location':location,
         'fields':fields,
@@ -310,7 +310,7 @@ def brand(request):
 
 def brandCreatePopup(request):
     location = True
-    admin = True
+    
     title_pag = "Marca"
     registers = Brand.objects.all()    
     form = BrandForm(request.POST, request.FILES) 
@@ -323,7 +323,7 @@ def brandCreatePopup(request):
     context={
         'form':form,
         'title_pag':title_pag,
-        'admin':admin,
+        
         'registers': registers,
         'location':location,
     }
@@ -334,7 +334,7 @@ def brand_modal(request, modal, pk):
     modal_title = ''
     modal_txt = ''
     location = True
-    admin = True
+    
     modal_submit = ''
     url_back="/administracion/marca/"
     registers = Brand.objects.all()
@@ -376,7 +376,7 @@ def brand_modal(request, modal, pk):
         'modal':modal,
         'register_id':register_id,
         'title_pag':title_pag,
-        'admin':admin,
+        
         'registers':registers,
         'location':location,
     }
@@ -385,7 +385,7 @@ def brand_modal(request, modal, pk):
 ############################# PRODUCT ##############################
 def product(request):
     location = True
-    admin = True
+    
     title_pag = "Producto"
     registers = Product.objects.all()
     # fields = [f.name for f in Subcategory()._meta.get_fields()][2:-1]
@@ -404,7 +404,7 @@ def product(request):
     context = {
         'form':form,
         'title_pag':title_pag,
-        'admin':admin,
+        
         'registers': registers,
         'location':location,
         'fields':fields,
@@ -416,7 +416,7 @@ def product(request):
 
 def productCreatePopup(request):
     location = True
-    admin = True
+    
     title_pag = "Producto"
     registers = Product.objects.all()    
     form = ProductForm(request.POST, request.FILES) 
@@ -429,7 +429,7 @@ def productCreatePopup(request):
     context={
         'form':form,
         'title_pag':title_pag,
-        'admin':admin,
+        
         'registers': registers,
         'location':location,
     }
@@ -440,7 +440,7 @@ def product_modal(request, modal, pk):
     modal_title = ''
     modal_txt = ''
     location = True
-    admin = True
+    
     modal_submit = ''
     url_back="/administracion/producto/"
     registers = Product.objects.all()
@@ -483,7 +483,7 @@ def product_modal(request, modal, pk):
         'modal':modal,
         'register_id':register_id,
         'title_pag':title_pag,
-        'admin':admin,
+        
         'registers':registers,
         'location':location,
     }
@@ -492,7 +492,7 @@ def product_modal(request, modal, pk):
 ############################# PROVIDER #############################
 def provider(request):
     location = True
-    admin = True
+    
     title_pag = "Proveedor"
     registers = Provider.objects.all()
     # fields = [f.name for f in Subcategory()._meta.get_fields()][2:-1]
@@ -511,7 +511,7 @@ def provider(request):
     context = {
         'form':form,
         'title_pag':title_pag,
-        'admin':admin,
+        
         'registers': registers,
         'location':location,
         'fields':fields,
@@ -521,7 +521,7 @@ def provider(request):
 
 def providerCreatePopup(request):
     location = True
-    admin = True
+    
     title_pag = "Proveedor"
     registers = Provider.objects.all()    
     form = ProviderForm(request.POST, request.FILES) 
@@ -534,7 +534,7 @@ def providerCreatePopup(request):
     context={
         'form':form,
         'title_pag':title_pag,
-        'admin':admin,
+        
         'registers': registers,
         'location':location,
     }
@@ -544,7 +544,7 @@ def provider_modal(request, modal, pk):
     title_pag = "Proveedor"
     modal_title = ''
     location = True
-    admin = True
+    
     modal_txt = ''
     modal_submit = ''
     url_back="/administracion/proveedor/"
@@ -588,7 +588,7 @@ def provider_modal(request, modal, pk):
         'modal':modal,
         'register_id':register_id,
         'title_pag':title_pag,
-        'admin':admin,
+        
         'registers':registers,
         'location':location,
     }
@@ -597,7 +597,7 @@ def provider_modal(request, modal, pk):
 ################################ USER ##############################
 # def user(request, pk):
 #     location = True
-#     admin = True
+#     
 #     title_pag = "Usuario"
 #     registers = User.objects.all()
 #     registers_obj = User.objects.get(id=pk)
@@ -618,7 +618,7 @@ def provider_modal(request, modal, pk):
 #     context = {
 #         'form':form,
 #         'title_pag':title_pag,
-#         'admin':admin,
+#         
 #         'registers': registers,
 #         'registers_obj':registers_obj,
 #         'location':location,
@@ -634,7 +634,7 @@ def provider_modal(request, modal, pk):
 #     modal_title = ''
 #     modal_txt = ''
 #     location = True
-#     admin = True
+#     
 #     modal_submit = ''
 #     url_back="/administracion/usuario/"
 #     registers = User.objects.all()
@@ -677,7 +677,7 @@ def provider_modal(request, modal, pk):
 #         'modal':modal,
 #         'register_id':register_id,
 #         'title_pag':title_pag,
-#         'admin':admin,
+#         
 #         'registers':registers,
 #         'location':location,
 #     }
@@ -703,7 +703,7 @@ def import_data(file, request):
 def backup(request, tipo):
     title_pag = "Backup"
     location = True
-    admin = True
+    
     example_dir = 'nopal/static/tablas/'
     with os.scandir (example_dir) as ficheros:
         ficheros = [fichero.name for fichero in ficheros if fichero.is_file()]
@@ -740,14 +740,14 @@ def backup(request, tipo):
         "form":form,
         "backups":backups,
         'title_pag':title_pag,
-        'admin':admin,
+        
         'location':location
     }
     return render(request, 'admin/backup.html',context) 
 
 # def unit(request):
 #     location = True
-#     admin = True
+#     
 #     title_pag = "Unidad de Medida"
 #     registers = Unit.objects.all()
 #     if request.method == 'POST':
@@ -762,7 +762,7 @@ def backup(request, tipo):
 #     context = {
 #         'form':form,
 #         'title_pag':title_pag,
-#         'admin':admin,
+#         
 #         'registers': registers,
 #         'location':location,
 #     }
@@ -770,7 +770,7 @@ def backup(request, tipo):
 
 # def unit_modal(request, modal, pk):
 #     location = True
-#     admin = True
+#     
 #     title_pag = "Unidad de Medida"
 #     modal_title = ''
 #     modal_txt = ''
@@ -820,7 +820,7 @@ def backup(request, tipo):
 #         'modal':modal,
 #         'register_id':register_id,
 #         'title_pag':title_pag,
-#         'admin':admin,
+#         
 #         'registers':registers,
 #         'location':location
 #     }
@@ -830,7 +830,7 @@ def backup(request, tipo):
 
 def registerU(request):
     location = True
-    admin = True
+    
     title_pag = "Registro"
     registers= User.objects.all()
 
@@ -849,7 +849,7 @@ def registerU(request):
     context = { 'form' : form,
             	'registers':registers,
                 'location':location,
-                'admin':admin,
+                
                 'title_pag':title_pag
 	}
     return render(request, 'admin/register.html', context)
@@ -857,7 +857,7 @@ def registerU(request):
 
 def registerP(request,pk):
     location = True
-    admin = True
+    
     title_pag = "Registro"
     registers= User.objects.all()
     registers_obj = User.objects.get(id=pk)
@@ -879,7 +879,7 @@ def registerP(request,pk):
     context = { 'form' : form,
             	'registers':registers,
                 'location':location,
-                'admin':admin,
+                
                 'registers_obj':registers_obj,
                 'title_pag':title_pag
 	}
@@ -887,7 +887,7 @@ def registerP(request,pk):
 
 def registerCreatePopup(request):
     location = True
-    admin = True
+    
     title_pag = "Registro"
     registers = User.objects.all()    
     form = UserRegisterForm(request.POST, request.FILES) 
@@ -898,7 +898,7 @@ def registerCreatePopup(request):
     context={
         'form':form,
         'title_pag':title_pag,
-        'admin':admin,
+        
         'registers': registers,
         'location':location,
     }
@@ -909,7 +909,7 @@ def user_modal(request, modal, pk):
     modal_title = ''
     modal_txt = ''
     location = True
-    admin = True
+    
     modal_submit = ''
     url_back="/administracion/usuario/"
     registers = User.objects.all()
@@ -952,7 +952,7 @@ def user_modal(request, modal, pk):
         'modal':modal,
         'register_id':register_id,
         'title_pag':title_pag,
-        'admin':admin,
+        
         'registers':registers,
         'location':location,
     }

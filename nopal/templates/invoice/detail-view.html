@@ -12,36 +12,38 @@
             <div class="col-md-8">
 
                 <table class="display table table-striped text-center table-hover text-nowrap mt-3" style="width:100% ">
+                    
+                    {% if buy_template %}
                     <thead style="background-color: var(--verde); color: var(--verdeocuro);">
-                        <tr><th colspan="5">Compra No.{{register_id.id}}</td></tr>
+                        <tr><th id="factura" colspan="5">Compra No.{{factura.id}}</td></tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td style="font-weight: 600" colspan="2">Fecha:</td>
-                            <td colspan="3">{{factura.date}}</td>
+                            <td style="font-weight: 600" id="texto" colspan="2">Fecha:</td>
+                            <td id="texto" colspan="3">{{factura.date}}</td>
                         </tr>
                         <tr>
-                            <td style="font-weight: 600" colspan="2">Proveedor:</td>
-                            <td colspan="3">{{factura.user}}</td>
+                            <td style="font-weight: 600" id="texto" colspan="2">Proveedor:</td>
+                            <td id="texto" colspan="3">{{factura.user}}</td>
                         </tr>
                         <tr>
-                            <td style="font-weight: 600" colspan="1">Celular:</td>
-                            <td colspan="1">{{factura.user.phone}}</td>
-                            <td style="font-weight: 600" colspan="1">Correo:</td>
-                            <td colspan="2">{{factura.user.email}}</td>
+                            <td style="font-weight: 600" id="texto" colspan="1">Celular:</td>
+                            <td id="texto" colspan="1">{{factura.user.phone}}</td>
+                            <td style="font-weight: 600" id="texto" colspan="1">Correo:</td>
+                            <td id="texto" colspan="2">{{factura.user.email}}</td>
                         </tr>
                         <tr>
                             <td colspan="1"></td>
                             <td colspan="1"></td>
-                            <td style="font-weight: 600; font-size:20px" colspan="1">Total a pagar:</td>
-                            <td style="font-size:25px" colspan="2">${{factura.finalPrice}}</td>
+                            <td style="font-weight: 600; font-size:20px" id="texto" colspan="1">Total a pagar:</td>
+                            <td id="texto" style="font-size:25px" colspan="2">${{factura.finalPrice|floatformat:3}}</td>
                         </tr>
                     </tbody>
                 </table>
 
 
 
-                <table id="tabla" class="display table table-striped table-hover text-nowrap mt-3" style="width:100%">
+                <table class="display table table-striped table-hover text-nowrap mt-3" style="width:100%">
                     
                     <thead style="background-color: var(--verde); color: var(--verdeocuro);" >
                         <tr>
@@ -55,14 +57,17 @@
                         {% for detail in registers %}
                             {% if detail.status %}
                             <tr>
-                                    <td>{{detail.product}}</td>
-                                    <td>{{detail.amount}}</td>
-                                    <td>${{detail.product.price}}</td>
-                                    <td>${{detail.total}}</td>
+                                    <td id="texto">{{detail.product}}</td>
+                                    <td id="texto">{{detail.amount}}</td>
+                                    <td id="texto">${{detail.product.price}}</td>
+                                    <td id="texto">${{detail.total}}</td>
                             </tr>
                             {% endif %}
                         {% endfor %}
                    </tbody>
+                   {% elif sale_template %}
+
+                   {% endif %}
                 </table>
 
                 <a class="btn_agregar d-block m-auto text-center text-decoration-none py-1 rounded border border-none" href="{{url_back}}"
