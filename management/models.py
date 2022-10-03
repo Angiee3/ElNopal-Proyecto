@@ -68,7 +68,7 @@ class Product(models.Model):
     brand = models.ForeignKey(Brand, on_delete=models.SET_NULL, null=True, verbose_name=u"Marca")
     unitMeasurement = models.ForeignKey(Unit, on_delete=models.SET_NULL, null=True)
     stock = models.PositiveIntegerField(validators=[MinValueValidator(1)], blank=False, null=True, verbose_name=u"Stock", default=0)
-    name_unitMeasurement = models.CharField(max_length=40, verbose_name=u"Unidad de Medida")
+    name_unitMeasurement = models.CharField(max_length=40, verbose_name=u"Unidad de Medida" , blank=True , null=True)
     image = models.ImageField(upload_to='product', null=True, verbose_name=u"Imagen", default='product/Logo.png')
     status = models.BooleanField(default=True)
     def __str__(self) -> str:
