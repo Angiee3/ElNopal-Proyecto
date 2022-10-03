@@ -27,7 +27,7 @@
                         <a href="{% url 'm_brand' %}" id="add_subcategory" onclick="return showAddPopup(this);"><img src = "{% static 'img/icons/plus.svg' %}"></a>
                         <br>
 
-                        {% comment %} <label for="product-unitMeasurement" class="control-label">Unidad de medida</label>
+                        <label for="product-unitMeasurement" class="control-label">Unidad de medida</label>
                         
                         {{form2.type}}
                         
@@ -37,7 +37,7 @@
                                 <option value="{{lista.name}}" data-chained="{{lista.type}}" >{{lista.name}}</option>
                                 {% endfor %}
                             </select>
-                        </div> {% endcomment %}
+                        </div> 
 
 
                           <div id="div_id_image" class="mb-3">
@@ -63,7 +63,7 @@
                             <th scope="col">Precio</th>
                             <th scope="col">Subcategoría</th>
                             <th scope="col">Marca</th>
-                            {% comment %} <th scope="col">Unidad de Medida</th> {% endcomment %}
+                            <th scope="col">Unidad de Medida</th> 
                             <th scope="col">Imagen</th>
                             <th scope="col">Descripción</th>
                             <th scope="col">Acciones</th>
@@ -78,7 +78,7 @@
                             <td id="texto">{{register.price}}</td>
                             <td id="texto">{{register.subcategory.name}}</td>
                             <td id="texto">{{register.brand.name}}</td>
-                            {% comment %} <td id="texto">{{register.unitMeasurement}}</td> {% endcomment %}
+                            <td id="texto">{{register.name_unitMeasurement}}</td>
                             <td id="texto">{{register.image.url}}</td>
                             <td id="texto">{{register.description}}</td>
 

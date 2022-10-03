@@ -388,6 +388,7 @@ def product(request):
     
     title_pag = "Producto"
     registers = Product.objects.all()
+    print('msdkmdkmdkmkd',request.POST)
     # fields = [f.name for f in Subcategory()._meta.get_fields()][2:-1]
     fields = ['name','price','subcategory','brand','expirationDate','unitMeasurement','stock','description','image']
     # print(fields)
@@ -399,18 +400,21 @@ def product(request):
             name = form.cleaned_data.get('name')
             messages.success(request,f'El producto {name} se agregó correctamente!')
             return redirect('product')
+        else:
+            name = form.cleaned_data.get('name')
+            messages.warning(request,f'El producto {name} no se agregó')
+            return redirect('product')
     else:
         form = ProductForm()
     context = {
         'form':form,
         'title_pag':title_pag,
-        
         'registers': registers,
         'location':location,
         'fields':fields,
         'atributes':atributes,
-        # 'form2':UnitForm(),
-        # 'unit':Unit.objects.all()
+        'form2':UnitForm(),
+        'unit':Unit.objects.all()
     }
     return render(request, 'admin/product.html', context)
 
@@ -745,86 +749,86 @@ def backup(request, tipo):
     }
     return render(request, 'admin/backup.html',context) 
 
-# def unit(request):
-#     location = True
-#     
-#     title_pag = "Unidad de Medida"
-#     registers = Unit.objects.all()
-#     if request.method == 'POST':
-#         form = UnitForm(request.POST, request.FILES)
-#         if form.is_valid():
-#             form.save()
-#             name = form.cleaned_data.get('name')
-#             messages.success(request,f'La unidad de medida {name} se agregó correctamente!')
-#             return redirect('unit')
-#     else:
-#         form = UnitForm()
-#     context = {
-#         'form':form,
-#         'title_pag':title_pag,
-#         
-#         'registers': registers,
-#         'location':location,
-#     }
-#     return render(request, 'admin/unit.html', context)
-
-# def unit_modal(request, modal, pk):
-#     location = True
-#     
-#     title_pag = "Unidad de Medida"
-#     modal_title = ''
-#     modal_txt = ''
-#     modal_submit = ''
-#     url_back="/administracion/unidad_medida/"
-#     registers = Unit.objects.all()
-#     register_id = Unit.objects.get(id=pk)
+def unit(request):
+    location = True
     
-#     if modal == 'eliminar':
-#         modal_title = 'Eliminar unidad de medida'
-#         modal_txt = 'eliminar la unidad de medida'
-#         modal_submit = 'eliminar'
-#         form = UnitForm(request.POST, request.FILES)
-#         if request.method == 'POST' :
-#             print('----------------------------------------ELIMINANDO')
-#             Unit.objects.filter(id=pk).update(
-#                 status = False
-#             )
-#             print('-------------------------------------------------SE ELIMINÓ')
-#             unitName = register_id.name.title()
-#             messages.success(request, f'La unidad de medida {unitName} se eliminó correctamente!')
+    title_pag = "Unidad de Medida"
+    registers = Unit.objects.all()
+    if request.method == 'POST':
+        form = UnitForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            name = form.cleaned_data.get('name')
+            messages.success(request,f'La unidad de medida {name} se agregó correctamente!')
+            return redirect('unit')
+    else:
+        form = UnitForm()
+    context = {
+        'form':form,
+        'title_pag':title_pag,
+        
+        'registers': registers,
+        'location':location,
+    }
+    return render(request, 'admin/unit.html', context)
 
-#             return redirect ('unit')
-#         else:
-#             form=UnitForm()
+def unit_modal(request, modal, pk):
+    location = True
+    
+    title_pag = "Unidad de Medida"
+    modal_title = ''
+    modal_txt = ''
+    modal_submit = ''
+    url_back="/administracion/unidad_medida/"
+    registers = Unit.objects.all()
+    register_id = Unit.objects.get(id=pk)
+    
+    if modal == 'eliminar':
+        modal_title = 'Eliminar unidad de medida'
+        modal_txt = 'eliminar la unidad de medida'
+        modal_submit = 'eliminar'
+        form = UnitForm(request.POST, request.FILES)
+        if request.method == 'POST' :
+            print('----------------------------------------ELIMINANDO')
+            Unit.objects.filter(id=pk).update(
+                status = False
+            )
+            print('-------------------------------------------------SE ELIMINÓ')
+            unitName = register_id.name.title()
+            messages.success(request, f'La unidad de medida {unitName} se eliminó correctamente!')
+
+            return redirect ('unit')
+        else:
+            form=UnitForm()
      
-#     elif modal == 'editar':
-#         modal_title = 'Editar unidad de medida'
-#         modal_txt = 'editar la unidad de medida'
-#         modal_submit = 'guardar'
-#         form = UnitForm(request.POST, request.FILES, instance=register_id)
-#         if request.method == 'POST':
-#             print('----------------------------------------EDITANDO')                
-#             if form.is_valid():
-#                 form.save()
-#                 unitName = form.cleaned_data.get('name')
-#                 messages.success(request, f'La unidad de medida {unitName} se editó correctamente!')
-#                 return redirect ('unit')
-#         else:
-#             form=UnitForm(instance=register_id)
-#     context ={
-#         'form':form,
-#         'modal_title':modal_title,
-#         'modal_txt':modal_txt,
-#         'modal_submit':modal_submit,
-#         'url_back':url_back,
-#         'modal':modal,
-#         'register_id':register_id,
-#         'title_pag':title_pag,
-#         
-#         'registers':registers,
-#         'location':location
-#     }
-#     return render(request, 'admin/modal-unit.html', context)
+    elif modal == 'editar':
+        modal_title = 'Editar unidad de medida'
+        modal_txt = 'editar la unidad de medida'
+        modal_submit = 'guardar'
+        form = UnitForm(request.POST, request.FILES, instance=register_id)
+        if request.method == 'POST':
+            print('----------------------------------------EDITANDO')                
+            if form.is_valid():
+                form.save()
+                unitName = form.cleaned_data.get('name')
+                messages.success(request, f'La unidad de medida {unitName} se editó correctamente!')
+                return redirect ('unit')
+        else:
+            form=UnitForm(instance=register_id)
+    context ={
+        'form':form,
+        'modal_title':modal_title,
+        'modal_txt':modal_txt,
+        'modal_submit':modal_submit,
+        'url_back':url_back,
+        'modal':modal,
+        'register_id':register_id,
+        'title_pag':title_pag,
+        
+        'registers':registers,
+        'location':location
+    }
+    return render(request, 'admin/modal-unit.html', context)
 
 # /////////////////////////RegistroUser////////////////////
 

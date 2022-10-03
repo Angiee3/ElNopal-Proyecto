@@ -43,21 +43,21 @@ class Brand(models.Model):
         verbose_name = "Marca"
         verbose_name_plural = "Marcas"
 
-# class Unit(models.Model):
-#     name = models.CharField(max_length=50, unique=True, verbose_name=u"Unidad de medida", blank=False)
-#     class Type(models.TextChoices):
-#         MASA = 'Masa',_('Masa')
-#         VOLUMEN = 'Volumen',_('Volumen')
-#     type = models.CharField(max_length=30, choices=Type.choices, default=Type.MASA, verbose_name="Tipo de medida")
-#     status = models.BooleanField(default=True)
+class Unit(models.Model):
+    name = models.CharField(max_length=50, unique=True, verbose_name=u"Unidad de medida", blank=False)
+    class Type(models.TextChoices):
+        MASA = 'Masa',_('Masa')
+        VOLUMEN = 'Volumen',_('Volumen')
+    type = models.CharField(max_length=30, choices=Type.choices, default=Type.MASA, verbose_name="Tipo de medida")
+    status = models.BooleanField(default=True)
     
-#     def __str__(self) -> str:
-#         return (self.name)
-#     def clean(self):
-#         self.name = self.name.title()
-#     class Meta:
-#         verbose_name = "Unidad de Medida"
-#         verbose_name_plural = "Unidades de Medida"
+    def __str__(self) -> str:
+        return (self.name)
+    def clean(self):
+        self.name = self.name.title()
+    class Meta:
+        verbose_name = "Unidad de Medida"
+        verbose_name_plural = "Unidades de Medida"
 
 
 class Product(models.Model):
@@ -66,10 +66,9 @@ class Product(models.Model):
     description = models.TextField(max_length=150, blank=True, verbose_name=u"Descripción")
     subcategory = models.ForeignKey(Subcategory, on_delete=models.SET_NULL, null=True, verbose_name=u"Subcategoría")
     brand = models.ForeignKey(Brand, on_delete=models.SET_NULL, null=True, verbose_name=u"Marca")
-    # unitMeasurement = models.ForeignKey(Unit, on_delete=models.SET_NULL, null=True, verbose_name=u"Unidad de Medida")
+    unitMeasurement = models.ForeignKey(Unit, on_delete=models.SET_NULL, null=True)
     stock = models.PositiveIntegerField(validators=[MinValueValidator(1)], blank=False, null=True, verbose_name=u"Stock", default=0)
-    # type = models.CharField(max_length=30, default='Masa', verbose_name="Tipo de medida", null=False)
-    # name_unitMeasurement= models.CharField(max_length=30)
+    name_unitMeasurement = models.CharField(max_length=40, verbose_name=u"Unidad de Medida")
     image = models.ImageField(upload_to='product', null=True, verbose_name=u"Imagen", default='product/Logo.png')
     status = models.BooleanField(default=True)
     def __str__(self) -> str:

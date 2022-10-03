@@ -28,8 +28,8 @@ urlpatterns = [
     path('proveedor/crear/', providerCreatePopup, name = "m_provider"),
     path('proveedor/<str:modal>/<int:pk>', provider_modal, name="provider-modal"),
     
-    # path('unidad_medida/', unit, name="unit"),
-    # path('unidad_medida/<str:modal>/<int:pk>', unit_modal, name="unit-modal"),
+    path('unidad_medida/', unit, name="unit"),
+    path('unidad_medida/<str:modal>/<int:pk>', unit_modal, name="unit-modal"),
     
     
     
