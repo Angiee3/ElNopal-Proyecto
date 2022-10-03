@@ -32,6 +32,7 @@ urlpatterns = [
     path('registrar/crear/', registerCreatePopup, name = "m_register"),
 
 
+
     
 ]
 

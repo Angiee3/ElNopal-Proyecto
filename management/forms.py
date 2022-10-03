@@ -65,17 +65,24 @@ class BackupForm(forms.ModelForm):
             'file':forms.FileInput(attrs={'class':'form-control'})
         }
 
-class UserRegisterForm(UserCreationForm):
-    first_name = forms.CharField(label='Nombre')
-    last_name = forms.CharField(label='Apellido')
-    email = models.EmailField(max_length=254, verbose_name=u"Correo Electrónico")
-    username = forms.CharField(label='Nombre de usuario')
-    password1 = forms.CharField(label='Contraseña', widget=forms.PasswordInput)
-    password2 = forms.CharField(label='Confirmar contraseña', widget=forms.PasswordInput)
-    is_active = forms.CharField()
+# class UserRegisterForm(UserCreationForm):
+#     first_name = forms.CharField(label='Nombre')
+#     last_name = forms.CharField(label='Apellido')
+#     email = models.EmailField(max_length=254, verbose_name=u"Correo Electrónico")
+#     username = forms.CharField(label='Nombre de usuario')
+#     password1 = forms.CharField(label='Contraseña', widget=forms.PasswordInput)
+#     password2 = forms.CharField(label='Confirmar contraseña', widget=forms.PasswordInput)
+#     is_active = forms.CharField()
 
-    class Meta:
+#     class Meta:
+#         model = User
+#         fields = ['first_name','last_name','email','username', 'password1', 'password2']
+#         help_texts = {k:"" for k in fields }
+  
+
+class CustomUserForm(UserCreationForm):
+    class Meta: 
         model = User
         fields = ['first_name','last_name','email','username', 'password1', 'password2']
-        help_texts = {k:"" for k in fields }
-  
+
+

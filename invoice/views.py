@@ -5,7 +5,7 @@ from urllib import request
 from django.shortcuts import render, redirect
 from .models import *
 from .forms import *
-from management.forms import UserRegisterForm
+# from management.forms import UserRegisterForm
 from django.contrib import messages
 from datetime import datetime
 from django.http import HttpResponse, HttpResponseRedirect

@@ -23,9 +23,9 @@ class DetailBuyForm(forms.ModelForm):
 class SaleForm(forms.ModelForm):
     class Meta:
         model = Sale
-        fields=['username','typeSale','payment','client','nDocument','address']
+        fields=['typeSale','payment','client','nDocument','address']
         widgets = {
-            'username':forms.Select(attrs={'class':'form-control'}),
+            # 'username':forms.Select(attrs={'class':'form-control'}),
             'typeSale':forms.Select(attrs={'class':'form-control'}),
             'payment':forms.Select(attrs={'class':'form-control'}),
             'client':forms.TextInput(attrs={'class':'form-control'}),
