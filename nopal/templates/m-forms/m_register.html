@@ -1,3 +1,4 @@
+
 {% extends 'partials/body.html' %}
 {% load crispy_forms_tags %} 
 {% block title %} El Nopal Supermercado{% endblock title %}
@@ -10,11 +11,11 @@
     <div class="row my-4">
             <div class="border p-3rounded shadow mt-3" id="mode-cards">
                 <h3 class="text-start">Nuevo Registro </h3>
-                <form method = 'POST' action= '' enctype = "multipart/form-data" novalidate id = "category-form">
+                <form method = 'POST' action= '' enctype = "multipart/form-data" novalidate id = "sale-form">
                     {% csrf_token %}
                     {{form.as_p}}
                     <input type="submit" class="btn_agregar d-block m-auto text-center text-decoration-none py-1 rounded border border-none" 
-                    style="width: 120px;" data-bs-toggle="tooltip" data-bs-placement="right" title="Agregar producto" value="Agregar" />                
+                    style="width: 120px;" data-bs-toggle="tooltip" data-bs-placement="right" title="Agregar usuario" value="Agregar" />                
                 </form>
         </div>
     </div>

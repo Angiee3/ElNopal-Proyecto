@@ -13,27 +13,17 @@
                     <h3 class="text-start">Nuevo Registro </h3>
                     <form action="" method="POST">
                         {% csrf_token %}
-
-                        {% comment %} <div id="div_id_name" class="mb-3">
-                            <label for="id_name" class="form-label requiredField">Nombre</label>
+                        <div id="div_id_first_name" class="mb-3">
+                            <label for="id_first_name" class="form-label requiredField">Nombre</label>
                             <span class="asteriskField">*</span>
-                            <input type="text" name="name" autofocus class="textinput textInput form-control" required id="id_name">
+                            <input type="text" name="first_name" autofocus class="textinput textInput form-control" required id="id_first_name">
                         </div>
-                        <div id="div_id_lastname" class="mb-3">
-                            <label for="id_lastname" class="form-label requiredField">Apellido</label>
+                        <div id="div_id_last_name" class="mb-3">
+                            <label for="id_last_name" class="form-label requiredField">Apellido</label>
                             <span class="asteriskField">*</span>
-                            <input type="text" name="lastname" autofocus class="textinput textInput form-control" required id="id_lastname">
-                        </div> 
+                            <input type="text" name="last_name" autofocus class="textinput textInput form-control" required id="id_last_name">
+                        </div>
 
-                        <div id="div_id_nDocument" class="mb-3">
-                            <label for="id_nDocument" class="control-label">Número de Documento</label>
-                            <span class="asteriskField">*</span>
-                            <input type="number" name="nDocument" autofocus class="numberinput numberInput form-control" required id="id_nDocument">
-                        </div>  
-                        <div id="div_id_phone" class="mb-3">
-                            <label for="id_phone" class="control-label">Número de celular</label>
-                            <input type="number" name="phone" autofocus class="numberinput numberInput form-control" required id="id_phone">
-                        </div>      {% endcomment %}
                         <div id="div_id_email" class="mb-3">
                             <label for="id_email" class="form-label requiredField">Email</label>
                             <span class="asteriskField">*</span>
@@ -65,10 +55,8 @@
                     <table id="tabla" class="display table table-striped table-hover text-nowrap mt-3" style="width:100%">
                         <thead style="background-color: var(--verde); color: var(--verdeoscuro);">
                             <tr>
-                                {% comment %}<th scope="col">Nombre</th>
-                                 <th scope="col">Apellido</th>
-                                <th scope="col">Número de documento</th>
-                                <th scope="col">Número de celular</th> {% endcomment %}
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Apellido</th>
                                 <th scope="col">Email</th>
                                 <th scope="col">Nombre Usuario</th>
                                 <th scope="col">Acciones</th>
@@ -78,17 +66,19 @@
 
                         <tbody>
                         {% for register in registers %}
+                            {% if register.is_active %}
                                     <tr>
-                                        {% comment %}<td id="texto">{{register.name}}</td>
-                                        <td id="texto">{{register.lastname}}</td>
-                                        <td id="texto">{{register.nDocument}}</td>
-                                        <td id="texto">{{register.phone}}</td> {% endcomment %}
+
+                                        <td id="texto">{{register.first_name}}</td>
+                                        <td id="texto">{{register.last_name}}</td>
                                         <td id="texto">{{register.email}}</td>
                                         <td id="texto">{{register.username}}</td>
-                                        <td><a href="{%url 'user-modal' modal='editar' pk=register.id %}" class="btn btn-md border"><img class="img-fluid" src="{% static 'img/icons/update.svg' %}" id="edit" alt=""></a>
-                                        <a href="" class="btn btn-md border"><img class="img-fluid" src="{% static 'img/icons/delete.svg' %}" id="eliminar" alt=""></a> 
+                                        <td>
+                                            <a href="{%url 'user-modal' modal='editar' pk=register.id %}" class="btn btn-md border"><img class="img-fluid" src="{% static 'img/icons/update.svg' %}" id="edit" alt=""></a>
+                                            <a href="{%url 'user-modal' modal='eliminar' pk=register.id %}" class="btn btn-md border"><img class="img-fluid" src="{% static 'img/icons/delete.svg' %}" id="eliminar" alt=""></a> 
                                     </td>  
                                     </tr>
+                            {% endif %}
                         {% endfor %}
                         </tbody> 
 
