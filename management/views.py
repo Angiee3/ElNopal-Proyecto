@@ -9,9 +9,8 @@ from store.models import *
 from django.contrib.auth.decorators import login_required
 from django.db.models import Sum
 from invoice.models import *
-
-from .forms import UserRegisterForm
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
 from django.http import HttpResponse, HttpResponseRedirect
 # Create your views here.
 
@@ -742,39 +741,37 @@ def unit_modal(request, modal, pk):
 # /////////////////////////RegistroUser////////////////////
 
 def registerU(request):
+    title_pag="Registrar Usuario"
     location = True
     admin = True
-    title_pag = "Registro"
-    registers= User.objects.all()
+    registers = User.objects.all()    
 
-    if request.method == 'POST':
-        form = UserRegisterForm(request.POST)
-        if form.is_valid() :
-           form.save()
+    if request.method =='POST':
+        formulario = CustomUserForm(request.POST)
+        if formulario.is_valid():
+            formulario.save()
+            #Autenticación
+            username = formulario.cleaned_data['username']
+            password = formulario.cleaned_data['password1'] 
+            user = authenticate(username=username, password=password)
 
-        name = form.cleaned_data.get('username')
+        name = formulario.cleaned_data.get('username')
         messages.success(request,f'El usuario {name} se agregó correctamente!')
-                    
-        return redirect('registerU')
-        
-    else:
-        form = UserRegisterForm()
-    context = { 'form' : form,
-            	'registers':registers,
-                'location':location,
-                'admin':admin,
-                'title_pag':title_pag
-	}
-    return render(request, 'admin/register.html', context)
-
-
+    context={
+        'title_pag':title_pag,
+        'form':CustomUserForm(),
+        'location':location,
+        'admin':admin,
+        'registers':registers
+    }
+    return render(request, "admin/register.html",context)
 
 def registerCreatePopup(request):
     location = True
     admin = True
     title_pag = "Registro"
     registers = User.objects.all()    
-    form = UserRegisterForm(request.POST, request.FILES) 
+    form = CustomUserForm(request.POST, request.FILES) 
 
     if form.is_valid():
         instance = form.save()
@@ -801,7 +798,7 @@ def user_modal(request, modal, pk):
         modal_title = 'Eliminar usuario'
         modal_txt = 'eliminar el usuario'
         modal_submit = 'eliminar'
-        form = UserRegisterForm(request.POST, request.FILES)
+        form = CustomUserForm(request.POST, request.FILES)
 
         if request.method == 'POST':
             print('----------------------------------------ELIMINANDO')
@@ -812,12 +809,12 @@ def user_modal(request, modal, pk):
             messages.success(request, f'El usuario {userName} se eliminó correctamente!')
             return redirect ('registerU')
         else:
-            form=UserRegisterForm()
+            form=CustomUserForm()
     elif modal == 'editar':
         modal_title = 'Editar usuario'
         modal_txt = 'editar el usuario'
         modal_submit = 'guardar'
-        form = UserRegisterForm(request.POST, request.FILES, instance=register_id)
+        form = CustomUserForm(request.POST, request.FILES, instance=register_id)
         if request.method == 'POST':
             print('----------------------------------------EDITANDO')                
             if form.is_valid():
@@ -826,7 +823,7 @@ def user_modal(request, modal, pk):
                 messages.success(request, f'El usuario {userName} se editó correctamente!')
                 return redirect ('registerU')
         else:
-            form=UserRegisterForm(instance=register_id)
+            form=CustomUserForm(instance=register_id)
     context ={
         'form':form,
         'modal_title':modal_title,

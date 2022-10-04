@@ -93,7 +93,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'db_elnopal',
         'USER':'root',
-        'PASSWORD':'%Brayan2021-2021-2021%#',
+        'PASSWORD':'JuliethRojas123.',
         'HOST':'localhost',
         'PORT':'3306'
     }

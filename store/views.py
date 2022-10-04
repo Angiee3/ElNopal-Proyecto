@@ -69,10 +69,3 @@ def contact(request):
     }
     return render(request, "user/contact.html",context)
 
-def gestion_usuario(request):
-    title_pag="Gestión Usuario"
-    context={
-        'title_pag':title_pag
-    }
-    return render(request, "user/gestionusuario.html",context)
-    

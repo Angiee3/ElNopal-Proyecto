@@ -6,8 +6,6 @@ from django.utils.translation import gettext_lazy as _
 from django.core.validators import MinValueValidator
 from django.core.exceptions import ValidationError
 
-from store.models import User
-
 class Category(models.Model):
     name = models.CharField(max_length=50, unique=True, verbose_name=u"Nombre", blank=False, db_column="Nombre")
     status = models.BooleanField(default=True, db_column="Status")

@@ -1,90 +1,92 @@
 {% extends 'partials/body.html' %}
 {% load crispy_forms_tags %}
-{% block title %}Registro{% endblock title %}
+{% block title %}Nueva Venta{% endblock title %}
 {% load static %}
 {% block contenido %}
 
-<div>
-    <section class="container p-5 h-auto" id="mode-cards" data-admin id="cuerpo" style="width: 95%">
-        <h1>Gestionar {{title_pag}}</h1>
-        <div class="row my-4">
-            <div class="col-md-4">
-                <div class="border p-3 rounded shadow mt-3" id="mode-cards">
-                    <h3 class="text-start">Nuevo Registro </h3>
-                    <form action="" method="POST">
-                        {% csrf_token %}
-                        <div id="div_id_first_name" class="mb-3">
-                            <label for="id_first_name" class="form-label requiredField">Nombre</label>
-                            <span class="asteriskField">*</span>
-                            <input type="text" name="first_name" autofocus class="textinput textInput form-control" required id="id_first_name">
-                        </div>
-                        <div id="div_id_last_name" class="mb-3">
-                            <label for="id_last_name" class="form-label requiredField">Apellido</label>
-                            <span class="asteriskField">*</span>
-                            <input type="text" name="last_name" autofocus class="textinput textInput form-control" required id="id_last_name">
-                        </div>
+<section class="container p-5 h-auto" id="mode-cards" data-admin id="cuerpo" style="width: 95%">
+    <h1>Gestionar {{title_pag}}</h1>
+    <div class="row my-4">
+        <div class="col-md-4">
+            <div class="border p-3 rounded shadow mt-3" id="mode-cards">
+                <h3 class="text-start">Nuevo Registro </h3>
+                <form action="" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% comment %} {{ form.as_p }} {% endcomment %}
+                    <div id="div_id_first_name" class="mb-3">
+                        <label for="id_first_name" class="form-label requiredField">Nombre</label>
+                        <span class="asteriskField">*</span>
+                        <input type="text" name="first_name" autofocus class="textinput textInput form-control" required id="id_first_name">
+                    </div>
+                    <div id="div_id_last_name" class="mb-3">
+                        <label for="id_last_name" class="form-label requiredField">Apellido</label>
+                        <span class="asteriskField">*</span>
+                        <input type="text" name="last_name" autofocus class="textinput textInput form-control" required id="id_last_name">
+                    </div>
 
-                        <div id="div_id_email" class="mb-3">
-                            <label for="id_email" class="form-label requiredField">Email</label>
-                            <span class="asteriskField">*</span>
-                            <input type="email" name="email" autofocus class="textinput textInput form-control" required id="id_email">
-                        </div>
-                        <div id="div_id_username" class="mb-3">
-                            <label for="id_username" class="form-label requiredField">Nombre de usuario</label>
-                            <span class="asteriskField">*</span>
-                            <input type="text" name="username" autofocus class="textinput textInput form-control" required id="id_username">
-                        </div>
-                        <div id="div_id_password1" class="mb-3">
-                            <label for="id_password1" class="form-label requiredField">Contraseña</label>
-                            <span class="asteriskField">*</span>
-                            <ul class="errorlist"><li>Debe contener al menos 8 caracteres.</li></ul>
-                            <input type="password" name="password1" class="textinput textInput form-control" required id="id_password1">
-                        </div>
-                        <div id="div_id_password2" class="mb-3">
-                            <label for="id_password2" class="form-label requiredField">Confirmar contraseña</label>
-                            <span class="asteriskField">*</span>
-                            <input type="password" name="password2" autofocus class="textinput textInput form-control" required id="id_password2">
-                        </div>
-                </div>    
-                
-                    <button  id="modal-status" class="btn_agregar d-block m-auto text-center text-decoration-none py-1 my-3 rounded border border-none"
-                    style="width: 120px;" >Registrar</button>
-                    </form>
+                    <div id="div_id_email" class="mb-3">
+                        <label for="id_email" class="form-label requiredField">Email</label>
+                        <span class="asteriskField">*</span>
+                        <input type="email" name="email" autofocus class="textinput textInput form-control" required id="id_email">
+                    </div>
+                    <div id="div_id_username" class="mb-3">
+                        <label for="id_username" class="form-label requiredField">Nombre de usuario</label>
+                        <span class="asteriskField">*</span>
+                        <input type="text" name="username" autofocus class="textinput textInput form-control" required id="id_username">
+                    </div>
+                    <div id="div_id_password1" class="mb-3">
+                        <label for="id_password1" class="form-label requiredField">Contraseña</label>
+                        <span class="asteriskField">*</span>
+                        <ul class="errorlist"><li>Debe contener al menos 8 caracteres.</li></ul>
+                        <input type="password" name="password1" class="textinput textInput form-control" required id="id_password1">
+                    </div>
+                    <div id="div_id_password2" class="mb-3">
+                        <label for="id_password2" class="form-label requiredField">Confirmar contraseña</label>
+                        <span class="asteriskField">*</span>
+                        <input type="password" name="password2" autofocus class="textinput textInput form-control" required id="id_password2">
+                    </div>
+                    
+                    <input type="hidden" id="modal-status" value="Registrar">
+                    <button class="btn_agregar d-block m-auto text-center text-decoration-none py-1 rounded border border-none"
+                    style="width: 120px;" data-bs-toggle="tooltip" data-bs-placement="right" title="Agregar usuario" >Registrar</button>
+
+                </form>
             </div>
-                <div class="col-md-8">
-                    <table id="tabla" class="display table table-striped table-hover text-nowrap mt-3" style="width:100%">
-                        <thead style="background-color: var(--verde); color: var(--verdeoscuro);">
-                            <tr>
-                                <th scope="col">Nombre</th>
-                                <th scope="col">Apellido</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Nombre Usuario</th>
-                                <th scope="col">Acciones</th>
-
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                        {% for register in registers %}
-                            {% if register.is_active %}
-                                    <tr>
-
-                                        <td id="texto">{{register.first_name}}</td>
-                                        <td id="texto">{{register.last_name}}</td>
-                                        <td id="texto">{{register.email}}</td>
-                                        <td id="texto">{{register.username}}</td>
-                                        <td>
-                                            <a href="{%url 'user-modal' modal='editar' pk=register.id %}" class="btn btn-md border"><img class="img-fluid" src="{% static 'img/icons/update.svg' %}" id="edit" alt=""></a>
-                                            <a href="{%url 'user-modal' modal='eliminar' pk=register.id %}" class="btn btn-md border"><img class="img-fluid" src="{% static 'img/icons/delete.svg' %}" id="eliminar" alt=""></a> 
-                                    </td>  
-                                    </tr>
-                            {% endif %}
-                        {% endfor %}
-                        </tbody> 
-
-                    </table>
         </div>
-    </section>
+        <div class="col-md-8">
+            <table id="tabla" class="display table table-striped table-hover text-nowrap mt-3" style="width:100%">
+                <thead style="background-color: var(--verde); color: var(--verdeoscuro);">
+                    <tr>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Apellido</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Nombre Usuario</th>
+                        <th scope="col">Acciones</th>
+
+                    </tr>
+                </thead>
+
+                <tbody>
+                {% for register in registers %}
+                    {% if register.is_active %}
+                            <tr>
+
+                                <td id="texto">{{register.first_name}}</td>
+                                <td id="texto">{{register.last_name}}</td>
+                                <td id="texto">{{register.email}}</td>
+                                <td id="texto">{{register.username}}</td>
+                                <td>
+                                    <a href="{%url 'user-modal' modal='editar' pk=register.id %}" class="btn btn-md border"><img class="img-fluid" src="{% static 'img/icons/update.svg' %}" id="edit" alt=""></a>
+                                    <a href="{%url 'user-modal' modal='eliminar' pk=register.id %}" class="btn btn-md border"><img class="img-fluid" src="{% static 'img/icons/delete.svg' %}" id="eliminar" alt=""></a>  
+                            </td>  
+                            </tr>
+                    {% endif %}
+                {% endfor %}
+                </tbody> 
+
+            </table>
+</div>
+</section>
 </div>
 
 {% include 'partials/accesibilidad.html' %}
