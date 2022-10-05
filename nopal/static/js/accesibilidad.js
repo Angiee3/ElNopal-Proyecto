@@ -43,6 +43,9 @@ let darktheme = ()=>{
     const icons7 = document.querySelectorAll('#imprimir');
     const icons8 = document.querySelectorAll('#excel');
     const icons9 = document.querySelectorAll('#pdf');
+    const icons10 = document.querySelectorAll('#mark');
+    const icons11 = document.querySelectorAll('#plus');
+    const icons12 = document.querySelectorAll('#eye');
     const textcolor = document.querySelectorAll('#texto');
     const mode_cards = document.querySelectorAll('#mode-cards')
     const modedark_admin = document.querySelectorAll('[data-admin]') 
@@ -82,6 +85,21 @@ let darktheme = ()=>{
                     if(icons9){
                         icons9.forEach(item=>{
                             item.src = '/static/img/icons/pdfdark.svg'
+                        })
+                    }
+                    if(icons10){
+                        icons10.forEach(item=>{
+                            item.src = '/static/img/icons/markdark.svg'
+                        })
+                    }
+                    if(icons11){
+                        icons11.forEach(item=>{
+                            item.src = '/static/img/icons/plusdark.svg'
+                        })
+                    }
+                    if(icons12){
+                        icons12.forEach(item=>{
+                            item.src = '/static/img/icons/eyedark.svg'
                         })
                     }
                     if(textcolor){
@@ -125,6 +143,21 @@ let darktheme = ()=>{
                     if(icons9){
                         icons9.forEach(item=>{
                             item.src = '/static/img/icons/pdf.svg'
+                        })
+                    }
+                    if(icons10){
+                        icons10.forEach(item=>{
+                            item.src = '/static/img/icons/mark.svg'
+                        })
+                    }
+                    if(icons11){
+                        icons11.forEach(item=>{
+                            item.src = '/static/img/icons/plus.svg'
+                        })
+                    }
+                    if(icons12){
+                        icons12.forEach(item=>{
+                            item.src = '/static/img/icons/eye.svg'
                         })
                     }
                     if(textcolor){
