@@ -4,7 +4,11 @@ from .models import *
 from .forms import *
 from django.contrib import messages
 from datetime import datetime
+from django.contrib.auth.models import User
 
+from django.contrib.auth.decorators import login_required
+
+@login_required(login_url="admin-login")
 def buy(request):
     print(request.POST) # Datos enviados
     location = True # Header
@@ -37,7 +41,7 @@ def buy(request):
         'template':template,
     }
     return render(request, 'invoice/invoice.html', context)
-
+@login_required(login_url="admin-login")
 def detail_buy(request, pk):
     print(request.POST) # Datos enviados
     location = True # Header
@@ -130,7 +134,7 @@ def detail_buy(request, pk):
         'url_factura':url_factura,
     }
     return render(request, 'invoice/detail.html', context)
-
+@login_required(login_url="admin-login")
 def detailbuy_modal(request, pkf, modal, pkd):
     print(request.POST) # Datos enviados
     location = True # Header
@@ -192,7 +196,7 @@ def detailbuy_modal(request, pkf, modal, pkd):
             )
             messages.success(request, f'El detalle se eliminó correctamente!')
             return redirect ('buy-detail', pkf)
-                
+                 
             
         else:
             form=DetailBuyForm()
@@ -307,7 +311,7 @@ def detailbuy_modal(request, pkf, modal, pkd):
         'template':template,
     }
     return render(request, 'invoice/modal-detail.html', context)
-
+@login_required(login_url="admin-login")
 def detailbuy_cerrar(request, pk):
     print(request)
     location = True # Header
@@ -361,7 +365,7 @@ def detailbuy_cerrar(request, pk):
         'factura':factura,
     }
     return render(request, 'invoice/modal-detail.html', context)
-
+@login_required(login_url="admin-login")
 def buy_actions(request, modal, pk):
     title_pag = "Compra"
     modal_title = ''
@@ -423,7 +427,7 @@ def buy_actions(request, modal, pk):
         'location':location,
     }
     return render(request, 'invoice/modal-invoice.html', context)
-
+@login_required(login_url="admin-login")
 def buy_view(request, pk):
     location = True
     template = 'buy'
@@ -447,7 +451,7 @@ def buy_view(request, pk):
         'url_back':url_back,
     }
     return render(request, 'invoice/detail-view.html', context)
-
+@login_required(login_url="admin-login")
 def buy_delete(request, pk):
     title_pag = "Compra"
     modal_title = ''
@@ -463,12 +467,12 @@ def buy_delete(request, pk):
     detail = DetailBuy.objects.filter(buy=pk)
     print(detail)    
     if detail.exists():
-        if not User.is_staff:
+        if not user.is_staff :
             messages.warning(request, f'La compra No.{pk} no se puede eliminar, tiene detalles de compra.')
             return redirect ('buy')
         else: 
-            messages.warning(request, f'La compra No.{pk} tiene detalles de compra. Debe ser marcada antes de eliminarse')
-            return redirect ('buy')
+            messages.warning(request, f'La compra No.{pk} tiene detalles de compra. Deben eliminarse.')
+            return redirect ('buy-detail', pk)
     else: 
         modal_title = 'Eliminar compra'
         modal_txt = 'eliminar la compra'
@@ -496,7 +500,7 @@ def buy_delete(request, pk):
         'modal':modal,
     }
     return render(request, 'invoice/modal-invoice.html', context)
-    
+@login_required(login_url="admin-login")
 def buy_inactiva(request):
     location = True
     template = 'buy'
@@ -529,7 +533,7 @@ def buy_inactiva(request):
         'inactivas':inactivas,
     }
     return render(request, 'invoice/inactiva.html', context)
-
+@login_required(login_url="admin-login")
 def buy_inactiva_modal(request, modal, pk):
     title_pag = "Compra"
     location = True
@@ -546,23 +550,9 @@ def buy_inactiva_modal(request, modal, pk):
     if modal == 'eliminar': 
         detail = DetailBuy.objects.filter(buy=pk)
         print(detail)    
-        if detail.exists():
-                
+        if detail.exists():   
             messages.warning(request, f'La compra No.{pk} no se puede eliminar, tiene detalles de compra. Debe eliminarlos antes.')
             return redirect ('buy-detail', pk)
-        else: 
-            modal_title = 'Eliminar compra'
-            modal_txt = 'eliminar la compra'
-            modal_submit = 'eliminar'
-                
-            if request.method == 'POST':
-                print('----------------------------------------ELIMINANDO')
-                Buy.objects.filter(id=pk).update(
-                    status = "Anulada"
-                )
-                print('Eliminado')
-                messages.success(request, f'La compra No.{pk} se eliminó correctamente!')
-                return redirect ('buy') 
             
     elif modal == 'desmarcar':  
         print('----------------------------------------> Editar Modal')
@@ -597,7 +587,7 @@ def buy_inactiva_modal(request, modal, pk):
     return render(request, 'invoice/modal-invoice.html', context)
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
+@login_required(login_url="admin-login")
 def sale(request):
     location = True
     template = 'sale'
@@ -632,7 +622,7 @@ def sale(request):
         'template':template,
     }
     return render(request, 'invoice/invoice.html', context)
-
+@login_required(login_url="admin-login")
 def detail_sale(request, pk):
     location = True
     template = 'sale'
@@ -782,7 +772,7 @@ def detailsale_modal(request, pkf, modal, pkd):
             print(amount)
             
             Product.objects.filter(id = product.id).update(
-                stock = int(product.stock) - amount
+                stock = int(product.stock) + amount
             )
             print(product.id)
             print('------------------------> Stock actualizado')
@@ -796,17 +786,12 @@ def detailsale_modal(request, pkf, modal, pkd):
             )
             print('------------------------> Total ')
             
-            DetailSale.objects.filter(sale=pkf, product=product).update(
-                status = False
-            )
+            DetailSale.objects.filter(sale=pkf, product=product).delete()
             
             Sale.objects.filter(id=pkf).update(
                 finalPrice = sale_a[0].finalPrice - total
             )
             
-            Product.objects.filter(id=pkd).update(
-                status = False
-            )
             messages.success(request, f'El detalle se eliminó correctamente!')
             return redirect ('sale-detail', pkf)
                 
@@ -821,92 +806,102 @@ def detailsale_modal(request, pkf, modal, pkd):
         form = DetailSaleEditForm(request.POST, request.FILES, instance=register_id)
         cantidad = register_id.amount
         if request.method == 'POST':
-            print('----------------------------------------EDITANDO')                
+            print('----------------------------------------EDITANDO venta')  
+            product = Product.objects.get(
+                        id = register_id.product.id
+                    )
+            
+            stock_f = product.stock + register_id.amount
+            print('Stock que queda',product.stock)
+            print('Stock completo')
+            print(stock_f)
+            
             if form.is_valid():
-                product = Product.objects.get(
-                    id = register_id.product.id
-                )
-                print(request.POST['amount'])
-                print(cantidad)
-                
-                if int(request.POST['amount'])>cantidad:
-                    print('------------------------> Si la cantidad ingresada es mayor a la que teniamos')
-                    amount = int(request.POST['amount']) - cantidad
-                    print('------------------------> Se saca la diferencia')
-                    print(amount)
+                if(stock_f >= int(request.POST['amount'])):    
+                    print(request.POST['amount'])
+                    print(cantidad)
                     
-                    detail_a = DetailSale.objects.filter(
-                        sale = pkf,
-                        product = product, 
-                    )
-                    print(detail_a)
-                    print('------------------------> Detalle en donde está el producto')
-                    
-                    Product.objects.filter(id = product.id).update(
-                        stock = int(product.stock) + amount
-                    )
-                    print(product.id)
-                    print('------------------------> Stock actualizado')
+                    if int(request.POST['amount'])>cantidad:
+                        print('------------------------> Si la cantidad ingresada es mayor a la que teniamos')
+                        amount = int(request.POST['amount']) - cantidad
+                        print('------------------------> Se saca la diferencia')
+                        print(amount)
+                        
+                        detail_a = DetailSale.objects.filter(
+                            sale = pkf,
+                            product = product, 
+                        )
+                        print(detail_a)
+                        print('------------------------> Detalle en donde está el producto')
+                        
+                        Product.objects.filter(id = product.id).update(
+                            stock = int(product.stock) - amount
+                        )
+                        print(product.id)
+                        print('------------------------> Stock actualizado')
 
-                    total = amount * int(product.price)
-                    print('------------------------> Total de la actualización')
-                    print('------------------------> ',total)
+                        total = amount * int(product.price)
+                        print('------------------------> Total de la actualización')
+                        print('------------------------> ',total)
+                        
+                        detail_a.update(
+                            total = detail_a[0].total + total
+                        )
+                        print('------------------------> Total ')
+                        
+                        DetailSale.objects.filter(sale=pkf, product=product).update(
+                            amount = request.POST['amount']
+                        )
+                        
+                        Sale.objects.filter(id=pkf).update(
+                            finalPrice = sale_a[0].finalPrice + total
+                        )
+                        
+                        messages.success(request, f'El detalle se editó correctamente!')
+                        return redirect ('sale-detail', pkf)
                     
-                    detail_a.update(
-                        total = detail_a[0].total + total
-                    )
-                    print('------------------------> Total ')
                     
-                    DetailSale.objects.filter(sale=pkf, product=product).update(
-                        amount = request.POST['amount']
-                    )
-                    
-                    Sale.objects.filter(id=pkf).update(
-                        finalPrice = sale_a[0].finalPrice + total
-                    )
-                    
-                    messages.success(request, f'El detalle se editó correctamente!')
-                    return redirect ('sale-detail', pkf)
-                
-                
+                    else:
+                        print('------------------------> Si la cantidad ingresada es menor a la que teniamos')
+                        amount = cantidad - int(request.POST['amount'])
+                        print('------------------------> Se saca la diferencia')
+                        print(amount)
+                        
+                        detail_a = DetailSale.objects.filter(
+                            sale = pkf,
+                            product = product, 
+                        )
+                        print(detail_a)
+                        print('------------------------> Detalle en donde está el producto')
+                        
+                        Product.objects.filter(id = product.id).update(
+                            stock = int(product.stock) + amount
+                        )
+                        print(product.id)
+                        print('------------------------> Stock actualizado')
+
+                        total = amount * int(product.price)
+                        print('------------------------> Total de la actualización')
+                        print('------------------------> ',total)
+                        
+                        detail_a.update(
+                            total =  detail_a[0].total - total
+                        )
+                        print('------------------------> Total ')
+                        
+                        DetailSale.objects.filter(sale=pkf, product=product).update(
+                            amount = request.POST['amount']
+                        )
+                        
+                        Sale.objects.filter(id=pkf).update(
+                            finalPrice = sale_a[0].finalPrice - total
+                        )
+                        
+                        messages.success(request, f'El detalle se editó correctamente!')
+                        return redirect ('sale-detail', pkf)
                 else:
-                    print('------------------------> Si la cantidad ingresada es menor a la que teniamos')
-                    amount = cantidad - int(request.POST['amount'])
-                    print('------------------------> Se saca la diferencia')
-                    print(amount)
-                    
-                    detail_a = DetailSale.objects.filter(
-                        sale = pkf,
-                        product = product, 
-                    )
-                    print(detail_a)
-                    print('------------------------> Detalle en donde está el producto')
-                    
-                    Product.objects.filter(id = product.id).update(
-                        stock = int(product.stock) - amount
-                    )
-                    print(product.id)
-                    print('------------------------> Stock actualizado')
-
-                    total = amount * int(product.price)
-                    print('------------------------> Total de la actualización')
-                    print('------------------------> ',total)
-                    
-                    detail_a.update(
-                        total =  detail_a[0].total - total
-                    )
-                    print('------------------------> Total ')
-                    
-                    DetailSale.objects.filter(sale=pkf, product=product).update(
-                        amount = request.POST['amount']
-                    )
-                    
-                    Sale.objects.filter(id=pkf).update(
-                        finalPrice = sale_a[0].finalPrice - total
-                    )
-                    
-                    messages.success(request, f'El detalle se editó correctamente!')
-                    return redirect ('sale-detail', pkf)
+                    messages.warning(request, f'Sólo tenemos {stock_f} {product.name_unitMeasurement} disponibles de {product} :c')
+                        
         else:
             form=DetailSaleEditForm(instance=register_id)
         
@@ -1078,7 +1073,7 @@ def sale_delete(request, pk):
     detail = DetailSale.objects.filter(sale=pk)
     print(detail)    
     if detail.exists():
-        if not User.is_staff:
+        if not user.is_staff :
             messages.warning(request, f'La venta No.{pk} no se puede eliminar, tiene detalles de venta.')
             return redirect ('sale')
         else: 

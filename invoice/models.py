@@ -45,7 +45,6 @@ class DetailBuy(models.Model):
         
 class Sale(models.Model):
     date = models.DateField(auto_now=True, verbose_name="Fecha de Venta")
-    # user = models.ForeignKey(CustomUserForm, on_delete=models.SET_NULL, null=True, verbose_name=u"Empleado")
     client = models.CharField(blank=True, null=False, max_length=50, verbose_name=u"Cliente", default=u"Cliente local")
     nDocument = models.CharField(blank=True, null=False, max_length=20, verbose_name=u"Número de Documento / NIT", default=1234567890)
     address = models.CharField(blank=True, null=False, verbose_name=u"Dirección", max_length=254, default=u"Local")
@@ -69,8 +68,9 @@ class DetailSale(models.Model):
     sale = models.ForeignKey(Sale, on_delete=models.SET_NULL, null=True, verbose_name=u"Id Venta")
     product = models.ForeignKey(Product, on_delete=models.SET_NULL,null=True,verbose_name=u"Producto")
     amount = models.PositiveIntegerField(validators=[MinValueValidator(0)],default=1, verbose_name=u"Cantidad")
-    total = models.IntegerField(default=0, null=False, blank=True)
-    status = models.CharField(max_length=10, choices=Status.choices, verbose_name="Estado", default=Status.ABIERTA)
+    total = models.IntegerField(default=0, null=False, blank=True)    
+    status = models.BooleanField(default=True, verbose_name="Estado")
+
     def __str__(self) -> str:
         return '%s' %(self.product.name)
     class Meta:

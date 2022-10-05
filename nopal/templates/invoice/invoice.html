@@ -88,7 +88,7 @@
                                 <td>
                                     {% if register.status == "Abierta" %}
                                         <a href="{% url 'buy-actions' modal='editar' pk=register.id %}" class="btn btn-md border" title="Editar"><img class="img-fluid" src="{% static 'img/icons/update.svg' %}" id="edit"></a>
-                                        {% if user.is_staff %}
+                                        {% if user.is_staff  %}
                                             <a href="{% url 'buy-delete' pk=register.id %}" class="btn btn-md border" title="Eliminar"><img class="img-fluid" src="{% static 'img/icons/delete.svg' %}" id="eliminar"></a>
                                         {% endif %}
                                         <a href="{% url 'buy-detail' pk=register.id%}" class="btn btn-md border" title="Añadir detalle"><img class="img-fluid" src="{% static 'img/icons/plus.svg' %}"></a> 
@@ -103,7 +103,7 @@
                                 <td>
                                     {% if register.status == "Abierta" %}
                                         <a href="{% url 'sale-actions' modal='editar' pk=register.id %}" class="btn btn-md border" title="Editar"><img class="img-fluid" src="{% static 'img/icons/update.svg' %}" id="edit"></a>
-                                        {% if user.is_staff %}
+                                        {% if user.is_staff  %}
                                             <a href="{% url 'sale-delete' pk=register.id %}" class="btn btn-md border" title="Eliminar"><img class="img-fluid" src="{% static 'img/icons/delete.svg' %}" id="eliminar"></a>
                                         {% endif %}
                                         <a href="{% url 'sale-detail' pk=register.id%}" class="btn btn-md border" title="Añadir detalle"><img class="img-fluid" src="{% static 'img/icons/plus.svg' %}"></a> 

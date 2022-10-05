@@ -67,7 +67,7 @@
                             <th scope="col">Unidad de Medida</th> 
                             <th scope="col">Imagen</th>
                             <th scope="col">Descripción</th>
-                            <th scope="col">Acciones</th>
+                            {% if user.is_staff   %}<th scope="col">Acciones</th>{% endif %}
                         </tr>
                     </thead>
                     <tbody>
@@ -82,14 +82,16 @@
                             <td id="texto">{{register.name_unitMeasurement}}</td> 
                             <td id="texto">{{register.image.url}}</td>
                             <td id="texto">{{register.description}}</td>
-
+{% if user.is_staff   %}
                             <td><a href="{%url 'product-modal' modal='editar' pk=register.id %}"
                                     class="btn btn-md border"><img class="img-fluid"
                                         src="{% static 'img/icons/update.svg' %}" id="edit" alt=""></a>
+                            
                                 <a href="{%url 'product-modal' modal='eliminar' pk=register.id%}"
                                     class="btn btn-md border"><img class="img-fluid"
                                         src="{% static 'img/icons/delete.svg' %}" id="eliminar" alt=""></a>
-                            </td>
+                            
+                            </td>{% endif %}
                         </tr>
                         {% endif %}
                         {% endfor %}

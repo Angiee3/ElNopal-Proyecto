@@ -27,7 +27,7 @@
                             <th scope="col">Nombre</th>
                             <th scope="col">Teléfono</th>
                             <th scope="col">Correo Electrónico</th>
-                            <th scope="col">Acciones</th>
+                            {% if user.is_staff   %}<th scope="col">Acciones</th>{% endif %}
                         </tr>
                     </thead>
 
@@ -38,9 +38,12 @@
                                     <td id="texto">{{register.name}}</td>
                                     <td id="texto">{{register.phone}}</td>
                                     <td id="texto">{{register.email}}</td>
-                                    <td id="texto"><a href="{%url 'provider-modal' modal='editar' pk=register.id %}" class="btn btn-md border"><img class="img-fluid" src="{% static 'img/icons/update.svg' %}" id="edit" alt=""></a>
+                                    {% if user.is_staff   %}<td id="texto">
+                                        <a href="{%url 'provider-modal' modal='editar' pk=register.id %}" class="btn btn-md border"><img class="img-fluid" src="{% static 'img/icons/update.svg' %}" id="edit" alt=""></a>
+                                        
                                         <a href="{%url 'provider-modal' modal='eliminar' pk=register.id%}" class="btn btn-md border"><img class="img-fluid" src="{% static 'img/icons/delete.svg' %}" id="eliminar" alt=""></a> 
-                                    </td>    
+                                        
+                                    </td>   {% endif %} 
                                 </tr>
                             {% endif %}
                     {% endfor %}

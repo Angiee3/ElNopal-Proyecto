@@ -4,7 +4,6 @@ from django.shortcuts import render , redirect
 from django.contrib import messages
 from management.forms import *
 from management.models import *
-from store.forms import *
 from store.models import *
 from django.contrib.auth.decorators import login_required
 from django.db.models import Sum
@@ -14,6 +13,7 @@ from django.contrib.auth import authenticate
 from django.http import HttpResponse, HttpResponseRedirect
 # Create your views here.
 
+@login_required(login_url="admin-login")
 def index_admin(request):
     location = True
     
@@ -61,6 +61,7 @@ def index_admin(request):
 
 ########################### SUBCATEGORY ############################
 ########################### SUBCATEGORY ############################
+@login_required(login_url="admin-login")
 def subcategory(request):
     location = True
     
@@ -83,7 +84,7 @@ def subcategory(request):
         'location':location,
     }
     return render(request, 'admin/subcategory.html', context)
-
+@login_required(login_url="admin-login")
 def subcategoryCreatePopup(request):
     location = True
     
@@ -104,7 +105,7 @@ def subcategoryCreatePopup(request):
         'location':location,
     }
     return render(request, "m-forms/m_subcategory.html", context)
-
+@login_required(login_url="admin-login")
 def subcategory_modal(request, modal, pk):
     location = True
     
@@ -115,7 +116,6 @@ def subcategory_modal(request, modal, pk):
     url_back="/administracion/subcategoria/"
     registers = Subcategory.objects.all()
     register_id = Subcategory.objects.get(id=pk)
-    
     
     
     if modal == 'eliminar':
@@ -135,8 +135,6 @@ def subcategory_modal(request, modal, pk):
             return redirect ('subcategory')
         else:
             form=SubcategoryForm()
-            
-            
             
     elif modal == 'editar':
         modal_title = 'Editar subcategoría'
@@ -169,6 +167,7 @@ def subcategory_modal(request, modal, pk):
 
 
 ############################# CATEGORY #############################
+@login_required(login_url="admin-login")
 def category(request):
     location = True
     
@@ -191,6 +190,7 @@ def category(request):
         'location':location,
     }
     return render(request, 'admin/category.html', context)
+@login_required(login_url="admin-login")
 def categoryCreatePopup(request):
     location = True
     
@@ -211,7 +211,7 @@ def categoryCreatePopup(request):
         'location':location,
     }
     return render(request, "m-forms/m_category.html", context)
-
+@login_required(login_url="admin-login")
 def category_modal(request, modal, pk):
     title_pag = "Categoría"
     location = True
@@ -278,6 +278,7 @@ def category_modal(request, modal, pk):
     return render(request, 'admin/modal-category.html', context)
 
 ############################## BRAND ###############################
+@login_required(login_url="admin-login")
 def brand(request):
     location = True
     
@@ -306,7 +307,7 @@ def brand(request):
         'atributes':atributes
     }
     return render(request, 'admin/brand.html', context)
-
+@login_required(login_url="admin-login")
 def brandCreatePopup(request):
     location = True
     
@@ -327,7 +328,7 @@ def brandCreatePopup(request):
         'location':location,
     }
     return render(request, "m-forms/m_brand.html", context)
-
+@login_required(login_url="admin-login")
 def brand_modal(request, modal, pk):
     title_pag = "Marca"
     modal_title = ''
@@ -382,6 +383,7 @@ def brand_modal(request, modal, pk):
     return render(request, 'admin/modal-brand.html', context)
 
 ############################# PRODUCT ##############################
+@login_required(login_url="admin-login")
 def product(request):
     location = True
     
@@ -412,7 +414,7 @@ def product(request):
         'unit':Unit.objects.all()
     }
     return render(request, 'admin/product.html', context)
-
+@login_required(login_url="admin-login")
 def productCreatePopup(request):
     location = True
     
@@ -433,7 +435,7 @@ def productCreatePopup(request):
         'location':location,
     }
     return render(request, "m-forms/m_product.html", context)
-
+@login_required(login_url="admin-login")
 def product_modal(request, modal, pk):
     title_pag = "Producto"
     modal_title = ''
@@ -489,6 +491,7 @@ def product_modal(request, modal, pk):
     return render(request, 'admin/modal-product.html', context)
 
 ############################# PROVIDER #############################
+@login_required(login_url="admin-login")
 def provider(request):
     location = True
     
@@ -517,7 +520,7 @@ def provider(request):
         'atributes':atributes
     }
     return render(request, 'admin/provider.html', context)
-
+@login_required(login_url="admin-login")
 def providerCreatePopup(request):
     location = True
     
@@ -538,7 +541,7 @@ def providerCreatePopup(request):
         'location':location,
     }
     return render(request, "m-forms/m_provider.html", context)
-
+@login_required(login_url="admin-login")
 def provider_modal(request, modal, pk):
     title_pag = "Proveedor"
     modal_title = ''
@@ -593,14 +596,15 @@ def provider_modal(request, modal, pk):
     }
     return render(request, 'admin/modal-provider.html', context)
     
-
 ############################# BACKUP ###############################
+@login_required(login_url="admin-login")
 def export_data(request):
     date_now = date.today()
     tabla = request.POST['opcion']
     os.system(f"mysqldump --add-drop-table --column-statistics=0 --password='Muselol23xd'-u root db_elnopal --tables {tabla}> nopal/static/tablas/BKP_{tabla}_{date_now}.sql")
     print('imprimio la tabla ', tabla )
     print('-------------------------------------------------------Hecho')
+@login_required(login_url="admin-login")
 def import_data(file, request):
     print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>LISTO PA´ IMPRIMIR')
     try:
@@ -612,6 +616,7 @@ def import_data(file, request):
     except Exception as err:
         messages.warning(request,f'error {err} ')
         print('error ', err)
+@login_required(login_url="admin-login")
 def backup(request, tipo):
     title_pag = "Backup"
     location = True
@@ -656,7 +661,7 @@ def backup(request, tipo):
         'location':location
     }
     return render(request, 'admin/backup.html',context) 
-
+@login_required(login_url="admin-login")
 def unit(request):
     location = True
     
@@ -679,7 +684,7 @@ def unit(request):
         'location':location,
     }
     return render(request, 'admin/unit.html', context)
-
+@login_required(login_url="admin-login")
 def unit_modal(request, modal, pk):
     location = True
     
@@ -739,7 +744,7 @@ def unit_modal(request, modal, pk):
     return render(request, 'admin/modal-unit.html', context)
 
 # /////////////////////////RegistroUser////////////////////
-
+@login_required(login_url="admin-login")
 def registerU(request):
     title_pag="Registrar Usuario"
     location = True
@@ -765,7 +770,7 @@ def registerU(request):
         'registers':registers
     }
     return render(request, "admin/register.html",context)
-
+@login_required(login_url="admin-login")
 def registerCreatePopup(request):
     location = True
     admin = True
@@ -784,7 +789,7 @@ def registerCreatePopup(request):
         'location':location,
     }
     return render(request, "m-forms/m_register.html", context)
-
+@login_required(login_url="admin-login")
 def user_modal(request, modal, pk):
     title_pag = "Usuario"
     modal_title = ''

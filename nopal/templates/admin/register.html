@@ -61,7 +61,7 @@
                         <th scope="col">Apellido</th>
                         <th scope="col">Email</th>
                         <th scope="col">Nombre Usuario</th>
-                        <th scope="col">Acciones</th>
+                        {% if user.is_staff   %}<th scope="col">Acciones</th>{% endif %}
 
                     </tr>
                 </thead>
@@ -75,10 +75,12 @@
                                 <td id="texto">{{register.last_name}}</td>
                                 <td id="texto">{{register.email}}</td>
                                 <td id="texto">{{register.username}}</td>
-                                <td>
+                                {% if user.is_staff   %}<td>
+                                    
                                     <a href="{%url 'user-modal' modal='editar' pk=register.id %}" class="btn btn-md border"><img class="img-fluid" src="{% static 'img/icons/update.svg' %}" id="edit" alt=""></a>
                                     <a href="{%url 'user-modal' modal='eliminar' pk=register.id %}" class="btn btn-md border"><img class="img-fluid" src="{% static 'img/icons/delete.svg' %}" id="eliminar" alt=""></a>  
-                            </td>  
+                                   
+                                </td>   {% endif %}
                             </tr>
                     {% endif %}
                 {% endfor %}
