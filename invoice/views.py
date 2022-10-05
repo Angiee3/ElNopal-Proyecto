@@ -316,10 +316,9 @@ def detailbuy_cerrar(request, pk):
     print(request)
     location = True # Header
     template = 'buy' # Datos en invoice.html 
-    title_pag = "productos - Compra No."+str(pk)
+    title_pag = "Productos - Compra No."+str(pk)
     modal_title = ''
     modal_txt = ''
-    location = True
     modal_submit = ''
     modal = 'cerrar'
     url_back="/facturacion/compra/detalle/"+str(pk)+"/"
@@ -735,7 +734,7 @@ def detail_sale(request, pk):
         'factura':factura,
     }
     return render(request, 'invoice/detail.html', context)
-
+@login_required(login_url="admin-login")
 def detailsale_modal(request, pkf, modal, pkd):
     print(request.POST) # Datos enviados
     location = True # Header
@@ -919,22 +918,21 @@ def detailsale_modal(request, pkf, modal, pkd):
         'location':location,
     }
     return render(request, 'invoice/modal-detail.html', context)
-
+@login_required(login_url="admin-login")
 def detailsale_cerrar(request, pk):
     print(request)
     location = True # Header
     template = 'sale' # Datos en invoice.html 
-    title_pag = "productos - Venta No."+str(pk)
+    title_pag = "Productos - Venta No."+str(pk)
     modal_title = ''
     modal_txt = ''
-    location = True
-    
     modal_submit = ''
     modal = 'cerrar'
     url_back="/facturacion/venta/detalle/"+str(pk)+"/"
     url_factura="/facturacion/venta/detalle/"+str(pk)+"/cerrar/"
+    factura = Sale.objects.get(id=pk)
     registers = DetailSale.objects.filter(sale=pk)
-    
+    register_id = pk
     detail = DetailSale.objects.filter(sale = pk)
     print('------------------------> Filtra si hay detalle')
             
@@ -969,9 +967,11 @@ def detailsale_cerrar(request, pk):
         'template':template,
         'registers':registers,
         'location':location,
+        'register_id':register_id,
+        'factura':factura,
     }
     return render(request, 'invoice/modal-detail.html', context)
-
+@login_required(login_url="admin-login")
 def sale_actions(request, modal, pk):
     title_pag = "Venta"
     modal_title = ''
@@ -1033,7 +1033,7 @@ def sale_actions(request, modal, pk):
         'location':location,
     }
     return render(request, 'invoice/modal-invoice.html', context)
-
+@login_required(login_url="admin-login")
 def sale_view(request, pk):
     location = True
     template = 'sale'
@@ -1057,7 +1057,7 @@ def sale_view(request, pk):
         'url_back':url_back,
     }
     return render(request, 'invoice/detail-view.html', context)
-
+@login_required(login_url="admin-login")
 def sale_delete(request, pk):
     title_pag = "venta"
     modal_title = ''
@@ -1106,7 +1106,7 @@ def sale_delete(request, pk):
         'modal':modal,
     }
     return render(request, 'invoice/modal-invoice.html', context)
-    
+@login_required(login_url="admin-login")
 def sale_inactiva(request):
     location = True
     template = 'sale'
@@ -1139,7 +1139,7 @@ def sale_inactiva(request):
         'inactivas':inactivas,
     }
     return render(request, 'invoice/inactiva.html', context)
-
+@login_required(login_url="admin-login")
 def sale_inactiva_modal(request, modal, pk):
     title_pag = "venta"
     location = True
