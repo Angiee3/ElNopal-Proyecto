@@ -11,7 +11,7 @@
             {% include 'partials/messages.html' %}
             <div>
                 <table id="tabla" class="display table table-striped table-hover text-nowrap mt-3" style="width:100%">
-                    {% if template == 'buy' %}
+                {% if template == 'buy' %}
                     <thead style="background-color: var(--verde); color: var(--verdeoscuro);">
                         <tr>
                             <th scope="col">ID</th>
@@ -68,7 +68,7 @@
                         <tr>
                             <td id="texto">{{register.id}}</td>
                             <td id="texto">{{register.date|date:"M d, Y - " }}{{register.date|time:"h:i a" }}</td>
-                            <td id="texto">{{register.user}}</td>
+                            <td id="texto">{{register.client}}</td>
                             <td id="texto">{{register.payment}}</td>
                             <td id="texto">${{register.finalPrice}}</td>
                             <td id="texto">{{register.observation}}</td>

@@ -34,9 +34,13 @@
                             style="width: 120px;" data-bs-toggle="tooltip" data-bs-placement="right" title="Agregar a la compra">Agregar</button>
                     </form>
                 </div>
+                {% if template == 'buy' %}
                 <a href="{% url 'buy-inactiva' %}" class="btn_agregar d-block m-auto text-center text-decoration-none py-1 my-3 rounded border border-none"
                         style="width: 200px;">Ver Inactivas/Pendientes</a>
-            
+                {% elif template == 'sale' %}
+                <a href="{% url 'sale-inactiva' %}" class="btn_agregar d-block m-auto text-center text-decoration-none py-1 my-3 rounded border border-none"
+                        style="width: 200px;">Ver Inactivas/Pendientes</a>
+                {% endif %}
                 {% include 'partials/messages.html' %}
             </div>
 
