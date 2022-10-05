@@ -46,6 +46,7 @@ let darktheme = ()=>{
     const icons10 = document.querySelectorAll('#mark');
     const icons11 = document.querySelectorAll('#plus');
     const icons12 = document.querySelectorAll('#eye');
+    const icons13 = document.querySelectorAll('#closed');
     const textcolor = document.querySelectorAll('#texto');
     const textcolormodal = document.querySelectorAll('#textomodal');
     const mode_cards = document.querySelectorAll('#mode-cards')
@@ -101,6 +102,11 @@ let darktheme = ()=>{
                     if(icons12){
                         icons12.forEach(item=>{
                             item.src = '/static/img/icons/eyedark.svg'
+                        })
+                    }
+                    if(icons13){
+                        icons13.forEach(item=>{
+                            item.src = '/static/img/icons/closedark.svg'
                         })
                     }
                     if(textcolor){
@@ -164,6 +170,11 @@ let darktheme = ()=>{
                     if(icons12){
                         icons12.forEach(item=>{
                             item.src = '/static/img/icons/eye.svg'
+                        })
+                    }
+                    if(icons13){
+                        icons13.forEach(item=>{
+                            item.src = '/static/img/icons/close.svg'
                         })
                     }
                     if(textcolor){

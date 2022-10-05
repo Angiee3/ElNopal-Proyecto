@@ -21,7 +21,7 @@ urlpatterns = [
     
     path('compra/detalle/<int:pkf>/<str:modal>/<int:pkd>/', detailbuy_modal, name="detailbuy-modal"),
     
-    path('compra/detalle/cerrar/<int:pk>/', detailbuy_cerrar, name="detailbuy-cerrar"),
+    # path('compra/detalle/cerrar/<int:pk>/', detailbuy_cerrar, name="detailbuy-cerrar"),
     
     
     path('venta/', sale, name="sale"),
@@ -40,6 +40,6 @@ urlpatterns = [
     
     path('venta/detalle/<int:pkf>/<str:modal>/<int:pkd>/', detailsale_modal, name="detailsale-modal"),
     
-    path('venta/detalle/cerrar/<int:pk>/', detailsale_cerrar, name="detailsale-cerrar"),
+    # path('venta/detalle/cerrar/<int:pk>/', detailsale_cerrar, name="detailsale-cerrar"),
     
 ]
