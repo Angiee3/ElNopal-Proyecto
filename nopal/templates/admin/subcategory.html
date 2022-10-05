@@ -49,7 +49,7 @@
                             <th scope="col">Nombre</th>
                             <th scope="col">Categoría</th>
                             <th scope="col">Imagen</th>
-                            {% if user.is_staff   %}<th scope="col">Acciones</th>{%endif%}
+                            <th scope="col">Acciones</th>
                         </tr>
                     </thead>
 
@@ -60,11 +60,11 @@
                                     <td id="texto">{{register.name}}</td>
                                     <td id="texto">{{register.category}}</td>
                                     <td id="texto">{{register.image}}</td>
-                                    {% if user.is_staff  %}<td><a href="{%url 'subcategory-modal' modal='editar' pk=register.id %}" class="btn btn-md border"><img class="img-fluid" src="{% static 'img/icons/update.svg' %}" id="edit" alt=""></a>
+                                    <td><a href="{%url 'subcategory-modal' modal='editar' pk=register.id %}" class="btn btn-md border"><img class="img-fluid" src="{% static 'img/icons/update.svg' %}" id="edit" alt=""></a>
                                         
                                             <a href="{%url 'subcategory-modal' modal='eliminar' pk=register.id%}" class="btn btn-md border"><img class="img-fluid" src="{% static 'img/icons/delete.svg' %}" id="eliminar" alt=""></a> 
                                         
-                                    </td>  {% endif %} 
+                                    </td>
                                 </tr>
                             {% endif %}
                     {% endfor %}

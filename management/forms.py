@@ -21,7 +21,7 @@ class SubcategoryForm(forms.ModelForm):
         fields = ['name','category','image']
         widgets = {
             'name':forms.TextInput(attrs={'class':'form-control'}),
-            'category':forms.Select(attrs={'class':'form-control'}),
+            'category':forms.Select(attrs={'class':'form-control select2'}),
             'image':forms.FileInput(attrs={'class':'form-control'})
         }     
 
@@ -41,8 +41,8 @@ class ProductForm(forms.ModelForm):
             'name':forms.TextInput(attrs={'class':'form-control'}),
             'price':forms.NumberInput(attrs={'class':'form-control'}),
             'description':forms.Textarea(attrs={'class':'form-control'}),
-            'subcategory':forms.Select(attrs={'class':'form-control'}),
-            'brand':forms.Select(attrs={'class':'form-control'}),
+            'subcategory':forms.Select(attrs={'class':'form-control select2'}),
+            'brand':forms.Select(attrs={'class':'form-control select2'}),
             'unitMeasurement':forms.Select(attrs={'class':'form-control select2'}),
             'stock':forms.NumberInput(attrs={'class':'form-control'}),
             'image':forms.FileInput(attrs={'class':'form-control'})            

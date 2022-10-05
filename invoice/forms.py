@@ -7,7 +7,7 @@ class BuyForm(forms.ModelForm):
         fields =['user','payment']
         widgets = {
             'user':forms.Select(attrs={'class':'form-select select2'}),
-            'payment':forms.Select(attrs={'class':'form-control'}),
+            'payment':forms.Select(attrs={'class':'form-control select2'}),
             'observations':forms.Select(attrs={'class':'form-control'})
         }
         
@@ -41,12 +41,12 @@ class SaleForm(forms.ModelForm):
         model = Sale
         fields=['typeSale','payment','client','nDocument','address']
         widgets = {
-            'typeSale':forms.Select(attrs={'class':'form-control'}),
-            'payment':forms.Select(attrs={'class':'form-control'}),
+            'typeSale':forms.Select(attrs={'class':'form-control select2'}),
+            'payment':forms.Select(attrs={'class':'form-control select2'}),
             'client':forms.TextInput(attrs={'class':'form-control'}),
             'nDocument':forms.NumberInput(attrs={'class':'form-control'}),
             'address':forms.TextInput(attrs={'class':'form-control'}),
-            'observations':forms.Select(attrs={'class':'form-control'})
+            'observations':forms.Select(attrs={'class':'form-control select2'})
         }
         
 class SaleFormStatus(forms.ModelForm):

@@ -60,7 +60,8 @@ let darktheme = ()=>{
                     icons1 ? icons1.src = '/static/img/icons/userdark.svg' : icons1
                     icons2 ? icons2.src = '/static/img/icons/shopping-car-dark.svg' : icons2
                     icons3 ? icons3.src = '/static/img/icons/helpdark.svg' : icons3
-                    icons4 ? icons4.src = '/static/img/icons/exitdark.svg' : icons4     
+                    icons4 ? icons4.src = '/static/img/icons/exitdark.svg' : icons4
+                    console.log(colorTexto);
                     colorTexto ? colorTexto.forEach(item=>{item.classList.add('dark-mode')}) : colorTexto
                     if(icons5){
                         icons5.forEach(item=>{
