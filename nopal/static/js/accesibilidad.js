@@ -47,6 +47,7 @@ let darktheme = ()=>{
     const icons11 = document.querySelectorAll('#plus');
     const icons12 = document.querySelectorAll('#eye');
     const textcolor = document.querySelectorAll('#texto');
+    const textcolormodal = document.querySelectorAll('#textomodal');
     const mode_cards = document.querySelectorAll('#mode-cards')
     const modedark_admin = document.querySelectorAll('[data-admin]') 
     let colorTexto = document.querySelectorAll('[data-color]')
@@ -107,6 +108,11 @@ let darktheme = ()=>{
                             item.style.color='#fff'
                         })
                     }
+                    if(textcolormodal){
+                        textcolormodal.forEach(item =>{
+                            item.style.color='#000'
+                        })
+                    }
                    if(mode_cards){
                     mode_cards.forEach(items=>{
                         items.classList.add('mode-cards')
@@ -163,6 +169,11 @@ let darktheme = ()=>{
                     if(textcolor){
                         textcolor.forEach(item =>{
                             item.style.color='#223016'
+                        })
+                    }
+                    if(textcolormodal){
+                        textcolormodal.forEach(item =>{
+                            item.style.color='#fff'
                         })
                     }
                     if(mode_cards){
