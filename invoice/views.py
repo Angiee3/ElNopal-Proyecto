@@ -1239,7 +1239,7 @@ def sale_inactiva_modal(request, modal, pk):
             )
             print('Eliminado')
             messages.success(request, f'La venta No.{pk} se desmarcó correctamente!')
-            return redirect ('buy-inactiva')
+            return redirect ('sale-inactiva')
         else:
             form = SaleForm()    
             
