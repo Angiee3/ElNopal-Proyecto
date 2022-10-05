@@ -179,7 +179,7 @@ CREATE TABLE `invoice_buy` (
   PRIMARY KEY (`id`),
   KEY `invoice_buy_user_id_38266fc6_fk_management_provider_id` (`user_id`),
   CONSTRAINT `invoice_buy_user_id_38266fc6_fk_management_provider_id` FOREIGN KEY (`user_id`) REFERENCES `management_provider` (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 6 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: invoice_detailbuy
@@ -732,7 +732,7 @@ VALUES
   (
     1,
     'pbkdf2_sha256$320000$f51jRoN4In1z3IMqT0BNk4$s+1HcwF0zWuiGOgRYhYmLofJQkxGYV7cs1BCxR/aR6s=',
-    '2022-10-05 13:10:11.447185',
+    '2022-10-05 17:58:03.122435',
     1,
     'angie',
     '',
@@ -1052,17 +1052,17 @@ INSERT INTO
   `django_session` (`session_key`, `session_data`, `expire_date`)
 VALUES
   (
-    't57aq3t6hiqo4cq7dgdba6h2yv4qt8is',
-    '.eJxVjMsOwiAUBf-FtSFwwQou3fsN5L4iVUOT0q6M_65NutDtmZnzMgXXpZa161xGMWcD5vC7EfJD2wbkju02WZ7aMo9kN8XutNvrJPq87O7fQcVev_URTpGIJeYkTKyQVYOHQOB8BBhi8IlyFofgXYicXBBMTMEPLMmheX8A28k3fw:1og2S1:L2nMPFpjirED6Y3utCS9pkOofh1IPXfMEx_r9vcw2I0',
-    '2022-10-19 11:20:33.019402'
+    '8zkl2jswm167e6016bcooz2g8tjib6mu',
+    '.eJxVjMEOwiAQRP-FsyGBLRY8evcbyLK7SNVAUtqT8d9tkx70Npn3Zt4q4rqUuHaZ48Tqoow6_XYJ6Sl1B_zAem-aWl3mKeld0Qft-tZYXtfD_Tso2Mu2TmMQJsoGhY1zFoI_jyBOUGAAQz6H5MFJQOaBEWiwsKWUBbwN3qvPFwf6OKo:1og8eh:uG8ylqa30dnJ_tXrvURU8hU7yRKgD7yYOXDy7TDjyRI',
+    '2022-10-19 17:58:03.130905'
   );
 INSERT INTO
   `django_session` (`session_key`, `session_data`, `expire_date`)
 VALUES
   (
-    'w6u51p96biabgbz5ydy6yxkjmctbcm0r',
-    '.eJxVjMsOwiAUBf-FtSFwwQou3fsN5L4iVUOT0q6M_65NutDtmZnzMgXXpZa161xGMWcD5vC7EfJD2wbkju02WZ7aMo9kN8XutNvrJPq87O7fQcVev_URTpGIJeYkTKyQVYOHQOB8BBhi8IlyFofgXYicXBBMTMEPLMmheX8A28k3fw:1og4O6:93KNN4BLgp_Cngi4TDDXrHmLmbUqZfWnggmd_Xq4-wQ',
-    '2022-10-19 13:24:38.659261'
+    't57aq3t6hiqo4cq7dgdba6h2yv4qt8is',
+    '.eJxVjMsOwiAUBf-FtSFwwQou3fsN5L4iVUOT0q6M_65NutDtmZnzMgXXpZa161xGMWcD5vC7EfJD2wbkju02WZ7aMo9kN8XutNvrJPq87O7fQcVev_URTpGIJeYkTKyQVYOHQOB8BBhi8IlyFofgXYicXBBMTMEPLMmheX8A28k3fw:1og2S1:L2nMPFpjirED6Y3utCS9pkOofh1IPXfMEx_r9vcw2I0',
+    '2022-10-19 11:20:33.019402'
   );
 
 # ------------------------------------------------------------
@@ -1165,6 +1165,26 @@ VALUES
     '2022-10-05 16:34:41.447179',
     'Efectivo',
     1200,
+    ' ',
+    'Cerrada',
+    1
+  );
+INSERT INTO
+  `invoice_buy` (
+    `id`,
+    `date`,
+    `payment`,
+    `finalPrice`,
+    `observation`,
+    `status`,
+    `user_id`
+  )
+VALUES
+  (
+    6,
+    '2022-10-05 17:59:41.931282',
+    'Efectivo',
+    0,
     ' ',
     'Abierta',
     1
@@ -1362,7 +1382,7 @@ VALUES
     23456,
     'Efectivo',
     ' ',
-    'Abierta'
+    'Cerrada'
   );
 INSERT INTO
   `invoice_sale` (
@@ -1388,7 +1408,7 @@ VALUES
     101200,
     'Efectivo',
     ' ',
-    'Abierta'
+    'Cerrada'
   );
 INSERT INTO
   `invoice_sale` (
