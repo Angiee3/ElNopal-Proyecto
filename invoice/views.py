@@ -311,59 +311,59 @@ def detailbuy_modal(request, pkf, modal, pkd):
         'template':template,
     }
     return render(request, 'invoice/modal-detail.html', context)
-# @login_required(login_url="admin-login")
-# def detailbuy_cerrar(request, pk):
-#     print(request)
-#     location = True # Header
-#     template = 'buy' # Datos en invoice.html 
-#     title_pag = "Productos - Compra No."+str(pk)
-#     modal_title = ''
-#     modal_txt = ''
-#     modal_submit = ''
-#     modal = 'cerrar'
-#     url_back="/facturacion/compra/detalle/"+str(pk)+"/"
-#     url_factura="/facturacion/compra/detalle/"+str(pk)+"/cerrar/"
-#     factura = Buy.objects.get(id=pk)
-#     registers = DetailBuy.objects.filter(buy=pk)
-#     register_id = pk
-#     detail = DetailBuy.objects.filter(buy = pk)
-#     print('------------------------> Filtra si hay detalle')
+@login_required(login_url="admin-login")
+def detailbuy_cerrar(request, pk):
+    print(request)
+    location = True # Header
+    template = 'buy' # Datos en invoice.html 
+    title_pag = "Productos - Compra No."+str(pk)
+    modal_title = ''
+    modal_txt = ''
+    modal_submit = ''
+    modal = 'cerrar'
+    url_back="/facturacion/compra/detalle/"+str(pk)+"/"
+    url_factura="/facturacion/compra/detalle/"+str(pk)+"/cerrar/"
+    factura = Buy.objects.get(id=pk)
+    registers = DetailBuy.objects.filter(buy=pk)
+    register_id = pk
+    detail = DetailBuy.objects.filter(buy = pk)
+    print('------------------------> Filtra si hay detalle')
             
-#     print('------------------------> Cerrando facturaxd')
-#     if detail.exists():
-#         modal_title = 'Cerrar compra'
-#         modal_txt = 'cerrar la compra'
-#         modal_submit = 'cerrar'
-#         form = BuyForm(request.POST, request.FILES)
-#         print('xdd')
-#         if request.method == 'POST':
-#             print('----------------------------------------CERRANDO')
-#             Buy.objects.filter(id=pk).update(
-#                 status = "Cerrada"
-#             )
-#             print('Cerrado')
-#             messages.success(request, f'La compra No.{pk} se cerró correctamente!')
-#             return redirect ('buy')
-#     else:
-#         messages.warning(request, f'No hay detalles en esta compra, agrega productos para poder cerrarla!')
-#         return redirect ('buy-detail', pk)
+    print('------------------------> Cerrando facturaxd')
+    if detail.exists():
+        modal_title = 'Cerrar compra'
+        modal_txt = 'cerrar la compra'
+        modal_submit = 'cerrar'
+        form = BuyForm(request.POST, request.FILES)
+        print('xdd')
+        if request.method == 'POST':
+            print('----------------------------------------CERRANDO')
+            Buy.objects.filter(id=pk).update(
+                status = "Cerrada"
+            )
+            print('Cerrado')
+            messages.success(request, f'La compra No.{pk} se cerró correctamente!')
+            return redirect ('buy')
+    else:
+        messages.warning(request, f'No hay detalles en esta compra, agrega productos para poder cerrarla!')
+        return redirect ('buy-detail', pk)
         
-#     context ={
-#         'form':form,
-#         'modal_title':modal_title,
-#         'modal_txt':modal_txt,
-#         'modal_submit':modal_submit,
-#         'url_back':url_back,
-#         'url_factura':url_factura,
-#         'modal':modal,
-#         'title_pag':title_pag,
-#         'template':template,
-#         'registers':registers,
-#         'location':location,
-#         'register_id':register_id,
-#         'factura':factura,
-#     }
-#     return render(request, 'invoice/modal-detail.html', context)
+    context ={
+        'form':form,
+        'modal_title':modal_title,
+        'modal_txt':modal_txt,
+        'modal_submit':modal_submit,
+        'url_back':url_back,
+        'url_factura':url_factura,
+        'modal':modal,
+        'title_pag':title_pag,
+        'template':template,
+        'registers':registers,
+        'location':location,
+        'register_id':register_id,
+        'factura':factura,
+    }
+    return render(request, 'invoice/modal-detail.html', context)
 @login_required(login_url="admin-login")
 def buy_actions(request, modal, pk):
     title_pag = "Compra"
@@ -411,32 +411,6 @@ def buy_actions(request, modal, pk):
             return redirect ('buy')
         else:
             form = BuyFormStatus()
-            
-    elif modal == 'cerrar':
-        print('---------------------------------------cerrar')
-        modal_title = 'Cerrar venta'
-        modal_txt = 'cerrar la venta'
-        modal_submit = 'cerrar'
-        
-        detail = DetailBuy.objects.filter(buy = pk)
-        print('------------------------> Filtra si hay detalle')
-                
-        print('------------------------> Cerrando facturaxd')
-        if detail.exists():
-            form = BuyForm(request.POST, request.FILES)
-            print('xdd')
-            if request.method == 'POST':
-                print('----------------------------------------CERRANDO')
-                Buy.objects.filter(id=pk).update(
-                    status = "Cerrada"
-                )
-                print('Cerrado')
-                messages.success(request, f'La compra No.{pk} se cerró correctamente!')
-                return redirect ('buy')
-        else:
-            form=  BuyForm(instance=register_id) 
-            messages.warning(request, f'No hay detalles en esta compra, agrega productos para poder cerrarla!')
-            return redirect ('buy-detail', pk) 
     
     context ={
         'form':form,
@@ -944,59 +918,59 @@ def detailsale_modal(request, pkf, modal, pkd):
         'location':location,
     }
     return render(request, 'invoice/modal-detail.html', context)
-# @login_required(login_url="admin-login")
-# def detailsale_cerrar(request, pk):
-#     print(request)
-#     location = True # Header
-#     template = 'sale' # Datos en invoice.html 
-#     title_pag = "Productos - Venta No."+str(pk)
-#     modal_title = ''
-#     modal_txt = ''
-#     modal_submit = ''
-#     modal = 'cerrar'
-#     url_back="/facturacion/venta/detalle/"+str(pk)+"/"
-#     url_factura="/facturacion/venta/detalle/"+str(pk)+"/cerrar/"
-#     factura = Sale.objects.get(id=pk)
-#     registers = DetailSale.objects.filter(sale=pk)
-#     register_id = pk
-#     detail = DetailSale.objects.filter(sale = pk)
-#     print('------------------------> Filtra si hay detalle')
+@login_required(login_url="admin-login")
+def detailsale_cerrar(request, pk):
+    print(request)
+    location = True # Header
+    template = 'sale' # Datos en invoice.html 
+    title_pag = "Productos - Venta No."+str(pk)
+    modal_title = ''
+    modal_txt = ''
+    modal_submit = ''
+    modal = 'cerrar'
+    url_back="/facturacion/venta/detalle/"+str(pk)+"/"
+    url_factura="/facturacion/venta/detalle/"+str(pk)+"/cerrar/"
+    factura = Sale.objects.get(id=pk)
+    registers = DetailSale.objects.filter(sale=pk)
+    register_id = pk
+    detail = DetailSale.objects.filter(sale = pk)
+    print('------------------------> Filtra si hay detalle')
             
-#     print('------------------------> Cerrando facturaxd')
-#     if detail.exists():
-#         modal_title = 'Cerrar venta'
-#         modal_txt = 'cerrar la venta No.'
-#         modal_submit = 'cerrar'
-#         form = SaleForm(request.POST, request.FILES)
-#         print('xdd')
-#         if request.method == 'POST':
-#             print('----------------------------------------CERRANDO')
-#             Sale.objects.filter(id=pk).update(
-#                 status = "Cerrada"
-#             )
-#             print('Cerrado')
-#             messages.success(request, f'La venta No.{pk} se cerró correctamente!')
-#             return redirect ('sale')
-#     else:
-#         messages.warning(request, f'No hay detalles en esta venta, agrega productos para poder cerrarla!')
-#         return redirect ('sale-detail', pk)
+    print('------------------------> Cerrando facturaxd')
+    if detail.exists():
+        modal_title = 'Cerrar venta'
+        modal_txt = 'cerrar la venta No.'
+        modal_submit = 'cerrar'
+        form = SaleForm(request.POST, request.FILES)
+        print('xdd')
+        if request.method == 'POST':
+            print('----------------------------------------CERRANDO')
+            Sale.objects.filter(id=pk).update(
+                status = "Cerrada"
+            )
+            print('Cerrado')
+            messages.success(request, f'La venta No.{pk} se cerró correctamente!')
+            return redirect ('sale')
+    else:
+        messages.warning(request, f'No hay detalles en esta venta, agrega productos para poder cerrarla!')
+        return redirect ('sale-detail', pk)
         
-#     context ={
-#         'form':form,
-#         'modal_title':modal_title,
-#         'modal_txt':modal_txt,
-#         'modal_submit':modal_submit,
-#         'url_back':url_back,
-#         'url_factura':url_factura,
-#         'modal':modal,
-#         'title_pag':title_pag,
-#         'template':template,
-#         'registers':registers,
-#         'location':location,
-#         'register_id':register_id,
-#         'factura':factura,
-#     }
-#     return render(request, 'invoice/modal-detail.html', context)
+    context ={
+        'form':form,
+        'modal_title':modal_title,
+        'modal_txt':modal_txt,
+        'modal_submit':modal_submit,
+        'url_back':url_back,
+        'url_factura':url_factura,
+        'modal':modal,
+        'title_pag':title_pag,
+        'template':template,
+        'registers':registers,
+        'location':location,
+        'register_id':register_id,
+        'factura':factura,
+    }
+    return render(request, 'invoice/modal-detail.html', context)
 @login_required(login_url="admin-login")
 def sale_actions(request, modal, pk):
     title_pag = "Venta"
@@ -1010,7 +984,7 @@ def sale_actions(request, modal, pk):
     register_id = Sale.objects.get(id=pk)
     print(request)
     form = " "
-    print('ESTA MIERDA NO ESTÁ FUNCIONANDO XD')
+    
     if modal == 'editar':
         modal_title = 'Editar la venta'
         modal_txt = 'editar la venta'
@@ -1043,34 +1017,8 @@ def sale_actions(request, modal, pk):
             messages.success(request, f'La venta No.{pk} se marcó correctamente!')
             return redirect ('sale')
         else:
-            form = SaleFormStatus(instance = register_id)
-            
-    elif modal == 'cerrar':
-        print('---------------------------------------cerrar')
-        modal_title = 'Cerrar venta'
-        modal_txt = 'cerrar la venta'
-        modal_submit = 'cerrar'
-        
-        detail = DetailSale.objects.filter(sale = pk)
-        print('------------------------> Filtra si hay detalle')
-                
-        print('------------------------> Cerrando facturaxd')
-        if detail.exists():
-            form = SaleForm(request.POST, request.FILES)
-            print('xdd')
-            if request.method == 'POST':
-                print('----------------------------------------CERRANDO')
-                Sale.objects.filter(id=pk).update(
-                    status = "Cerrada"
-                )
-                print('Cerrado')
-                messages.success(request, f'La venta No.{pk} se cerró correctamente!')
-                return redirect ('sale')
-        else:
-            form=  SaleForm(instance=register_id) 
-            messages.warning(request, f'No hay detalles en esta venta, agrega productos para poder cerrarla!')
-            return redirect ('sale-detail', pk)     
-                
+            form = SaleFormStatus()
+    
     context ={
         'form':form,
         'modal_title':modal_title,
@@ -1239,7 +1187,7 @@ def sale_inactiva_modal(request, modal, pk):
             )
             print('Eliminado')
             messages.success(request, f'La venta No.{pk} se desmarcó correctamente!')
-            return redirect ('sale-inactiva')
+            return redirect ('buy-inactiva')
         else:
             form = SaleForm()    
             

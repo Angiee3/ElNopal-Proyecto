@@ -129,9 +129,9 @@
                     </tbody>
                 </table>
                 {% if template == 'buy' %}
-                <a href="/facturacion/compra/" class="btn_agregar d-block m-auto text-center text-decoration-none py-1 rounded border border-none d-print-none" style="width: 120px;">Gestionar</a>
+                <a href="{% url 'detailbuy-cerrar' pk=factura.id %}" class="btn_agregar d-block m-auto text-center text-decoration-none py-1 rounded border border-none d-print-none" type="submit" style="width: 120px;">Cerrar Factura</a>
                 {% elif template == 'sale' %}
-                <a href="/facturacion/venta/" class="btn_agregar d-block m-auto text-center text-decoration-none py-1 rounded border border-none d-print-none" style="width: 120px;">Gestionar</a>
+                <a href="{% url 'detailsale-cerrar' pk=factura.id %}" class="btn_agregar d-block m-auto text-center text-decoration-none py-1 rounded border border-none d-print-none" type="submit" style="width: 120px;">Cerrar Factura</a>
                 {% endif %}
                 <button type="button" id="botonReporte" class="btn_agregar text-center text-decoration-none rounded border border-none p-1 d-block d-print-none" onclick="window.print()">Reportes</button>
            

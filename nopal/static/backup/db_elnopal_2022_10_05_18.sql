@@ -179,7 +179,7 @@ CREATE TABLE `invoice_buy` (
   PRIMARY KEY (`id`),
   KEY `invoice_buy_user_id_38266fc6_fk_management_provider_id` (`user_id`),
   CONSTRAINT `invoice_buy_user_id_38266fc6_fk_management_provider_id` FOREIGN KEY (`user_id`) REFERENCES `management_provider` (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 7 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: invoice_detailbuy
@@ -199,7 +199,7 @@ CREATE TABLE `invoice_detailbuy` (
   CONSTRAINT `invoice_detailbuy_buy_id_e219648e_fk_invoice_buy_id` FOREIGN KEY (`buy_id`) REFERENCES `invoice_buy` (`id`),
   CONSTRAINT `invoice_detailbuy_product_id_2df9cb3f_fk_management_product_id` FOREIGN KEY (`product_id`) REFERENCES `management_product` (`id`),
   CONSTRAINT `invoice_detailbuy_chk_1` CHECK ((`amount` >= 0))
-) ENGINE = InnoDB AUTO_INCREMENT = 7 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: invoice_detailsale
@@ -219,7 +219,7 @@ CREATE TABLE `invoice_detailsale` (
   CONSTRAINT `invoice_detailsale_product_id_20252ffd_fk_management_product_id` FOREIGN KEY (`product_id`) REFERENCES `management_product` (`id`),
   CONSTRAINT `invoice_detailsale_sale_id_bafb59e8_fk_invoice_sale_id` FOREIGN KEY (`sale_id`) REFERENCES `invoice_sale` (`id`),
   CONSTRAINT `invoice_detailsale_chk_1` CHECK ((`amount` >= 0))
-) ENGINE = InnoDB AUTO_INCREMENT = 12 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: invoice_sale
@@ -238,7 +238,7 @@ CREATE TABLE `invoice_sale` (
   `observation` varchar(15) DEFAULT NULL,
   `status` varchar(10) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 9 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: management_backup
@@ -337,7 +337,7 @@ CREATE TABLE `management_subcategory` (
   UNIQUE KEY `name` (`name`),
   KEY `management_subcatego_category_id_a4264a4b_fk_managemen` (`category_id`),
   CONSTRAINT `management_subcatego_category_id_a4264a4b_fk_managemen` FOREIGN KEY (`category_id`) REFERENCES `management_category` (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 3 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: management_unit
@@ -732,7 +732,7 @@ VALUES
   (
     1,
     'pbkdf2_sha256$320000$f51jRoN4In1z3IMqT0BNk4$s+1HcwF0zWuiGOgRYhYmLofJQkxGYV7cs1BCxR/aR6s=',
-    '2022-10-05 17:58:03.122435',
+    '2022-10-05 13:10:11.447185',
     1,
     'angie',
     '',
@@ -760,7 +760,7 @@ VALUES
   (
     2,
     'pbkdf2_sha256$320000$Jcd2brsV8e9iTN42ywp07U$wN60xLjbVELL/iO/iN1psA/u+bmLx5S3tAbI+AclEEs=',
-    '2022-10-05 13:24:38.651893',
+    '2022-10-05 13:10:22.121737',
     0,
     'Angiee',
     'Angie',
@@ -1052,17 +1052,17 @@ INSERT INTO
   `django_session` (`session_key`, `session_data`, `expire_date`)
 VALUES
   (
-    '8zkl2jswm167e6016bcooz2g8tjib6mu',
-    '.eJxVjMEOwiAQRP-FsyGBLRY8evcbyLK7SNVAUtqT8d9tkx70Npn3Zt4q4rqUuHaZ48Tqoow6_XYJ6Sl1B_zAem-aWl3mKeld0Qft-tZYXtfD_Tso2Mu2TmMQJsoGhY1zFoI_jyBOUGAAQz6H5MFJQOaBEWiwsKWUBbwN3qvPFwf6OKo:1og8eh:uG8ylqa30dnJ_tXrvURU8hU7yRKgD7yYOXDy7TDjyRI',
-    '2022-10-19 17:58:03.130905'
+    't57aq3t6hiqo4cq7dgdba6h2yv4qt8is',
+    '.eJxVjMsOwiAUBf-FtSFwwQou3fsN5L4iVUOT0q6M_65NutDtmZnzMgXXpZa161xGMWcD5vC7EfJD2wbkju02WZ7aMo9kN8XutNvrJPq87O7fQcVev_URTpGIJeYkTKyQVYOHQOB8BBhi8IlyFofgXYicXBBMTMEPLMmheX8A28k3fw:1og2S1:L2nMPFpjirED6Y3utCS9pkOofh1IPXfMEx_r9vcw2I0',
+    '2022-10-19 11:20:33.019402'
   );
 INSERT INTO
   `django_session` (`session_key`, `session_data`, `expire_date`)
 VALUES
   (
-    't57aq3t6hiqo4cq7dgdba6h2yv4qt8is',
-    '.eJxVjMsOwiAUBf-FtSFwwQou3fsN5L4iVUOT0q6M_65NutDtmZnzMgXXpZa161xGMWcD5vC7EfJD2wbkju02WZ7aMo9kN8XutNvrJPq87O7fQcVev_URTpGIJeYkTKyQVYOHQOB8BBhi8IlyFofgXYicXBBMTMEPLMmheX8A28k3fw:1og2S1:L2nMPFpjirED6Y3utCS9pkOofh1IPXfMEx_r9vcw2I0',
-    '2022-10-19 11:20:33.019402'
+    'w6u51p96biabgbz5ydy6yxkjmctbcm0r',
+    '.eJxVjMsOwiAUBf-FtSFwwQou3fsN5L4iVUOT0q6M_65NutDtmZnzMgXXpZa161xGMWcD5vC7EfJD2wbkju02WZ7aMo9kN8XutNvrJPq87O7fQcVev_URTpGIJeYkTKyQVYOHQOB8BBhi8IlyFofgXYicXBBMTMEPLMmheX8A28k3fw:1og4AI:2NFTMImhnvbPE5R9BdF7-Q4xFudNjGKk--zHSKGRqJY',
+    '2022-10-19 13:10:22.130566'
   );
 
 # ------------------------------------------------------------
@@ -1106,7 +1106,7 @@ VALUES
     'Efectivo',
     23456,
     ' ',
-    'Cerrada',
+    'Abierta',
     1
   );
 INSERT INTO
@@ -1125,66 +1125,6 @@ VALUES
     '2022-10-05 11:47:19.360120',
     'Efectivo',
     200,
-    ' ',
-    'Cerrada',
-    1
-  );
-INSERT INTO
-  `invoice_buy` (
-    `id`,
-    `date`,
-    `payment`,
-    `finalPrice`,
-    `observation`,
-    `status`,
-    `user_id`
-  )
-VALUES
-  (
-    4,
-    '2022-10-05 13:37:10.071198',
-    'Efectivo',
-    400,
-    ' ',
-    'Cerrada',
-    1
-  );
-INSERT INTO
-  `invoice_buy` (
-    `id`,
-    `date`,
-    `payment`,
-    `finalPrice`,
-    `observation`,
-    `status`,
-    `user_id`
-  )
-VALUES
-  (
-    5,
-    '2022-10-05 16:34:41.447179',
-    'Efectivo',
-    1200,
-    ' ',
-    'Cerrada',
-    1
-  );
-INSERT INTO
-  `invoice_buy` (
-    `id`,
-    `date`,
-    `payment`,
-    `finalPrice`,
-    `observation`,
-    `status`,
-    `user_id`
-  )
-VALUES
-  (
-    6,
-    '2022-10-05 17:59:41.931282',
-    'Efectivo',
-    0,
     ' ',
     'Abierta',
     1
@@ -1227,39 +1167,6 @@ INSERT INTO
   )
 VALUES
   (3, 1, 200, 1, 3, 1);
-INSERT INTO
-  `invoice_detailbuy` (
-    `id`,
-    `amount`,
-    `total`,
-    `status`,
-    `buy_id`,
-    `product_id`
-  )
-VALUES
-  (4, 2, 400, 1, 4, 1);
-INSERT INTO
-  `invoice_detailbuy` (
-    `id`,
-    `amount`,
-    `total`,
-    `status`,
-    `buy_id`,
-    `product_id`
-  )
-VALUES
-  (5, 1, 1000, 1, 5, 2);
-INSERT INTO
-  `invoice_detailbuy` (
-    `id`,
-    `amount`,
-    `total`,
-    `status`,
-    `buy_id`,
-    `product_id`
-  )
-VALUES
-  (6, 1, 200, 1, 5, 1);
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: invoice_detailsale
@@ -1342,17 +1249,6 @@ INSERT INTO
   )
 VALUES
   (10, 1, 1000, 1, 2, 6);
-INSERT INTO
-  `invoice_detailsale` (
-    `id`,
-    `amount`,
-    `total`,
-    `status`,
-    `product_id`,
-    `sale_id`
-  )
-VALUES
-  (11, 1, 200, 1, 1, 2);
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: invoice_sale
@@ -1382,7 +1278,7 @@ VALUES
     23456,
     'Efectivo',
     ' ',
-    'Cerrada'
+    'Abierta'
   );
 INSERT INTO
   `invoice_sale` (
@@ -1405,10 +1301,10 @@ VALUES
     '1234567890',
     'Local',
     'store',
-    101200,
+    101000,
     'Efectivo',
     ' ',
-    'Cerrada'
+    'Abierta'
   );
 INSERT INTO
   `invoice_sale` (
@@ -1460,7 +1356,7 @@ VALUES
     4800,
     'Efectivo',
     ' ',
-    'Cerrada'
+    'Abierta'
   );
 INSERT INTO
   `invoice_sale` (
@@ -1510,58 +1406,6 @@ VALUES
     'Local',
     'store',
     1000,
-    'Efectivo',
-    'Cambio',
-    'Pendiente'
-  );
-INSERT INTO
-  `invoice_sale` (
-    `id`,
-    `date`,
-    `client`,
-    `nDocument`,
-    `address`,
-    `typeSale`,
-    `finalPrice`,
-    `payment`,
-    `observation`,
-    `status`
-  )
-VALUES
-  (
-    7,
-    '2022-10-05',
-    'Cliente local',
-    '1234567890',
-    'Local',
-    'store',
-    0,
-    'Efectivo',
-    ' ',
-    'Abierta'
-  );
-INSERT INTO
-  `invoice_sale` (
-    `id`,
-    `date`,
-    `client`,
-    `nDocument`,
-    `address`,
-    `typeSale`,
-    `finalPrice`,
-    `payment`,
-    `observation`,
-    `status`
-  )
-VALUES
-  (
-    8,
-    '2022-10-05',
-    'Cliente local',
-    '1234567890',
-    'Local',
-    'store',
-    0,
     'Efectivo',
     ' ',
     'Abierta'
@@ -1627,7 +1471,7 @@ VALUES
     'Kjhbgvy',
     200,
     '',
-    99,
+    97,
     'Masa',
     'Njnm',
     'product/Logo.png',
@@ -1657,7 +1501,7 @@ VALUES
     'Cfgvbhjnmk',
     1000,
     '',
-    99,
+    98,
     'Masa',
     'Njnm',
     'product/Logo.png',
@@ -1684,10 +1528,6 @@ INSERT INTO
   `management_subcategory` (`id`, `name`, `image`, `status`, `category_id`)
 VALUES
   (1, 'Jhkl,', 'subcategory/Logo.png', 1, 2);
-INSERT INTO
-  `management_subcategory` (`id`, `name`, `image`, `status`, `category_id`)
-VALUES
-  (2, 'Lmk', 'subcategory/Logo.png', 1, 2);
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: management_unit
