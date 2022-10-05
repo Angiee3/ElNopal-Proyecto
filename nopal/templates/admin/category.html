@@ -25,7 +25,7 @@
                     <thead style="background-color: var(--verde); color: var(--verdeoscuro);">
                         <tr>
                             <th scope="col">Nombre</th>
-                            {% if user.is_staff   %}<th scope="col">Acciones</th>{% endif %}
+                            <th scope="col">Acciones</th>
                         </tr>
                     </thead>
 
@@ -34,12 +34,11 @@
                             {% if register.status %}
                                 <tr>
                                     <td id="texto">{{register.name}}</td>
-                                    {% if user.is_staff   %}
                                     <td><a href="{%url 'category-modal' modal='editar' pk=register.id %}" class="btn btn-md border"><img class="img-fluid" src="{% static 'img/icons/update.svg' %}" id="edit"alt=""></a>
                                         
                                         <a href="{%url 'category-modal' modal='eliminar' pk=register.id%}" class="btn btn-md border"><img class="img-fluid" src="{% static 'img/icons/delete.svg' %}" id="eliminar"alt=""></a> 
                                         
-                                    </td> {% endif %}   
+                                    </td> 
                                 </tr>
                             {% endif %}
                     {% endfor %}
